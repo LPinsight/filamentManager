@@ -9,27 +9,29 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageHomeComponent } from './page-home/page-home.component';
 import { TemplateHeaderComponent } from './_template/template-header/template-header.component';
 import { TemplateHeaderNavComponent } from './_template/template-header-nav/template-header-nav.component';
+import { PageSettingsComponent } from './page-settings/page-settings.component';
 
 const navigationRoutes: Routes = [
-  // {path: 'settings', component: PageSettingsComponent},
+  {path: 'settings', component: PageSettingsComponent},
   // {path: 'mirror', component: PageMirrorComponent},
   {path: '', component: PageHomeComponent, pathMatch: 'full'},
-  // {path: '**', redirectTo: '/'},
+  {path: '**', redirectTo: '/'},
 ]
 
 @NgModule({
-  declarations: [	
+  declarations: [		
     AppComponent,
     PageHomeComponent,
+    PageSettingsComponent,
     TemplateHeaderComponent,
-    TemplateHeaderNavComponent
+    TemplateHeaderNavComponent,
    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot(navigationRoutes),
-    MatIconModule
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

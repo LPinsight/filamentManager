@@ -1,0 +1,55 @@
+@use './../../../scss/var' as *;
+
+// ##########################################################
+// ##########################################################
+// ##########################################################
+
+nav {
+  height: 100%;
+  width: 100%;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    li {
+      height: 100%;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 2rem 0 0;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        color: $white;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: all 250ms;
+        text-decoration: none;
+
+        &.active, &:hover {
+          color: $prime-dark;
+        }
+
+        mat-icon {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+}

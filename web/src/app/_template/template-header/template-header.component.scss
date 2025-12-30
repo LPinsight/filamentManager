@@ -1,0 +1,34 @@
+@use './../../../scss/var' as *;
+
+header {
+  height: 8rem;
+  padding: 1rem;
+  width: 100%;
+  border-bottom: solid 5px $second-dark;
+  display: flex;
+  justify-content: space-between;
+
+  div#left {
+    h1 {
+      font-size: 4rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: $prime-dark;
+    }
+
+    span {
+      font-size: 2rem;
+      text-transform: none;
+      line-height: 0.5rem;
+      color: $white;
+    }
+  }
+
+  div#nav {
+    height: 100%;
+  }
+}

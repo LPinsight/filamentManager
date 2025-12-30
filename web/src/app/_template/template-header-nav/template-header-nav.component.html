@@ -1,3 +1,6 @@
-<p>
-  template-header-nav works!
-</p>
+<nav>
+  <ul>
+    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><mat-icon>home</mat-icon>Home</a></li>
+    <li><a routerLink="/settings" routerLinkActive="active"><mat-icon>settings</mat-icon>Einstellungen</a></li>
+  </ul>
+</nav>
