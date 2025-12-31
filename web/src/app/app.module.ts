@@ -10,25 +10,45 @@ import { PageHomeComponent } from './page-home/page-home.component';
 import { TemplateHeaderComponent } from './_template/template-header/template-header.component';
 import { TemplateHeaderNavComponent } from './_template/template-header-nav/template-header-nav.component';
 import { PageSettingsComponent } from './page-settings/page-settings.component';
+import { PageHerstellerComponent } from './page-hersteller/page-hersteller.component';
+import { TemplateListHerstellerComponent } from './_template/template-list-hersteller/template-list-hersteller.component';
+import { PageMaterialComponent } from './page-material/page-material.component';
+import { TemplateListMaterialComponent } from './_template/template-list-material/template-list-material.component';
+import { PageOrtComponent } from './page-ort/page-ort.component';
+import { TemplateListOrtComponent } from './_template/template-list-ort/template-list-ort.component';
+import { PageFilamentComponent } from './page-filament/page-filament.component';
+import { TemplateListFilamentComponent } from './_template/template-list-filament/template-list-filament.component';
+import { PageSpuleComponent } from './page-spule/page-spule.component';
+import { TemplateListSpuleComponent } from './_template/template-list-spule/template-list-spule.component';
 
 const navigationRoutes: Routes = [
-  {path: 'spulen', component: PageHomeComponent},
-  {path: 'ort', component: PageHomeComponent},
-  {path: 'filament', component: PageHomeComponent},
-  {path: 'material', component: PageHomeComponent},
-  {path: 'hersteller', component: PageHomeComponent},
+  {path: 'spulen', component: PageSpuleComponent},
+  {path: 'ort', component: PageOrtComponent},
+  {path: 'filament', component: PageFilamentComponent},
+  {path: 'material', component: PageMaterialComponent},
+  {path: 'hersteller', component: PageHerstellerComponent},
   {path: 'einstellungen', component: PageSettingsComponent},
   {path: '', component: PageHomeComponent, pathMatch: 'full'},
   {path: '**', redirectTo: '/'},
 ]
 
 @NgModule({
-  declarations: [		
+  declarations: [							
     AppComponent,
     PageHomeComponent,
     PageSettingsComponent,
+    PageHerstellerComponent,
+    PageMaterialComponent,
+    PageOrtComponent,
+    PageFilamentComponent,
+    PageSpuleComponent,
     TemplateHeaderComponent,
     TemplateHeaderNavComponent,
+    TemplateListHerstellerComponent,
+    TemplateListMaterialComponent,
+    TemplateListOrtComponent,
+    TemplateListFilamentComponent,
+    TemplateListSpuleComponent,
    ],
   imports: [
     BrowserModule,

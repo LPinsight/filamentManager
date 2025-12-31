@@ -7,5 +7,5 @@ export interface Spule {
   verbrauchtes_Gewicht: number
   nfc: string
   ort: Ort
-  archviert: boolean
+  archiviert: boolean
 }
