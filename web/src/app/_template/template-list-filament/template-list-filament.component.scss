@@ -1,0 +1,40 @@
+@use './../../../scss/var' as *;
+
+div.filament {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  h3 {
+    font-size: 1.7rem;
+    font-weight: normal;
+  }
+
+  div.farbe {
+  display: flex;
+  align-items: center;
+
+    div.farbcode {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 1.5rem;
+      margin-right: 1rem;
+    }
+  }
+
+  div.gewicht {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  div.buttons {
+    display: flex;
+    flex-direction: column;
+
+    div {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

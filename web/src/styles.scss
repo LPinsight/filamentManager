@@ -61,3 +61,36 @@ body, html {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+button {
+  transition: all 250ms;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.3rem;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+  background-color: $prime;
+
+  mat-icon.mat-icon {
+    font-size: 1.7rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    margin-right: 0.3rem;
+  }
+
+  &:hover {
+    background-color: $prime-dark;
+    color: $white;
+  }
+  &.save {
+    background-color: $green;
+  }
+  &.delete {
+    background-color: $red;
+  }
+
+  
+}

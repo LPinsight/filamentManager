@@ -1,3 +1,26 @@
-<p>
-  {{filament.farbe}} - {{filament.id}} - {{filament.hersteller.name}} - {{filament.material.name}}
-</p>
+<div class="filament">
+  <div class="hersteller">
+    <h3>{{filament.hersteller.name}}</h3>
+  </div>
+  <div class="farbe">
+    <div class="farbcode" [ngStyle]="{'background-color': filament.farbcode}"></div>
+    <h3>{{filament.farbe}}</h3>
+  </div>
+  <div class="material">
+    <h3>{{filament.material.name}}</h3>
+  </div>
+  <div class="preis">
+    <h3>{{filament.preis| number:'1.2-2'}}€</h3>
+  </div>
+  <div class="gewicht">
+    <h3>{{filament.gewicht_filament | number}}g</h3>
+    <h3>{{filament.gewicht_spule | number}}g</h3>
+  </div>
+  <div class="buttons">
+    <div>
+      <button class="save"><mat-icon>edit</mat-icon>bearbeiten</button>
+      <button class="delete"><mat-icon>delete</mat-icon>löschen</button>
+    </div>
+    <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
+  </div>
+</div>
