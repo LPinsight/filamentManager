@@ -1,7 +1,9 @@
-<div id="material" *ngFor="let material of materialList">
-  <app-template-list-material [material]=material></app-template-list-material>
+<div id="material">
+  <button (click)="addMaterial()"><mat-icon>add</mat-icon>Material hinzufügen</button>
+  <app-template-list-material *ngFor="let material of materialList" [material]=material></app-template-list-material>
 </div>
 
-<div id="hersteller" *ngFor="let hersteller of herstellerListe">
-    <app-template-list-hersteller [hersteller]=hersteller></app-template-list-hersteller>
+<div id="hersteller" >
+  <button (click)="addHersteller()"><mat-icon>add</mat-icon>Hersteller hinzufügen</button>
+    <app-template-list-hersteller *ngFor="let hersteller of herstellerListe" [hersteller]=hersteller></app-template-list-hersteller>
   </div>

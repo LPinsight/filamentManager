@@ -19,6 +19,8 @@ import { TemplateListFilamentComponent } from './_template/template-list-filamen
 import { PageSpuleComponent } from './page-spule/page-spule.component';
 import { TemplateListSpuleComponent } from './_template/template-list-spule/template-list-spule.component';
 import { PageMaterialHerstellerComponent } from './page-materialHersteller/page-materialHersteller.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 const navigationRoutes: Routes = [
   {path: 'spulen', component: PageSpuleComponent},
@@ -53,6 +55,8 @@ const navigationRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(navigationRoutes),
     MatIconModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -14,9 +14,9 @@ export class MaterialService {
   constructor(private http: HttpClient) { }
 
   loadAll() {
-      return this.http.get<Material[]>(`${apiUrl}/material`).pipe(tap(data => {
-        this.subject.next(data)
-      }))
-    }
+    return this.http.get<Material[]>(`${apiUrl}/material`).pipe(tap(data => {
+      this.subject.next(data)
+    }))
+  }
 
 }
