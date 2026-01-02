@@ -33,6 +33,10 @@ export class DataService {
     material.changed$.subscribe(_ => {
       this.loadFilamentSpule()
     })
+
+    filament.changed$.subscribe(_ => {
+      spule.loadAll().subscribe()
+    })
   }
 
   private loadAll () {

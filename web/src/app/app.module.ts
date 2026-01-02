@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule, Routes } from '@angular/router';
 import { PageHomeComponent } from './page-home/page-home.component';
 import { TemplateHeaderComponent } from './_template/template-header/template-header.component';
 import { TemplateHeaderNavComponent } from './_template/template-header-nav/template-header-nav.component';
@@ -19,7 +25,6 @@ import { TemplateListFilamentComponent } from './_template/template-list-filamen
 import { PageSpuleComponent } from './page-spule/page-spule.component';
 import { TemplateListSpuleComponent } from './_template/template-list-spule/template-list-spule.component';
 import { PageMaterialHerstellerComponent } from './page-materialHersteller/page-materialHersteller.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 const navigationRoutes: Routes = [
@@ -57,8 +62,15 @@ const navigationRoutes: Routes = [
     MatIconModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
