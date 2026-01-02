@@ -132,4 +132,16 @@ constructor() { }
     }
   }
 
+  public removeFilamentConfig(name: string, hersteller: string, material: string): SweetAlertOptions {
+    return {
+      title: `Filament "${name} ${hersteller}-${material}" entfernen`,
+      text: `Möchten Sie das Filament wirklich entfernen?`,
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Filament nicht entfernen',
+      denyButtonText: 'Filament entfernen'
+    }
+  }
+
 }

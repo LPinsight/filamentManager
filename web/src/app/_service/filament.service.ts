@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Filament } from '../_interface/filament';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '../_config/api.config';
 
@@ -14,8 +14,17 @@ export class FilamentService {
   constructor(private http: HttpClient) { }
 
   loadAll() {
-      return this.http.get<Filament[]>(`${apiUrl}/filament`).pipe(tap(data => {
-        this.subject.next(data)
-      }))
-    }
+    return this.http.get<Filament[]>(`${apiUrl}/filament`).pipe(tap(data => {
+      this.subject.next(data)
+    }))
+  }
+
+  remove(id: string) {
+    return this.http.delete<Filament>(`${apiUrl}/filament/${id}`, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      return res
+    }))
+  }
 }
