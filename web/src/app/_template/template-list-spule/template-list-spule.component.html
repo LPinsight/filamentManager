@@ -1,3 +1,28 @@
-<p>
-  {{spule.id}} - {{spule.nfc}} - {{spule.filament.farbcode}} - {{spule.filament.hersteller.name}} - {{spule.filament.material.name}} - {{spule.archiviert}}
-</p>
+<div class="farbe">
+  <div class="farbcode" [ngStyle]="{'background-color': spule.filament.farbcode}"></div>
+  <h3>{{spule.filament.hersteller.name}} - {{spule.filament.farbe}}</h3>
+</div>
+
+<h3>{{spule.filament.material.name}}</h3>
+
+<h3>{{spule.verbrauchtes_Gewicht | number}}g</h3>
+<h3>{{spule.verbleibendes_Gewicht | number}}g</h3>
+
+<h3>{{spule.ort.name}}</h3>
+
+<div class="buttons">
+  <!-- <section>
+    <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
+    <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
+  </section>
+
+  <section>
+    <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
+    <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
+  </section> -->
+
+  <section>
+    <button class="save"><mat-icon>edit</mat-icon>bearbeiten</button>
+    <button class="delete"><mat-icon>delete</mat-icon>löschen</button>
+  </section>
+</div>

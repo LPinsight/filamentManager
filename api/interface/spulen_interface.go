@@ -1,12 +1,13 @@
 package iface
 
 type Spule struct {
-	ID                   string   `json:"id"`
-	Filament             Filament `json:"filament"`
-	Verbrauchtes_Gewicht float32  `json:"verbrauchtes_Gewicht"`
-	NFC                  string   `json:"nfc"`
-	Ort                  Ort      `json:"ort"`
-	Archiviert           bool     `json:"archiviert"`
+	ID                    string   `json:"id"`
+	Filament              Filament `json:"filament"`
+	Verbrauchtes_Gewicht  float32  `json:"verbrauchtes_Gewicht"`
+	Verbleibendes_Gewicht float32  `json:"verbleibendes_Gewicht"`
+	NFC                   string   `json:"nfc"`
+	Ort                   Ort      `json:"ort"`
+	Archiviert            bool     `json:"archiviert"`
 }
 
 type SpuleData struct {

@@ -1,9 +1,12 @@
 @use './../../../scss/var' as *;
 
-div.filament {
+:host {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border: 1px solid $prime-dark;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
 
   h3 {
     font-size: 1.7rem;
@@ -11,8 +14,8 @@ div.filament {
   }
 
   div.farbe {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
     div.farbcode {
       width: 3rem;
@@ -32,7 +35,7 @@ div.filament {
     display: flex;
     flex-direction: column;
 
-    div {
+    section {
       display: flex;
       flex-direction: row;
     }

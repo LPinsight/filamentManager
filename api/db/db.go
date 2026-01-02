@@ -163,6 +163,7 @@ func ToIfaceSpule(m *models.Spule) *iface.Spule {
 
 	if filament := ToIfaceFilament(&m.Filament); filament != nil {
 		spule.Filament = *filament
+		spule.Verbleibendes_Gewicht = filament.Gewicht_Filament - m.Verbrauchtes_Gewicht
 	}
 
 	if ort := ToIfaceOrt(&m.Ort); ort != nil {
