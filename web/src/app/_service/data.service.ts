@@ -24,11 +24,28 @@ export class DataService {
     public filament: FilamentService,
     public spule: SpuleService
   ) {
-    material.loadAll().subscribe()
-    hersteller.loadAll().subscribe()
-    ort.loadAll().subscribe()
-    filament.loadAll().subscribe()
-    spule.loadAll().subscribe()
+    this.loadAll()
+    
+    hersteller.changed$.subscribe(_ => {
+      this.loadFilamentSpule()
+    })
+
+    material.changed$.subscribe(_ => {
+      this.loadFilamentSpule()
+    })
+  }
+
+  private loadAll () {
+    this.material.loadAll().subscribe()
+    this.hersteller.loadAll().subscribe()
+    this.ort.loadAll().subscribe()
+    this.filament.loadAll().subscribe()
+    this.spule.loadAll().subscribe()
+  }
+
+  private loadFilamentSpule () {
+    this.filament.loadAll().subscribe()
+    this.spule.loadAll().subscribe()
   }
 
 }

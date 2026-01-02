@@ -47,10 +47,33 @@ export class PageMaterialHerstellerComponent implements OnInit {
   }
 
   public async addMaterial() {
-    const result = await Swal.fire(this.alertService.createMaterialConfig())
+    const steps = ['1', '2', '3']
+    const swalQueue = Swal.mixin(this.alertService.MixinConfig(steps))
+    const values = ['', '', '']
+    let currentStep
 
-    if (result.isConfirmed) {
-      this.toastService.success(result.value, "Hinzufügen erfolgreich")
+    for (currentStep = 0; currentStep<steps.length;) {
+      const result = await swalQueue.fire(this.alertService.createMaterialConfig(currentStep, values, true))
+
+      if (result.value) {
+        values[currentStep] = result.value
+        currentStep++
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        currentStep--        
+      } else if (result.dismiss === Swal.DismissReason.close) {
+        break
+      }
+    }
+
+    if (currentStep === steps.length) {
+      this.dataService.material.create(values[0], Number(values[1]), Number(values[2])).subscribe({
+        next: (res) => {
+          this.toastService.success(`Material "${values[0]}" wurde erfolgreich hinzugefügt.`, "Hinzufügen erfolgreich")
+        },
+        error: (err) => {
+          this.toastService.error(err.error.message, 'Material-Hinzufügen fehlgeschlagen');
+        }
+      })
     }
   }
 

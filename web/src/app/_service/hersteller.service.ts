@@ -11,7 +11,14 @@ export class HerstellerService {
   private subject = new BehaviorSubject<Hersteller[]>([])
   hersteller$ = this.subject.asObservable()
 
+  private changedSubject = new BehaviorSubject<void>(undefined)
+  changed$ = this.changedSubject.asObservable()
+
   constructor(private http: HttpClient) { }
+
+  private notifyChanged() {
+    this.changedSubject.next()
+  }
 
   loadAll() {
     return this.http.get<Hersteller[]>(`${apiUrl}/hersteller`).pipe(tap(data => {
@@ -41,6 +48,7 @@ export class HerstellerService {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(map((res) => {
       this.loadAll().subscribe()
+      this.notifyChanged()
       return res
     }))
   }

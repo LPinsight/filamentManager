@@ -1,6 +1,8 @@
 <h3>{{material.name}}</h3>
+<h3>{{material.durchmesser| number:'1.2-2'}}mm</h3>
+<h3>{{material.dichte| number:'1.2-2'}}g/cm³</h3>
 
 <div class="buttons">
-    <button class="save"><mat-icon>edit</mat-icon>bearbeiten</button>
-    <button class="delete"><mat-icon>delete</mat-icon>löschen</button>
+    <button (click)="updateMaterial()" class="save"><mat-icon>edit</mat-icon>bearbeiten</button>
+    <button (click)="removeMaterial()" class="delete"><mat-icon>delete</mat-icon>löschen</button>
 </div>
