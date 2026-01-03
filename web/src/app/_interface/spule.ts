@@ -7,6 +7,7 @@ export interface Spule {
   verbrauchtes_Gewicht: number
   verbleibendes_Gewicht: number
   nfc: string
+  nummer: number
   ort: Ort
   archiviert: boolean
 }

@@ -8,7 +8,7 @@
 <h3>{{spule.verbrauchtes_Gewicht | number}}g</h3>
 <h3>{{spule.verbleibendes_Gewicht | number}}g</h3>
 
-<h3>{{this.spule.nfc ? "Tag zugeordnet" : "kein Tag zugeordnet"}}</h3>
+<h3>{{spule.nfc ? "Nummer: " +spule.nummer : "kein Tag zugeordnet"}}</h3>
 <h3>{{spule.ort.name || "kein Ort"}}</h3>
 
 <div class="buttons">

@@ -158,6 +158,7 @@ func ToIfaceSpule(m *models.Spule) *iface.Spule {
 		ID:                   m.SpuleID,
 		Verbrauchtes_Gewicht: m.Verbrauchtes_Gewicht,
 		NFC:                  m.NFC,
+		Nummer:               m.Nummer,
 		Archiviert:           m.Archiviert,
 	}
 

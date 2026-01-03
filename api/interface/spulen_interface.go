@@ -6,6 +6,7 @@ type Spule struct {
 	Verbrauchtes_Gewicht  float32  `json:"verbrauchtes_Gewicht"`
 	Verbleibendes_Gewicht float32  `json:"verbleibendes_Gewicht"`
 	NFC                   string   `json:"nfc"`
+	Nummer                int      `json:"nummer"`
 	Ort                   Ort      `json:"ort"`
 	Archiviert            bool     `json:"archiviert"`
 }
