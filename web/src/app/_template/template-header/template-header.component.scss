@@ -11,6 +11,7 @@ header {
   div#left {
     h1 {
       font-size: 4rem;
+      line-height: 4rem;
       text-transform: uppercase;
       font-weight: bold;
       display: flex;
@@ -23,7 +24,7 @@ header {
     span {
       font-size: 2rem;
       text-transform: none;
-      line-height: 0.5rem;
+      line-height: 1rem;
       color: $white;
     }
   }

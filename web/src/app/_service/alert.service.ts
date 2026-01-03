@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SweetAlertOptions } from 'sweetalert2';
+import { Material } from '../_interface/material';
+import { Filament } from '../_interface/filament';
 
 @Injectable({
   providedIn: 'root'
@@ -142,6 +144,48 @@ constructor() { }
       confirmButtonText: 'Filament nicht entfernen',
       denyButtonText: 'Filament entfernen'
     }
+  }
+
+  public createFilamentConfig(data: Filament, neu: boolean): SweetAlertOptions {
+    let title = neu ? 'Filament hinzufügen' : 'Filament aktualisieren'
+
+    return {
+      title: title,
+      html: this.buildFilamentPreview(data),
+      icon: 'info',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: title,
+      denyButtonText: 'Abbrechen'
+    }
+  }
+
+  private buildFilamentPreview(filament: any): string {
+    return `
+      <div style="text-align:left">
+        <p><b>Farbe:</b> ${filament.farbe}</p>
+        <p>
+          <b>Farbcode:</b>
+          <span style="
+            display:inline-block;
+            width:16px;
+            height:16px;
+            background:${filament.farbcode};
+            border:1px solid #000;
+            vertical-align:middle;
+          "></span>
+          ${filament.farbcode}
+        </p>
+        <p><b>Hersteller:</b> ${filament.hersteller_id}</p>
+        <p><b>Material:</b> ${filament.material_id}</p>
+        <p><b>Filamentgewicht:</b> ${filament.gewicht_filament} g</p>
+        <p><b>Leerenspule:</b> ${filament.gewicht_spule} g</p>
+        <p><b>Preis:</b> ${filament.preis} €</p>
+        <p><b>URL:</b> ${filament.link || '-'}</p>
+        <p><b>Extruder:</b> ${filament.temp_extruder} °C</p>
+        <p><b>Druckbett:</b> ${filament.temp_bed} °C</p>
+      </div>
+    `;
   }
 
 }

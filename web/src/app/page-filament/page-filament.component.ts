@@ -18,7 +18,8 @@ export class PageFilamentComponent implements OnInit {
   herstellerList: Hersteller[] = []
   materialList: Material[] = []
 
-  showForm = true
+  hiddeForm = true
+  editingFilament: Filament | null = null;
   filamentForm!: FormGroup
 
   constructor(
@@ -55,49 +56,91 @@ export class PageFilamentComponent implements OnInit {
   }
 
   toggleForm() {
-    this.showForm = !this.showForm
-    if(!this.showForm) {
+    this.hiddeForm = !this.hiddeForm
+
+      // this.resetForm()
+    if(this.hiddeForm) {
       this.resetForm()
     }
   }
 
-  submit() {
+  public async submit() {
     if (this.filamentForm.invalid) {
       this.filamentForm.markAllAsTouched()
       return
     }
 
     const filament = this.filamentForm.value
+    
+    const result = await Swal.fire(this.alertService.createFilamentConfig(filament, !this.editingFilament))
 
-    this.dataService.filament.create(filament).subscribe({
-      next: (res) => {
-        this.toastService.success(`Filament "${filament.farbe}" wurde erfolgreich hinzugefügt.`, "Hinzufügen erfolgreich")
-        this.showForm = true
-        this.resetForm()
-      },
-      error: (err) => {
-        this.toastService.error(err.error.message, 'Filament-Hinzufügen fehlgeschlagen');
+    if(result.isConfirmed) {
+      if(this.editingFilament) {
+        this.dataService.filament.update(filament, this.editingFilament.id).subscribe({
+          next: (res) => {
+            this.toastService.success(`Filament "${filament.farbe}" wurde erfolgreich aktualisiert.`, "Aktualisieren erfolgreich")
+            this.resetForm()
+            this.hiddeForm = true
+            this.editingFilament = null
+          },
+          error: (err) => {
+            this.toastService.error(err.error.message, 'Filament-Aktualisieren fehlgeschlagen');
+          }
+        })
+      } else {
+        this.dataService.filament.create(filament).subscribe({
+          next: (res) => {
+            this.toastService.success(`Filament "${filament.farbe}" wurde erfolgreich hinzugefügt.`, "Hinzufügen erfolgreich")
+            this.resetForm()
+            this.hiddeForm = true
+          },
+          error: (err) => {
+            this.toastService.error(err.error.message, 'Filament-Hinzufügen fehlgeschlagen');
+          }
+        })
       }
-    })
+    }
   }
 
-  resetForm() {
-  this.filamentForm.reset({
-    farbe: '',
-    farbcode: '#000000',
-    hersteller_id: null,
-    material_id: null,
-    gewicht_filament: null,
-    gewicht_spule: null,
-    preis: null,
-    link: '',
-    temp_extruder: 200,
-    temp_bed: 60
-  });
+  private resetForm() {
+    this.filamentForm.reset({
+      farbe: '',
+      farbcode: '#000000',
+      hersteller_id: null,
+      material_id: null,
+      gewicht_filament: null,
+      gewicht_spule: null,
+      preis: null,
+      link: '',
+      temp_extruder: 200,
+      temp_bed: 60
+    });
 
-  this.filamentForm.markAsPristine()
-  this.filamentForm.markAsUntouched()
-  this.filamentForm.updateValueAndValidity()
-}
+    Object.values(this.filamentForm.controls).forEach(control => {
+      control.markAsPristine()
+      control.markAsUntouched()
+      control.updateValueAndValidity({emitEvent: false})
+    })
+
+    this.filamentForm.updateValueAndValidity({emitEvent: false})
+  }
+
+  public updateFilament(filament: Filament) {
+    this.editingFilament = filament;
+    this.hiddeForm = false;
+
+    this.filamentForm.patchValue({
+      farbe: filament.farbe,
+      farbcode: filament.farbcode,
+      hersteller_id: filament.hersteller.id,
+      material_id: filament.material.id,
+      gewicht_filament: filament.gewicht_filament,
+      gewicht_spule: filament.gewicht_spule,
+      preis: filament.preis,
+      link: filament.link,
+      temp_extruder: filament.temp_extruder,
+      temp_bed: filament.temp_bed
+    });
+  }
 
 }

@@ -1,7 +1,6 @@
 <button (click)="toggleForm()"><mat-icon>add</mat-icon>Filament hinzufügen</button>
 
-<div [hidden]="showForm" id="formFilament">
-<!-- <div id="formFilament"> -->
+<div [hidden]="hiddeForm" id="formFilament">
   <form [formGroup]="filamentForm" (ngSubmit)="submit()">
 
     <mat-form-field appearance="outline">
@@ -63,10 +62,10 @@
     </mat-form-field>
 
     <div id="actions">
-      <button class="save" type="submit"><mat-icon>save</mat-icon>Filament hinzufügen</button>
+      <button class="save" type="submit"><mat-icon>save</mat-icon>{{editingFilament ? 'Filament aktualisieren' : 'Filament hinzufügen'}}</button>
       <button class="delete" type="button" (click)="toggleForm()"><mat-icon>cancel</mat-icon>Abbrechen</button>
     </div>
   </form>
 </div>
 
-<app-template-list-filament *ngFor="let filament of filamentList" [filament]=filament></app-template-list-filament>
+<app-template-list-filament *ngFor="let filament of filamentList" [filament]=filament (edit)="updateFilament($event)"></app-template-list-filament>

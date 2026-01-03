@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Filament } from '../../_interface/filament';
 import { AlertService } from '../../_service/alert.service';
 import { DataService } from '../../_service/data.service';
@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class TemplateListFilamentComponent implements OnInit {
   @Input() filament!: Filament
+  @Output() edit = new EventEmitter<Filament>()
 
   constructor(
     private dataService: DataService,
@@ -35,6 +36,10 @@ export class TemplateListFilamentComponent implements OnInit {
         }
       })
     }
+  }
+
+  public updateFilament() {
+    this.edit.emit(this.filament)
   }
 
 }

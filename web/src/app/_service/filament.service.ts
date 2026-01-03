@@ -36,6 +36,16 @@ export class FilamentService {
     }))
   }
 
+  update(data: Filament, id: string) {
+    return this.http.put<Filament>(`${apiUrl}/filament/${id}`, data, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      this.notifyChanged()
+      return res
+    }))
+  }
+
   remove(id: string) {
     return this.http.delete<Filament>(`${apiUrl}/filament/${id}`, {
       headers: { 'Content-Type': 'application/json' }
