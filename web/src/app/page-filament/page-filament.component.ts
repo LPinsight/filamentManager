@@ -92,7 +92,7 @@ export class PageFilamentComponent implements OnInit {
     }
   }
 
-  private resetForm() {
+  public resetForm() {
     this.filamentForm.reset({
       farbe: '',
       farbcode: '#000000',

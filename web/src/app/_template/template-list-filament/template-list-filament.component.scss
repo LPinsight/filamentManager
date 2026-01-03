@@ -12,11 +12,21 @@
   h3 {
     font-size: 1.7rem;
     font-weight: normal;
+    width: 20rem;
+    text-align: center;
+
+    a {
+      color: $white;
+    }
   }
 
   div.farbe {
     display: flex;
     align-items: center;
+
+    h3 {
+      text-align: left;
+    }
 
     div.farbcode {
       width: 3rem;

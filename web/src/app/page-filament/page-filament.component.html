@@ -4,66 +4,79 @@
   <h2>{{ editingFilament ? 'Filament bearbeiten' : 'Filament hinzufügen' }}</h2>
   <form [formGroup]="filamentForm" (ngSubmit)="submit()">
 
-    <mat-form-field appearance="outline">
-      <mat-label>Farbe</mat-label>
-      <input matInput type="text" formControlName="farbe">
-    </mat-form-field>
+    <div id="inputs">
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Farbe</mat-label>
+          <input matInput type="text" formControlName="farbe">
+        </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Farbcode</mat-label>
-      <input matInput type="color"formControlName="farbcode">
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Farbcode</mat-label>
+          <input matInput type="color"formControlName="farbcode">
+        </mat-form-field>
+      </section>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Hersteller</mat-label>
-      <mat-select formControlName="hersteller_id">
-        <mat-option *ngFor="let hersteller of herstellerList" [value]="hersteller.id">
-          {{hersteller.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Hersteller</mat-label>
+          <mat-select formControlName="hersteller_id">
+            <mat-option *ngFor="let hersteller of herstellerList" [value]="hersteller.id">
+              {{hersteller.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Material</mat-label>
-      <mat-select formControlName="material_id">
-        <mat-option *ngFor="let material of materialList" [value]="material.id">
-          {{material.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Material</mat-label>
+          <mat-select formControlName="material_id">
+            <mat-option *ngFor="let material of materialList" [value]="material.id">
+              {{material.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Filamentgewicht (g)</mat-label>
-      <input matInput type="number" formControlName="gewicht_filament" min="0">
-    </mat-form-field>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Filamentgewicht (g)</mat-label>
+          <input matInput type="number" formControlName="gewicht_filament" min="0">
+        </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Leere Spule (g)</mat-label>
-      <input matInput type="number" formControlName="gewicht_spule" min="0">
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Leere Spule (g)</mat-label>
+          <input matInput type="number" formControlName="gewicht_spule" min="0">
+        </mat-form-field>
+      </section>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Preis (€)</mat-label>
-      <input matInput type="number" formControlName="preis" min="0">
-    </mat-form-field>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Preis (€)</mat-label>
+          <input matInput type="number" formControlName="preis" min="0">
+        </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Filament URL</mat-label>
-      <input matInput type="url" formControlName="link">
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Filament URL</mat-label>
+          <input matInput type="url" formControlName="link">
+        </mat-form-field>
+      </section>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Extruder Temperatur (°C)</mat-label>
-      <input matInput type="number" formControlName="temp_extruder" min="0">
-    </mat-form-field>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Extruder Temperatur (°C)</mat-label>
+          <input matInput type="number" formControlName="temp_extruder" min="0">
+        </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Druckbett Temperatur (°C)</mat-label>
-      <input matInput type="number" formControlName="temp_bed" min="0">
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Druckbett Temperatur (°C)</mat-label>
+          <input matInput type="number" formControlName="temp_bed" min="0">
+        </mat-form-field>
+      </section>
+    </div>
 
     <div id="actions">
       <button class="save" type="submit"><mat-icon>save</mat-icon>{{editingFilament ? 'Filament aktualisieren' : 'Filament hinzufügen'}}</button>
+      <button type="button" (click)="resetForm()"><mat-icon>refresh</mat-icon>Zurücksetzen</button>
       <button class="delete" type="button" (click)="closeForm()"><mat-icon>cancel</mat-icon>Abbrechen</button>
     </div>
   </form>

@@ -90,9 +90,17 @@ func (s *FilamentService) Create(data iface.FilamentData) (*iface.Filament, erro
 // Filament aktualisieren
 func (s *FilamentService) Update(id string, data iface.FilamentData) (*iface.Filament, error) {
 	// Filament aus DB abrufen
-	filament, err := s.SearchFilament(id)
+	filament, err := s.SearchFilamentWithoutPreload(id)
 	if err != nil {
 		return nil, err
+	}
+
+	if err := s.db.First(&models.Hersteller{}, "hersteller_id = ?", data.HerstellerID).Error; err != nil {
+		return nil, errors.New("hersteller not found")
+	}
+
+	if err := s.db.First(&models.Material{}, "material_id = ?", data.MaterialID).Error; err != nil {
+		return nil, errors.New("material not found")
 	}
 
 	// Felder aktualisieren
@@ -141,6 +149,19 @@ func (s *FilamentService) SearchFilament(id string) (*models.Filament, error) {
 	var filament models.Filament
 
 	if err := s.db.Preload("Hersteller").Preload("Material").First(&filament, "filament_id = ?", id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("filament not found")
+		}
+		return nil, err
+	}
+
+	return &filament, nil
+}
+
+func (s *FilamentService) SearchFilamentWithoutPreload(id string) (*models.Filament, error) {
+	var filament models.Filament
+
+	if err := s.db.First(&filament, "filament_id = ?", id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("filament not found")
 		}

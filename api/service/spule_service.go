@@ -85,9 +85,17 @@ func (s *SpuleService) Create(data iface.SpuleData) (*iface.Spule, error) {
 // Spule aktualisieren
 func (s *SpuleService) Update(id string, data iface.SpuleData) (*iface.Spule, error) {
 	// Spule aus DB abrufen
-	spule, err := s.SearchSpule(id)
+	spule, err := s.SearchSpuleWithoutPreload(id)
 	if err != nil {
 		return nil, err
+	}
+
+	if err := s.db.First(&models.Filament{}, "filament_id = ?", data.FilamentID).Error; err != nil {
+		return nil, errors.New("filament not found")
+	}
+
+	if err := s.db.First(&models.Ort{}, "ort_id = ?", data.OrtID).Error; err != nil {
+		return nil, errors.New("ort not found")
 	}
 
 	// Felder aktualisieren
@@ -152,10 +160,23 @@ func (s *SpuleService) SearchSpule(id string) (*models.Spule, error) {
 	return &spule, nil
 }
 
+func (s *SpuleService) SearchSpuleWithoutPreload(id string) (*models.Spule, error) {
+	var spule models.Spule
+
+	if err := s.db.First(&spule, "spule_id = ?", id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("spule not found")
+		}
+		return nil, err
+	}
+
+	return &spule, nil
+}
+
 func (s *SpuleService) SearchSpuleByTag(nfcTag string) (*models.Spule, error) {
 	var spule models.Spule
 
-	if err := s.db.Preload("Filament").Preload("Ort").First(&spule, "nfc = ?", nfcTag).Error; err != nil {
+	if err := s.db.Preload("Filament").Preload("Filament.Hersteller").Preload("Filament.Material").Preload("Ort").First(&spule, "nfc = ?", nfcTag).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("spule not found")
 		}

@@ -1,8 +1,52 @@
+@use './../../scss/var' as *;
+
 :host {
   display: flex;
   flex-direction: column;
 
   button {
     margin-bottom: 1rem;
+  }
+
+  div#formFilament {
+    border: 0.1rem solid $prime-dark;
+    margin-bottom: 1rem;
+    border-radius: 1.1rem;
+
+    h2 {
+      text-decoration: underline;
+      text-align: center;
+      text-transform: uppercase;
+      background-color: $prime-dark;
+      border-radius: 1rem;
+      padding: 0.5rem 0;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      
+      div#inputs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        section {
+          display: flex;
+          flex-direction: column;
+          margin: 0 2rem;
+        }
+      }
+
+      div#actions {
+        display: flex;
+
+        button {
+          width: 100%;
+          margin-left: 1rem;
+          margin-right: 1rem;
+        }
+      }
+    }
   }
 }

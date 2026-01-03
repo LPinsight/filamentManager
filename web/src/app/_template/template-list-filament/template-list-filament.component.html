@@ -1,9 +1,10 @@
-<h3>{{filament.hersteller.name}}</h3>
-
 <div class="farbe">
   <div class="farbcode" [ngStyle]="{'background-color': filament.farbcode}"></div>
-  <h3>{{filament.farbe}}</h3>
+  <h3 *ngIf="filament.link"><a href="{{filament.link}}" target="_blank">{{filament.farbe}}</a></h3>
+  <h3 *ngIf="!filament.link">{{filament.farbe}}</h3>
 </div>
+
+<h3>{{filament.hersteller.name}}</h3>
 
 <h3>{{filament.material.name}}</h3>
 
