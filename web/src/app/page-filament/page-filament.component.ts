@@ -55,15 +55,6 @@ export class PageFilamentComponent implements OnInit {
     })
   }
 
-  toggleForm() {
-    this.hiddeForm = !this.hiddeForm
-
-      // this.resetForm()
-    if(this.hiddeForm) {
-      this.resetForm()
-    }
-  }
-
   public async submit() {
     if (this.filamentForm.invalid) {
       this.filamentForm.markAllAsTouched()
@@ -71,17 +62,17 @@ export class PageFilamentComponent implements OnInit {
     }
 
     const filament = this.filamentForm.value
+    const material = this.dataService.material.getNameById(filament.material_id)
+    const hersteller = this.dataService.hersteller.getNameById(filament.hersteller_id)
     
-    const result = await Swal.fire(this.alertService.createFilamentConfig(filament, !this.editingFilament))
+    const result = await Swal.fire(this.alertService.createFilamentConfig(filament, material, hersteller, !this.editingFilament))
 
     if(result.isConfirmed) {
       if(this.editingFilament) {
         this.dataService.filament.update(filament, this.editingFilament.id).subscribe({
           next: (res) => {
             this.toastService.success(`Filament "${filament.farbe}" wurde erfolgreich aktualisiert.`, "Aktualisieren erfolgreich")
-            this.resetForm()
-            this.hiddeForm = true
-            this.editingFilament = null
+            this.closeForm()
           },
           error: (err) => {
             this.toastService.error(err.error.message, 'Filament-Aktualisieren fehlgeschlagen');
@@ -91,8 +82,7 @@ export class PageFilamentComponent implements OnInit {
         this.dataService.filament.create(filament).subscribe({
           next: (res) => {
             this.toastService.success(`Filament "${filament.farbe}" wurde erfolgreich hinzugefügt.`, "Hinzufügen erfolgreich")
-            this.resetForm()
-            this.hiddeForm = true
+            this.closeForm()
           },
           error: (err) => {
             this.toastService.error(err.error.message, 'Filament-Hinzufügen fehlgeschlagen');
@@ -125,22 +115,26 @@ export class PageFilamentComponent implements OnInit {
     this.filamentForm.updateValueAndValidity({emitEvent: false})
   }
 
-  public updateFilament(filament: Filament) {
-    this.editingFilament = filament;
-    this.hiddeForm = false;
-
-    this.filamentForm.patchValue({
-      farbe: filament.farbe,
-      farbcode: filament.farbcode,
-      hersteller_id: filament.hersteller.id,
-      material_id: filament.material.id,
-      gewicht_filament: filament.gewicht_filament,
-      gewicht_spule: filament.gewicht_spule,
-      preis: filament.preis,
-      link: filament.link,
-      temp_extruder: filament.temp_extruder,
-      temp_bed: filament.temp_bed
-    });
+  public openCreateForm() {
+    this.editingFilament = null
+    this.resetForm()
+    this.hiddeForm = false
   }
 
+  public openEditForm(filament: Filament) {
+    this.editingFilament = filament
+    this.resetForm()
+    this.hiddeForm = false
+    this.filamentForm.patchValue(filament)
+    this.filamentForm.patchValue({
+      hersteller_id: filament.hersteller.id,
+      material_id: filament.material.id,
+    })
+  }
+
+  public closeForm() {
+    this.hiddeForm = true
+    this.editingFilament = null
+    this.resetForm()
+  }
 }

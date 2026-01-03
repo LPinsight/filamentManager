@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SweetAlertOptions } from 'sweetalert2';
 import { Material } from '../_interface/material';
 import { Filament } from '../_interface/filament';
+import { Hersteller } from '../_interface/hersteller';
 
 @Injectable({
   providedIn: 'root'
@@ -146,12 +147,12 @@ constructor() { }
     }
   }
 
-  public createFilamentConfig(data: Filament, neu: boolean): SweetAlertOptions {
+  public createFilamentConfig(data: Filament, material: string, hersteller: string, neu: boolean): SweetAlertOptions {
     let title = neu ? 'Filament hinzufügen' : 'Filament aktualisieren'
 
     return {
       title: title,
-      html: this.buildFilamentPreview(data),
+      html: this.buildFilamentPreview(data, material, hersteller),
       icon: 'info',
       showCloseButton: true,
       showDenyButton: true,
@@ -160,7 +161,7 @@ constructor() { }
     }
   }
 
-  private buildFilamentPreview(filament: any): string {
+  private buildFilamentPreview(filament: Filament, material: string, hersteller: string): string {
     return `
       <div style="text-align:left">
         <p><b>Farbe:</b> ${filament.farbe}</p>
@@ -176,8 +177,8 @@ constructor() { }
           "></span>
           ${filament.farbcode}
         </p>
-        <p><b>Hersteller:</b> ${filament.hersteller_id}</p>
-        <p><b>Material:</b> ${filament.material_id}</p>
+        <p><b>Hersteller:</b> ${hersteller}</p>
+        <p><b>Material:</b> ${material}</p>
         <p><b>Filamentgewicht:</b> ${filament.gewicht_filament} g</p>
         <p><b>Leerenspule:</b> ${filament.gewicht_spule} g</p>
         <p><b>Preis:</b> ${filament.preis} €</p>
