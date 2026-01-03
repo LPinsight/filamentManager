@@ -9,6 +9,8 @@ import { DataService } from '../_service/data.service';
 })
 export class PageSpuleComponent implements OnInit {
   spuleList: Spule[] = []
+  aktiveSpulen: Spule[] = []
+  archvierteSpulen: Spule[] = []
 
   constructor(
     private dataService: DataService
@@ -17,6 +19,9 @@ export class PageSpuleComponent implements OnInit {
   ngOnInit() {
     this.dataService.spule.spule$.subscribe(list => {
       this.spuleList = list
+
+      this.aktiveSpulen = list.filter(spule => !spule.archiviert)
+      this.archvierteSpulen = list.filter(spule => spule.archiviert)
     })
   }
 

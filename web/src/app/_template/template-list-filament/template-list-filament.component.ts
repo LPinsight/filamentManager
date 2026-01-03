@@ -42,4 +42,19 @@ export class TemplateListFilamentComponent implements OnInit {
     this.edit.emit(this.filament)
   }
 
+  public async addSpool() {
+    const result = await Swal.fire(this.alertService.addSpulenConfig(this.filament.farbe, this.filament.hersteller.name, this.filament.material.name))
+
+    if (result.isConfirmed) {
+      this.dataService.spule.create(this.filament).subscribe({
+        next: (res) => {
+          this.toastService.success(`Spule vom Filament "${this.filament.farbe} ${this.filament.hersteller.name}-${this.filament.material.name}" wurde erfolgreich hinzugefügt.`, "Hinzufügen erfolgreich")
+        },
+        error: (err) => {
+          this.toastService.error(err.error.message, 'Spulen-Hinzufügen fehlgeschlagen');
+        }
+      })
+    }
+  }
+
 }

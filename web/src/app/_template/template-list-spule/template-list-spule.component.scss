@@ -2,7 +2,7 @@
 
 :host {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   border: 1px solid $prime-dark;
   padding: 0.7rem;
@@ -12,12 +12,17 @@
   h3 {
     font-size: 1.7rem;
     font-weight: normal;
-    margin-right: 1rem;
+    width: 20rem;
+    text-align: center;
   }
 
   div.farbe {
     display: flex;
     align-items: center;
+
+    h3 {
+      text-align: left;
+    }
 
     div.farbcode {
       width: 3rem;

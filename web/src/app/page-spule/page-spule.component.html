@@ -1,3 +1,9 @@
-<div *ngFor="let spule of spuleList">
-  <app-template-list-spule [spule]=spule></app-template-list-spule>
+<div>
+  <h3>aktiv</h3>
+  <app-template-list-spule *ngFor="let spule of aktiveSpulen" [spule]=spule></app-template-list-spule>
+</div>
+
+<div>
+  <h3>archiviert</h3>
+  <app-template-list-spule *ngFor="let spule of archvierteSpulen" [spule]=spule></app-template-list-spule>
 </div>

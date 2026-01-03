@@ -55,16 +55,15 @@ func (s *SpuleService) Create(data iface.SpuleData) (*iface.Spule, error) {
 		return nil, errors.New("filament not found")
 	}
 
-	if err := s.db.First(&models.Ort{}, "ort_id = ?", data.OrtID).Error; err != nil {
-		return nil, errors.New("ort not found")
-	}
+	// if err := s.db.First(&models.Ort{}, "ort_id = ?", data.OrtID).Error; err != nil {
+	// 	return nil, errors.New("ort not found")
+	// }
 
 	spuleModel := &models.Spule{
 		SpuleID:              utils.NewSpulenID(),
 		FilamentID:           data.FilamentID,
 		Verbrauchtes_Gewicht: data.Verbrauchtes_Gewicht,
 		NFC:                  data.NFC,
-		OrtID:                data.OrtID,
 		Archiviert:           data.Archiviert,
 	}
 
@@ -102,7 +101,7 @@ func (s *SpuleService) Update(id string, data iface.SpuleData) (*iface.Spule, er
 	spule.FilamentID = data.FilamentID
 	spule.Verbrauchtes_Gewicht = data.Verbrauchtes_Gewicht
 	spule.NFC = data.NFC
-	spule.OrtID = data.OrtID
+	spule.OrtID = &data.OrtID
 	spule.Archiviert = data.Archiviert
 
 	// Änderungen speichern
@@ -139,6 +138,30 @@ func (s *SpuleService) GetByNfcTag(nfcTag string) (*iface.Spule, error) {
 	spule := db.ToIfaceSpule(spuleModel)
 
 	return spule, nil
+}
+
+// Archiv-Status aktualisieren
+func (s *SpuleService) UpdateArchiv(id string, data iface.ArchivRequest) (*iface.Spule, error) {
+	// Spule aus DB abrufen
+	result := s.db.Model(&models.Spule{}).
+		Where("spule_id = ?", id).
+		Update("archiviert", data.Archiviert)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return nil, errors.New("spule not found")
+	}
+
+	spule, err := s.SearchSpule(id)
+	if err != nil {
+		return nil, err
+	}
+	updated := db.ToIfaceSpule(spule)
+
+	return updated, nil
 }
 
 // ####################################################

@@ -81,6 +81,7 @@ func NewRouter() http.Handler {
 	spuleById.HandleFunc("", handler.GetSpuleByIDHandler).Methods("GET", "OPTIONS")
 	spuleById.HandleFunc("", handler.UpdateSpuleHandler).Methods("PUT", "OPTIONS")
 	spuleById.HandleFunc("", handler.DeleteSpuleHandler).Methods("DELETE", "OPTIONS")
+	spuleById.HandleFunc("/archiv", handler.UpdateArchivHandler).Methods("PATCH", "OPTIONS")
 
 	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 
@@ -90,7 +91,7 @@ func NewRouter() http.Handler {
 func enableCORS(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
 		if r.Method == http.MethodOptions {

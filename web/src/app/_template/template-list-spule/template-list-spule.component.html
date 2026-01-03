@@ -8,18 +8,19 @@
 <h3>{{spule.verbrauchtes_Gewicht | number}}g</h3>
 <h3>{{spule.verbleibendes_Gewicht | number}}g</h3>
 
-<h3>{{spule.ort.name}}</h3>
+<h3>{{this.spule.nfc ? "Tag zugeordnet" : "kein Tag zugeordnet"}}</h3>
+<h3>{{spule.ort.name || "kein Ort"}}</h3>
 
 <div class="buttons">
   <!-- <section>
     <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
     <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
-  </section>
+  </section> -->
 
   <section>
-    <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
-    <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
-  </section> -->
+    <button *ngIf="!spule.archiviert" (click)="chanceArchiv()"><mat-icon>archive</mat-icon>archivieren</button>
+    <button *ngIf="spule.archiviert" (click)="chanceArchiv()"><mat-icon>upgrade</mat-icon>aktivieren</button>
+  </section>
 
   <section>
     <button class="save"><mat-icon>edit</mat-icon>bearbeiten</button>

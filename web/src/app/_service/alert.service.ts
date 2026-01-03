@@ -161,6 +161,31 @@ constructor() { }
     }
   }
 
+  public addSpulenConfig(name: string, hersteller: string, material: string): SweetAlertOptions {
+    return {
+      title: `Spule von "${name} ${hersteller}-${material}" hinzufügen`,
+      text: `Möchten Sie von dem Filament wirklich eine Spule hinzufügen?`,
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Spule hinzufügen',
+      denyButtonText: 'Abbrechen'
+    }
+  }
+
+  public changeArchivConfig(name: string, hersteller: string, material: string, archiv: boolean): SweetAlertOptions {
+    const titel = archiv ? "aktivieren" : "archivieren"
+    return {
+      title: `Spule "${name} ${hersteller}-${material}" ${titel}`,
+      text: `Möchten Sie die Spule wirklich ${titel}?`,
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: `Spule ${titel}`,
+      denyButtonText: 'Abbrechen'
+    }
+  }
+
   private buildFilamentPreview(filament: Filament, material: string, hersteller: string): string {
     return `
       <div style="text-align:left">

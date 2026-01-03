@@ -17,3 +17,7 @@ type SpuleData struct {
 	OrtID                string  `json:"ort_id"`
 	Archiviert           bool    `json:"archiviert"`
 }
+
+type ArchivRequest struct {
+	Archiviert bool `json:"archiviert"`
+}

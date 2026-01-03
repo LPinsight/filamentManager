@@ -84,3 +84,21 @@ func GetSpuleByNfcTagHandler(w http.ResponseWriter, r *http.Request) {
 
 	writeJSON(w, spule, http.StatusOK)
 }
+
+func UpdateArchivHandler(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
+
+	var data iface.ArchivRequest
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	spule, err := spuleService.UpdateArchiv(id, data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	writeJSON(w, spule, http.StatusOK)
+}
