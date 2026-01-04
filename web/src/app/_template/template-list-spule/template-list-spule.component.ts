@@ -46,7 +46,7 @@ export class TemplateListSpuleComponent implements OnInit {
   public async chanceOrt(event: string) {
     switch(event){
       case "update":
-        const result1 = await Swal.fire(this.alertService.setSpulenOrtConfig(this.orteList))
+        const result1 = await Swal.fire(this.alertService.setSpulenOrtConfig(this.orteList, this.spule.ort.id))
 
         if (result1.isConfirmed) {
           this.dataService.spule.updateOrt(this.spule.id, result1.value).subscribe({

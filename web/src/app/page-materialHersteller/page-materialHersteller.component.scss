@@ -1,3 +1,5 @@
+@use './../../scss/var' as *;
+
 :host {
   display: flex;
   justify-content: space-around;
@@ -5,9 +7,17 @@
   div {
     display: flex;
     flex-direction: column;
+    min-width: 45rem;
 
     button {
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    p {
+      text-align: center;
+      border: 1px solid $prime-dark;
+      padding: 0.7rem;
+      border-radius: 1rem;
     }
   }
 }

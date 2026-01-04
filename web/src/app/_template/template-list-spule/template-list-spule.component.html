@@ -14,7 +14,7 @@
 <div class="buttons">
   <section>
     <button (click)="chanceOrt('update')"><mat-icon>location_on</mat-icon>Ort auswählen</button>
-    <button (click)="chanceOrt('remove')"><mat-icon>location_off</mat-icon>Ort entfernen</button>
+    <button *ngIf="spule.ort.name" (click)="chanceOrt('remove')"><mat-icon>location_off</mat-icon>Ort entfernen</button>
   </section>
 
   <section>

@@ -199,7 +199,7 @@ constructor() { }
     }
   }
 
-  public setSpulenOrtConfig(orte: Ort[]): SweetAlertOptions {
+  public setSpulenOrtConfig(orte: Ort[], value: string | null): SweetAlertOptions {
     const options: Record<string, string> = {}
     orte.forEach(ort => {
       options[ort.id] = ort.name
@@ -215,7 +215,8 @@ constructor() { }
       showCloseButton: true,
       showDenyButton: true,
       confirmButtonText: 'Ort wählen',
-      denyButtonText: 'Abbruch'
+      denyButtonText: 'Abbruch',
+      inputValue: value
     }
   }
 

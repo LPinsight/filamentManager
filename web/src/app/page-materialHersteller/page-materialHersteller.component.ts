@@ -14,7 +14,13 @@ import { ToastService } from '../_service/toast.service';
 })
 export class PageMaterialHerstellerComponent implements OnInit {
   materialList: Material[] = []
+  gefilterteMaterialList: Material[] = []
+
   herstellerListe: Hersteller[] = []
+  gefilterteHerstellerListe: Hersteller[] = []
+
+  materialSearch: string = ''
+  herstellerSearch: string = ''
 
   constructor(
       private dataService: DataService,
@@ -25,9 +31,11 @@ export class PageMaterialHerstellerComponent implements OnInit {
   ngOnInit() {
     this.dataService.material.material$.subscribe(liste => {
       this.materialList = liste
+      this.gefilterteMaterialList = liste 
     })
     this.dataService.hersteller.hersteller$.subscribe(liste => {
-      this.herstellerListe = liste      
+      this.herstellerListe = liste   
+      this.gefilterteHerstellerListe = liste   
     })
   }
 
@@ -44,6 +52,12 @@ export class PageMaterialHerstellerComponent implements OnInit {
         }
       })
     }
+  }
+
+  public filterHersteller() {
+    const search = this.herstellerSearch.toLowerCase().trim()
+
+    this.gefilterteHerstellerListe = this.herstellerListe.filter(hersteller => hersteller.name.toLowerCase().includes(search))    
   }
 
   public async addMaterial() {
@@ -75,6 +89,12 @@ export class PageMaterialHerstellerComponent implements OnInit {
         }
       })
     }
+  }
+
+  public filterMaterial() {
+    const search = this.materialSearch.toLowerCase().trim()
+
+    this.gefilterteMaterialList = this.materialList.filter(material => material.name.toLowerCase().includes(search))    
   }
 
 }

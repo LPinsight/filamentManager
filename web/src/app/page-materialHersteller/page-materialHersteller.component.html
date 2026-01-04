@@ -1,9 +1,24 @@
 <div id="material">
   <button (click)="addMaterial()"><mat-icon>add</mat-icon>Material hinzufügen</button>
-  <app-template-list-material *ngFor="let material of materialList" [material]=material></app-template-list-material>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Material suchen...</mat-label>
+    <input matInput type="text" [(ngModel)]="materialSearch" (input)="filterMaterial()">
+  </mat-form-field>
+
+  <app-template-list-material *ngFor="let material of gefilterteMaterialList" [material]=material></app-template-list-material>
+
+  <p *ngIf="gefilterteMaterialList.length === 0">Kein Material gefunden</p>
 </div>
 
 <div id="hersteller" >
   <button (click)="addHersteller()"><mat-icon>add</mat-icon>Hersteller hinzufügen</button>
-    <app-template-list-hersteller *ngFor="let hersteller of herstellerListe" [hersteller]=hersteller></app-template-list-hersteller>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Hersteller suchen...</mat-label>
+    <input matInput type="text" [(ngModel)]="herstellerSearch" (input)="filterHersteller()">
+  </mat-form-field>
+
+  <app-template-list-hersteller *ngFor="let hersteller of gefilterteHerstellerListe" [hersteller]=hersteller></app-template-list-hersteller>
+  <p *ngIf="gefilterteHerstellerListe.length == 0">Kein Hersteller gefunden</p>
   </div>
