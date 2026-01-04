@@ -82,4 +82,16 @@
   </form>
 </div>
 
+<div id="hersteller-legende" class="legende">
+  <span class="farbe">Farbe</span>
+  <span class="hersteller">Hersteller</span>
+  <span>Material</span>
+  <span>Preis</span>
+  <div class="gewicht">
+    <span>Gewicht Filament</span>
+    <span>Gewicht Spule</span>
+  </div>
+  <span class="aktionen">Aktionen</span>
+</div>
+
 <app-template-list-filament *ngFor="let filament of filamentList" [filament]=filament (edit)="openEditForm($event)"></app-template-list-filament>

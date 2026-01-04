@@ -1,18 +1,18 @@
 <div class="farbe">
   <div class="farbcode" [ngStyle]="{'background-color': filament.farbcode}"></div>
-  <h3 *ngIf="filament.link"><a href="{{filament.link}}" target="_blank">{{filament.farbe}}</a></h3>
-  <h3 *ngIf="!filament.link">{{filament.farbe}}</h3>
+  <span *ngIf="filament.link"><a href="{{filament.link}}" target="_blank">{{filament.farbe}}</a></span>
+  <span *ngIf="!filament.link">{{filament.farbe}}</span>
 </div>
 
-<h3>{{filament.hersteller.name}}</h3>
+<span class="hersteller">{{filament.hersteller.name}}</span>
 
-<h3>{{filament.material.name}}</h3>
+<span>{{filament.material.name}}</span>
 
-<h3>{{filament.preis| number:'1.2-2'}}€</h3>
+<span>{{filament.preis| number:'1.2-2'}}€</span>
 
 <div class="gewicht">
-  <h3>{{filament.gewicht_filament | number}}g</h3>
-  <h3>{{filament.gewicht_spule | number}}g</h3>
+  <span>{{filament.gewicht_filament | number}}g</span>
+  <span>{{filament.gewicht_spule | number}}g</span>
 </div>
 
 <div class="buttons">

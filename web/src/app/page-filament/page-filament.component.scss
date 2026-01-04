@@ -49,4 +49,29 @@
       }
     }
   }
+
+  div#hersteller-legende {
+    align-items: end;
+
+    div.gewicht {
+      display: flex;
+      flex-direction: column;
+    }
+
+    span {
+      width: 12rem;
+
+      &.farbe {
+        width: 17rem;
+      }
+
+      &.hersteller {
+        width: 16rem;
+      }
+
+      &.aktionen {
+        width: 20.5rem;
+      }
+    }
+  }
 }

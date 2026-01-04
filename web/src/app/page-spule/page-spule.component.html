@@ -1,5 +1,16 @@
 <div>
   <h3>aktiv</h3>
+
+<div class="spulen-legende legende">
+  <span class="farbe">Farbe</span>
+  <span class="hersteller">Hersteller - Material</span>
+  <span>Verbrauchtes Gewicht</span>
+  <span>Verbleibendes Gewicht</span>
+  <span>NFC-Tag</span>
+  <span>Ort</span>
+  <span class="aktionen">Aktionen</span>
+</div>
+
   <app-template-list-spule *ngFor="let spule of aktiveSpulen" [spule]=spule></app-template-list-spule>
 </div>
 

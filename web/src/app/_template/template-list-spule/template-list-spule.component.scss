@@ -5,23 +5,28 @@
   justify-content: space-between;
   align-items: center;
   border: 1px solid $prime-dark;
-  padding: 0.7rem;
   border-radius: 1rem;
   margin-bottom: 1rem;
+  padding: 0.7rem;
 
-  h3 {
+  span {
     font-size: 1.7rem;
     font-weight: normal;
-    width: 20rem;
+    width: 12rem;
     text-align: center;
+
+    &.hersteller {
+      width: 20rem;
+    }
   }
 
   div.farbe {
     display: flex;
     align-items: center;
 
-    h3 {
+    span {
       text-align: left;
+      width: 13rem;
     }
 
     div.farbcode {
@@ -35,6 +40,7 @@
   div.buttons {
     display: flex;
     flex-direction: row;
+    width: 36rem;
 
     section {
       display: flex;

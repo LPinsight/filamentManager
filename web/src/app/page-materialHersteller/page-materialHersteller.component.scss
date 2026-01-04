@@ -4,25 +4,13 @@
   display: flex;
   justify-content: space-around;
 
-  div {
+  div#material,
+  div#hersteller {
     display: flex;
     flex-direction: column;
 
     button {
       margin-bottom: 2rem;
-    }
-
-    div.legende {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      justify-content: space-between;
-      padding: 0.7rem;
-
-      span {
-        text-align: center;
-        font-weight: bold;
-      }
     }
 
     div#material-legende {

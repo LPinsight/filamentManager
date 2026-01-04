@@ -9,11 +9,15 @@
   margin-bottom: 1rem;
   padding: 0.7rem;
 
-  h3 {
+  span {
     font-size: 1.7rem;
     font-weight: normal;
-    width: 20rem;
+    width: 12rem;
     text-align: center;
+
+    &.hersteller {
+      width: 16rem;
+    }
 
     a {
       color: $white;
@@ -24,8 +28,9 @@
     display: flex;
     align-items: center;
 
-    h3 {
+    span {
       text-align: left;
+      width: 13rem;
     }
 
     div.farbcode {
@@ -45,6 +50,7 @@
   div.buttons {
     display: flex;
     flex-direction: column;
+    width: 20.5rem;
 
     section {
       display: flex;
