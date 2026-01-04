@@ -25,7 +25,7 @@ constructor() { }
     }
   }
 
-  public createHerstellerConfig(): SweetAlertOptions {
+  public createHerstellerConfig(name?: string): SweetAlertOptions {
     return {
       title: 'Hersteller hinzufügen',
       text: 'Geben Sie den Namen des Herstellers ein, den Sie hinzufügen möchten.',
@@ -34,6 +34,7 @@ constructor() { }
       showDenyButton: true,
       input: 'text',
       inputPlaceholder: 'Herstellername',
+      inputValue: name,
       confirmButtonText: 'Hersteller hinzufügen',
       denyButtonText: 'Abbrechen'
     }

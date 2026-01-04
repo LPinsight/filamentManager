@@ -7,7 +7,6 @@
   div {
     display: flex;
     flex-direction: column;
-    min-width: 45rem;
 
     button {
       margin-bottom: 2rem;
@@ -47,6 +46,14 @@
       border: 1px solid $prime-dark;
       padding: 0.7rem;
       border-radius: 1rem;
+
+      &#noMaterial {
+        width: 55rem;
+      }
+
+      &#noHersteller {
+        width: 44rem;
+      }
     }
   }
 }

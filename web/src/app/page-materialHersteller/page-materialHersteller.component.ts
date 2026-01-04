@@ -39,8 +39,8 @@ export class PageMaterialHerstellerComponent implements OnInit {
     })
   }
 
-  public async addHersteller() {
-    const result = await Swal.fire(this.alertService.createHerstellerConfig())
+  public async addHersteller(name?: string) {
+    const result = await Swal.fire(this.alertService.createHerstellerConfig(name))
 
     if (result.isConfirmed) {
       this.dataService.hersteller.create(result.value).subscribe({
@@ -60,10 +60,11 @@ export class PageMaterialHerstellerComponent implements OnInit {
     this.gefilterteHerstellerListe = this.herstellerListe.filter(hersteller => hersteller.name.toLowerCase().includes(search))    
   }
 
-  public async addMaterial() {
+  public async addMaterial(name?: string) {
     const steps = ['1', '2', '3']
     const swalQueue = Swal.mixin(this.alertService.MixinConfig(steps))
-    const values = ['', '', '']
+    const material: string = name ? name : ''
+    const values = [material, '', '']
     let currentStep
 
     for (currentStep = 0; currentStep<steps.length;) {
