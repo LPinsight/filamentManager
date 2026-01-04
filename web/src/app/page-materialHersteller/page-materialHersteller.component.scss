@@ -13,6 +13,35 @@
       margin-bottom: 2rem;
     }
 
+    div.legende {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0.7rem;
+
+      span {
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+
+    div#material-legende {
+      span {
+        width: 10rem;
+
+        &:last-child {
+          width: 20.5rem;
+        }
+      }
+    }
+
+    div#hersteller-legende {
+      span {
+        width: 20.5rem;
+      }
+    }
+
     p {
       text-align: center;
       border: 1px solid $prime-dark;
