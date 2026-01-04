@@ -82,6 +82,7 @@ func NewRouter() http.Handler {
 	spuleById.HandleFunc("", handler.UpdateSpuleHandler).Methods("PUT", "OPTIONS")
 	spuleById.HandleFunc("", handler.DeleteSpuleHandler).Methods("DELETE", "OPTIONS")
 	spuleById.HandleFunc("/archiv", handler.UpdateArchivHandler).Methods("PATCH", "OPTIONS")
+	spuleById.HandleFunc("/ort", handler.UpdateSpulenOrtHandler).Methods("PATCH", "OPTIONS")
 
 	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 

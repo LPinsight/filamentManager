@@ -65,7 +65,7 @@ export class HerstellerService {
   getNameById(id: string) {
     if (!id) return '—';
 
-  const list = this.subject.value;
-  return list.find(h => h.id === id)?.name ?? `Unbekannt (#${id})`;
+    const list = this.subject.value;
+    return list.find(h => h.id === id)?.name ?? `Unbekannt (#${id})`;
   }
 }

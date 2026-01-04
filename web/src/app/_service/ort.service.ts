@@ -14,8 +14,15 @@ export class OrtService {
   constructor(private http: HttpClient) { }
 
   loadAll() {
-      return this.http.get<Ort[]>(`${apiUrl}/ort`).pipe(tap(data => {
-        this.subject.next(data)
-      }))
-    }
+    return this.http.get<Ort[]>(`${apiUrl}/ort`).pipe(tap(data => {
+      this.subject.next(data)
+    }))
+  }
+
+  getNameById(id: string) {
+    if (!id) return '—';
+
+    const list = this.subject.value;
+    return list.find(o => o.id === id)?.name ?? `Unbekannt (#${id})`;
+  }
 }

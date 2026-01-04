@@ -4,6 +4,7 @@ import { Spule } from '../_interface/spule';
 import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '../_config/api.config';
 import { Filament } from '../_interface/filament';
+import { Ort } from '../_interface/ort';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,19 @@ export class SpuleService {
     }
     
     return this.http.patch<Spule>(`${apiUrl}/spule/${spule.id}/archiv`, json, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      return res
+    }))
+  }
+
+  updateOrt(spuleId: string, ortId: string | null) {
+    let json = {
+      "ort_id": ortId
+    }
+    
+    return this.http.patch<Spule>(`${apiUrl}/spule/${spuleId}/ort`, json, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(map((res) => {
       this.loadAll().subscribe()

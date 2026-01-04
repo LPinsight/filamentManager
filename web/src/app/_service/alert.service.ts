@@ -3,6 +3,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { Material } from '../_interface/material';
 import { Filament } from '../_interface/filament';
 import { Hersteller } from '../_interface/hersteller';
+import { Ort } from '../_interface/ort';
 
 @Injectable({
   providedIn: 'root'
@@ -183,6 +184,38 @@ constructor() { }
       showDenyButton: true,
       confirmButtonText: `Spule ${titel}`,
       denyButtonText: 'Abbrechen'
+    }
+  }
+
+  public removeSpulenOrtConfig(): SweetAlertOptions {
+    return {
+      title: `Ort entfernen`,
+      text: `Möchten Sie den Ort wirklich entfernen?`,
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Ort nicht entfernen',
+      denyButtonText: 'Ort entfernen'
+    }
+  }
+
+  public setSpulenOrtConfig(orte: Ort[]): SweetAlertOptions {
+    const options: Record<string, string> = {}
+    orte.forEach(ort => {
+      options[ort.id] = ort.name
+    })
+
+    return {
+      title: `Ort auswählen`,
+      text: `Wählen Sie den Ort für die Spule aus?`,
+      icon: 'question',
+      input: 'select',
+      inputOptions: options,
+      inputPlaceholder: 'Ort auswählen',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Ort wählen',
+      denyButtonText: 'Abbruch'
     }
   }
 

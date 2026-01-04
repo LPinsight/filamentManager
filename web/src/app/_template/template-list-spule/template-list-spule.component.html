@@ -12,10 +12,10 @@
 <h3>{{spule.ort.name || "kein Ort"}}</h3>
 
 <div class="buttons">
-  <!-- <section>
-    <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
-    <button><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
-  </section> -->
+  <section>
+    <button (click)="chanceOrt('update')"><mat-icon>location_on</mat-icon>Ort auswählen</button>
+    <button (click)="chanceOrt('remove')"><mat-icon>location_off</mat-icon>Ort entfernen</button>
+  </section>
 
   <section>
     <button *ngIf="!spule.archiviert" (click)="chanceArchiv()"><mat-icon>archive</mat-icon>archivieren</button>
