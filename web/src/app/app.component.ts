@@ -12,6 +12,5 @@ export class AppComponent {
   constructor (
     private dataService: DataService
   ) {}
-
-  title = 'web';
+  
 }

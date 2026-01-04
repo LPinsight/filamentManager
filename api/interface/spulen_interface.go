@@ -26,3 +26,8 @@ type ArchivRequest struct {
 type OrtRequest struct {
 	OrtID *string `json:"ort_id"`
 }
+
+type NfcRequest struct {
+	NFC    *string `json:"nfc"`
+	Nummer *int    `json:"nummer"`
+}

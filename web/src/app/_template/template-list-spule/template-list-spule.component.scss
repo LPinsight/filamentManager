@@ -18,6 +18,11 @@
     &.hersteller {
       width: 20rem;
     }
+
+    span.nummer {
+      font-size: 1.2rem;
+      color: $prime-dark;
+    }
   }
 
   div.farbe {
@@ -40,7 +45,7 @@
   div.buttons {
     display: flex;
     flex-direction: row;
-    width: 36rem;
+    width: 55rem;
 
     section {
       display: flex;

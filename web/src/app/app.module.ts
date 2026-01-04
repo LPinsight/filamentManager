@@ -78,7 +78,7 @@ export class AppModule {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
   ) {
-    const icons = ['spool', 'manufacturer', 'material']
+    const icons = ['spool', 'manufacturer', 'material', 'nfc', 'nfc-off', 'gewicht']
     
     icons.forEach(icon => {
       matIconRegistry.addSvgIcon(icon,domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`))

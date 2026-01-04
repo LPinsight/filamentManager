@@ -8,16 +8,28 @@
 <span>{{spule.verbrauchtes_Gewicht | number}}g</span>
 <span>{{spule.verbleibendes_Gewicht | number}}g</span>
 
-<span>{{spule.nfc ? "Nummer: " +spule.nummer : "kein Tag zugeordnet"}}</span>
+<span *ngIf="!spule.nfc && !spule.nummer">kein Tag zugeordnet</span>
+<span *ngIf="!spule.nfc && spule.nummer">
+  kein Tag zugeordnet<br>
+  <span class="nummer">(Nr. {{spule.nummer}})</span>
+</span>
+<span *ngIf="spule.nfc && spule.nummer">Nummer: {{spule.nummer}}</span>
+
 <span>{{spule.ort.name || "kein Ort"}}</span>
 
 <div class="buttons">
+  <section>
+    <button><mat-icon svgIcon="nfc"></mat-icon>NFC bearbeiten</button>
+    <button *ngIf="spule.nfc" (click)="chanceNFC('remove')" ><mat-icon svgIcon="nfc-off"></mat-icon>NFC entfernen</button>
+  </section>
+
   <section>
     <button (click)="chanceOrt('update')"><mat-icon>location_on</mat-icon>Ort auswählen</button>
     <button *ngIf="spule.ort.name" (click)="chanceOrt('remove')"><mat-icon>location_off</mat-icon>Ort entfernen</button>
   </section>
 
   <section>
+    <button><mat-icon svgIcon="gewicht"></mat-icon>Gewicht anpassen</button>
     <button *ngIf="!spule.archiviert" (click)="chanceArchiv()"><mat-icon>archive</mat-icon>archivieren</button>
     <button *ngIf="spule.archiviert" (click)="chanceArchiv()"><mat-icon>upgrade</mat-icon>aktivieren</button>
   </section>

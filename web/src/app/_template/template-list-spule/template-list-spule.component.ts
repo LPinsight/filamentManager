@@ -75,7 +75,42 @@ export class TemplateListSpuleComponent implements OnInit {
         }
         return
       default:
-        console.log(undefined);
+        return
+    }
+  }
+
+  public async chanceNFC(event: string) {
+    switch(event){
+      case "update":
+        // const result1 = await Swal.fire(this.alertService.setSpulenOrtConfig(this.orteList, this.spule.ort.id))
+
+        // if (result1.isConfirmed) {
+        //   this.dataService.spule.updateOrt(this.spule.id, result1.value).subscribe({
+        //     next: (res) => {
+        //       this.toastService.success(`Der Ort "${this.dataService.ort.getNameById(result1.value)}" wurde erfolgreich ausgewählt.`, `Ort erfolgreich ausgewählt`)
+        //     },
+        //     error: (err) => {
+        //       this.toastService.error(err.error.message, `Ort-Auswählen fehlgeschlagen`);
+        //     }
+        //   })
+        // }
+        return
+        
+      case "remove":
+        const result2 = await Swal.fire(this.alertService.removeSpulenNfcConfig())
+        
+        if (result2.isDenied) {
+          this.dataService.spule.removeNfc(this.spule.id).subscribe({
+            next: (res) => {
+              this.toastService.success(`Der NFC-Tag wurde erfolgreich entfernt.`, `NFC-Tag erfolgreich entfernt`)
+            },
+            error: (err) => {
+              this.toastService.error(err.error.message, `NFC-Entfernen fehlgeschlagen`);
+            }
+          })
+        }
+        return
+      default:
         return
     }
   }

@@ -221,6 +221,18 @@ constructor() { }
     }
   }
 
+  public removeSpulenNfcConfig(): SweetAlertOptions {
+    return {
+      title: `NFC-Tag entfernen`,
+      text: `Möchten Sie den NFC-Tag wirklich entfernen?`,
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'NFC-Tag nicht entfernen',
+      denyButtonText: 'NFC-Tag entfernen'
+    }
+  }
+
   private buildFilamentPreview(filament: Filament, material: string, hersteller: string): string {
     return `
       <div style="text-align:left">

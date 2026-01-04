@@ -62,4 +62,18 @@ export class SpuleService {
     }))
   }
 
+  removeNfc(spuleId: string) {
+    let json = {
+      "nummer": null,
+      "nfc": null
+    }
+    
+    return this.http.patch<Spule>(`${apiUrl}/spule/${spuleId}/nfc`, json, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      return res
+    }))
+  }
+
 }

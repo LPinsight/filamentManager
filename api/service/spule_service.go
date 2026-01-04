@@ -6,6 +6,7 @@ import (
 	"api/models"
 	"api/utils"
 	"errors"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -164,7 +165,7 @@ func (s *SpuleService) UpdateArchiv(id string, data iface.ArchivRequest) (*iface
 	return updated, nil
 }
 
-// Archiv-Status aktualisieren
+// Ort aktualisieren
 func (s *SpuleService) UpdateOrt(id string, data iface.OrtRequest) (*iface.Spule, error) {
 
 	if data.OrtID != nil {
@@ -177,6 +178,45 @@ func (s *SpuleService) UpdateOrt(id string, data iface.OrtRequest) (*iface.Spule
 	result := s.db.Model(&models.Spule{}).
 		Where("spule_id = ?", id).
 		Update("ort_id", data.OrtID)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return nil, errors.New("spule not found")
+	}
+
+	spule, err := s.SearchSpule(id)
+	if err != nil {
+		return nil, err
+	}
+	updated := db.ToIfaceSpule(spule)
+
+	return updated, nil
+}
+
+// NFC-Tag & Nummer aktualisieren
+func (s *SpuleService) UpdateNfc(id string, data iface.NfcRequest) (*iface.Spule, error) {
+	fmt.Println(data)
+	updates := map[string]interface{}{}
+
+	if data.NFC == nil {
+		updates["nfc"] = data.NFC
+	}
+
+	if data.Nummer == nil {
+		updates["nummer"] = data.Nummer
+	}
+
+	if len(updates) == 0 {
+		return nil, errors.New("no Update")
+	}
+
+	// Spule aus DB abrufen
+	result := s.db.Model(&models.Spule{}).
+		Where("spule_id = ?", id).
+		Updates(updates)
 
 	if result.Error != nil {
 		return nil, result.Error
