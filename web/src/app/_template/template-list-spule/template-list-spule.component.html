@@ -8,10 +8,13 @@
 <span>{{spule.verbrauchtes_Gewicht | number}}g</span>
 <span>{{spule.verbleibendes_Gewicht | number}}g</span>
 
-<span *ngIf="!spule.nfc && !spule.nummer">kein Tag zugeordnet</span>
-<span *ngIf="!spule.nfc && spule.nummer">
+<span *ngIf="!spule.nfc && !spule.nummer" class="empty">
   kein Tag zugeordnet<br>
-  <span class="nummer">(Nr. {{spule.nummer}})</span>
+  keine Nr. zugeordnet
+</span>
+<span *ngIf="!spule.nfc && spule.nummer" class="empty">
+  kein Tag zugeordnet<br>
+  <span class="nummer">Nummer: {{spule.nummer}}</span>
 </span>
 <span *ngIf="spule.nfc && spule.nummer">Nummer: {{spule.nummer}}</span>
 
