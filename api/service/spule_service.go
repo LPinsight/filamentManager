@@ -143,10 +143,21 @@ func (s *SpuleService) GetByNfcTag(nfcTag string) (*iface.Spule, error) {
 
 // Archiv-Status aktualisieren
 func (s *SpuleService) UpdateArchiv(id string, data iface.ArchivRequest) (*iface.Spule, error) {
+
+	updates := map[string]interface{}{
+		"archiviert": data.Archiviert,
+	}
+
+	if data.Archiviert {
+		updates["nfc"] = nil
+		updates["nummer"] = nil
+		updates["ort_id"] = nil
+	}
+
 	// Spule aus DB abrufen
 	result := s.db.Model(&models.Spule{}).
 		Where("spule_id = ?", id).
-		Update("archiviert", data.Archiviert)
+		Updates(updates)
 
 	if result.Error != nil {
 		return nil, result.Error

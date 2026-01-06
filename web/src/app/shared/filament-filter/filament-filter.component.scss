@@ -16,6 +16,10 @@
         text-align: center;
         color: $second-dark;
         width: 25rem;
+
+        mat-slider {
+          margin: 0 1.8rem;
+        }
       }
     }
   }

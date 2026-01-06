@@ -10,5 +10,5 @@
 />
 
 <app-legende [items]="legende" />
-<app-template-list-spule *ngFor="let spule of gefilterteSpuleList" [spule]=spule />
+<app-template-list-spule *ngFor="let spule of gefilterteSpuleList" [spule]="spule" [class.archiv]="spule.archiviert"/>
 <app-no-element *ngIf="gefilterteSpuleList.length == 0" title="Keine Spule gefunden" />

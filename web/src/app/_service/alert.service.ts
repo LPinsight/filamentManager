@@ -179,7 +179,7 @@ constructor() { }
     const titel = archiv ? "aktivieren" : "archivieren"
     return {
       title: `Spule "${name} ${hersteller}-${material}" ${titel}`,
-      text: `Möchten Sie die Spule wirklich ${titel}?`,
+      text: `Möchten Sie die Spule wirklich ${titel}? Damit wird der Ort, NFC-Tag sowie Nummer entfernt!`,
       icon: 'question',
       showCloseButton: true,
       showDenyButton: true,
