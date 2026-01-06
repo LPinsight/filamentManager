@@ -8,6 +8,7 @@ import { Hersteller } from '../_interface/hersteller';
 import { Material } from '../_interface/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FILAMENT_FILTER_CONFIG } from '../_config/filament.config';
+import { Legende } from '../_interface/legende';
 
 @Component({
   selector: 'app-page-filament',
@@ -30,6 +31,18 @@ export class PageFilamentComponent implements OnInit {
   filamentForm!: FormGroup
   filterForm!: FormGroup
   FILAMENT_FILTER_CONFIG = FILAMENT_FILTER_CONFIG
+
+  legende: Legende[] = [
+    {label: 'Farbe', class: 'farbe'},
+    {label: 'Hersteller', class: 'hersteller'},
+    {label: 'Preis'},
+    {label: [
+      {label: 'Gewicht Filament'},
+      {label: 'Gewicht Spule'},
+    ], class: 'gewicht'},
+    {label: 'NFC-Tag'},
+    {label: 'Aktionen', class: 'aktionen'},
+  ]
 
   constructor(
     private dataService: DataService,

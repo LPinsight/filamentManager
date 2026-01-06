@@ -12,36 +12,5 @@
     button {
       margin-bottom: 2rem;
     }
-
-    div#material-legende {
-      span {
-        width: 10rem;
-
-        &:last-child {
-          width: 20.5rem;
-        }
-      }
-    }
-
-    div#hersteller-legende {
-      span {
-        width: 20.5rem;
-      }
-    }
-
-    p {
-      text-align: center;
-      border: 1px solid $prime-dark;
-      padding: 0.7rem;
-      border-radius: 1rem;
-
-      &#noMaterial {
-        width: 55rem;
-      }
-
-      &#noHersteller {
-        width: 44rem;
-      }
-    }
   }
 }

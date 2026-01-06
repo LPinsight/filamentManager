@@ -3,6 +3,7 @@ import { Spule } from '../_interface/spule';
 import { DataService } from '../_service/data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SPULE_FILTER_CONFIG } from '../_config/filament.config';
+import { Legende } from '../_interface/legende';
 
 @Component({
   selector: 'app-page-spule',
@@ -24,6 +25,16 @@ export class PageSpuleComponent implements OnInit {
   filterForm!: FormGroup
   SPULE_FILTER_CONFIG = SPULE_FILTER_CONFIG
 
+  legende: Legende[] = [
+    {label: 'Farbe', class: 'farbe'},
+    {label: 'Hersteller - Material', class: 'herstellerMaterial'},
+    {label: 'Verbrauchtes Gewicht'},
+    {label: 'Verbleibendes Gewicht'},
+    {label: 'NFC-Tag'},
+    {label: 'Ort'},
+    {label: 'Aktionen', class: 'aktionenSpule'},
+  ]
+
   constructor(
     private dataService: DataService,
     private fb: FormBuilder,
@@ -34,6 +45,7 @@ export class PageSpuleComponent implements OnInit {
 
     this.dataService.spule.spule$.subscribe(list => {
       this.spuleList = list
+      this.gefilterteSpuleList = list
 
       this.aktiveSpulen = list.filter(spule => !spule.archiviert)
       this.archvierteSpulen = list.filter(spule => spule.archiviert)

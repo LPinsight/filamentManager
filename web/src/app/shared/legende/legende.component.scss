@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  align-items: end;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.7rem 0;
+
+  span {
+    text-align: center;
+    font-weight: bold;
+    width: 12rem;
+
+    &.farbe {
+      width: 17rem;
+    }
+
+    &.hersteller {
+      width: 16rem;
+    }
+
+    &.material {
+      width: 10rem;
+    }
+
+    &.herstellerMaterial {
+      width: 20rem;
+    }
+
+    &.aktionenSpule {
+      width: 55rem;
+    }
+
+    &.aktionen {
+        width: 20.5rem;
+      }
+  }
+
+  div.nested {
+    display: flex;
+    flex-direction: column;
+  }
+}

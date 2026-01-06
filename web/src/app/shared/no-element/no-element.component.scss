@@ -1,0 +1,16 @@
+@use './../../../scss/var' as *;
+
+p {
+  text-align: center;
+  border: 1px solid $prime-dark;
+  padding: 0.7rem;
+  border-radius: 1rem;
+
+  &.material {
+    width: 55rem;
+  }
+
+  &.hersteller {
+    width: 44rem;
+  }
+}

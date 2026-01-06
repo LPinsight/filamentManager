@@ -82,7 +82,6 @@
   </form>
 </div>
 
-<div class="filter">
   <app-filament-filter
     [form]="filterForm"
     [config]="FILAMENT_FILTER_CONFIG"
@@ -91,19 +90,8 @@
     [gewichtMin]="gewichtMin"
     [gewichtMax]="gewichtMax"
     (reset)="resetFilter()"
-  ></app-filament-filter>
-</div>
+  />
 
-<div id="hersteller-legende" class="legende">
-  <span class="farbe">Farbe</span>
-  <span class="hersteller">Hersteller</span>
-  <span>Material</span>
-  <span>Preis</span>
-  <div class="gewicht">
-    <span>Gewicht Filament</span>
-    <span>Gewicht Spule</span>
-  </div>
-  <span class="aktionen">Aktionen</span>
-</div>
-
-<app-template-list-filament *ngFor="let filament of gefilterteFilamentList" [filament]=filament (edit)="openEditForm($event)"></app-template-list-filament>
+<app-legende [items]="legende" />
+<app-template-list-filament *ngFor="let filament of gefilterteFilamentList" [filament]=filament (edit)="openEditForm($event)" />
+<app-no-element *ngIf="gefilterteFilamentList.length == 0" title="Kein Filament gefunden" />

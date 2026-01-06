@@ -1,0 +1,7 @@
+<ng-container *ngFor="let item of items">
+  <span *ngIf="!isNested(item.label)" [ngClass]="item.class">{{item.label}}</span>
+
+  <div *ngIf="isNested(item.label)" class="nested" [ngClass]="item.class">
+    <span *ngFor="let sub of item.label" [ngClass]="sub.class">{{sub.label}}</span>
+  </div>
+</ng-container>

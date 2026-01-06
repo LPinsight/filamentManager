@@ -6,16 +6,9 @@
     <input matInput type="text" [(ngModel)]="materialSearch" (input)="filterMaterial()">
   </mat-form-field>
 
-  <div id="material-legende" class="legende">
-    <span>Name</span>
-    <span>Durchmesser</span>
-    <span>Dichte</span>
-    <span>Aktionen</span>
-  </div>
-
-  <app-template-list-material *ngFor="let material of gefilterteMaterialList" [material]=material></app-template-list-material>
-
-  <p *ngIf="gefilterteMaterialList.length === 0" id="noMaterial">Kein Material gefunden</p>
+  <app-legende [items]="legendeMaterial" />
+  <app-template-list-material *ngFor="let material of gefilterteMaterialList" [material]="material" />
+  <app-no-element *ngIf="gefilterteMaterialList.length == 0" title="Kein Material gefunden" class="material" />
 </div>
 
 <div id="hersteller" >
@@ -26,11 +19,7 @@
     <input matInput type="text" [(ngModel)]="herstellerSearch" (input)="filterHersteller()">
   </mat-form-field>
 
-  <div id="hersteller-legende" class="legende">
-    <span>Name</span>
-    <span>Aktionen</span>
-  </div>
-
-  <app-template-list-hersteller *ngFor="let hersteller of gefilterteHerstellerListe" [hersteller]=hersteller></app-template-list-hersteller>
-  <p *ngIf="gefilterteHerstellerListe.length == 0" id="noHersteller">Kein Hersteller gefunden</p>
-  </div>
+  <app-legende [items]="legendeHersteller" />
+  <app-template-list-hersteller *ngFor="let hersteller of gefilterteHerstellerListe" [hersteller]="hersteller" />
+  <app-no-element *ngIf="gefilterteHerstellerListe.length == 0" title="Kein Hersteller gefunden" class="hersteller" />
+</div>

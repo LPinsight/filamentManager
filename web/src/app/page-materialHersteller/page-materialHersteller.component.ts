@@ -5,6 +5,7 @@ import { Hersteller } from '../_interface/hersteller';
 import Swal from 'sweetalert2';
 import { AlertService } from '../_service/alert.service';
 import { ToastService } from '../_service/toast.service';
+import { Legende } from '../_interface/legende';
 
 @Component({
   selector: 'app-page-materialHersteller',
@@ -21,6 +22,18 @@ export class PageMaterialHerstellerComponent implements OnInit {
 
   materialSearch: string = ''
   herstellerSearch: string = ''
+
+  legendeHersteller: Legende[] = [
+    {label: 'Name', class: 'aktionen'},
+    {label: 'Aktionen', class: 'aktionen'},
+  ]
+
+  legendeMaterial: Legende[] = [
+    {label: 'Name', class: 'material'},
+    {label: 'Durchmesser', class: 'material'},
+    {label: 'Dichte', class: 'material'},
+    {label: 'Aktionen', class: 'aktionen'},
+  ]
 
   constructor(
       private dataService: DataService,

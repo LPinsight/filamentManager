@@ -7,16 +7,8 @@
   [gewichtMin]="gewichtMin"
   [gewichtMax]="gewichtMax"
   (reset)="resetFilter()"
-></app-filament-filter>
+/>
 
-<div class="spulen-legende legende">
-  <span class="farbe">Farbe</span>
-  <span class="hersteller">Hersteller - Material</span>
-  <span>Verbrauchtes Gewicht</span>
-  <span>Verbleibendes Gewicht</span>
-  <span>NFC-Tag</span>
-  <span>Ort</span>
-  <span class="aktionen">Aktionen</span>
-</div>
-
-<app-template-list-spule *ngFor="let spule of gefilterteSpuleList" [spule]=spule></app-template-list-spule>
+<app-legende [items]="legende" />
+<app-template-list-spule *ngFor="let spule of gefilterteSpuleList" [spule]=spule />
+<app-no-element *ngIf="gefilterteSpuleList.length == 0" title="Keine Spule gefunden" />
