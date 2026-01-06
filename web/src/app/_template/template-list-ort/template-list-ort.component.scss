@@ -1,0 +1,26 @@
+@use './../../../scss/var' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  border-radius: 1rem;
+  border: 1px solid $second-dark;
+  padding: 0.7rem 0;
+  margin: 2rem;
+
+
+  h1 {
+    text-align: center;
+  }
+
+  div.buttons {
+    display: flex;
+    border-bottom: 1px solid $second-dark;
+    padding: 0 0.7rem;
+
+    button {
+      width: 100%;
+    }
+  }
+}

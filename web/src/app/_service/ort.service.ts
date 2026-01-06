@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Ort } from '../_interface/ort';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { apiUrl } from '../_config/api.config';
 
 @Injectable({
@@ -25,4 +25,18 @@ export class OrtService {
     const list = this.subject.value;
     return list.find(o => o.id === id)?.name ?? `Unbekannt (#${id})`;
   }
+
+  create(name: string) {
+    let json = {
+    "name": name
+    }
+    
+    return this.http.post<Ort>(`${apiUrl}/ort`, json, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      return res
+    }))
+  }
+
 }

@@ -1,5 +1,5 @@
-<ul>
-  <li *ngFor="let ort of orteListe">
-    <app-template-list-ort [ort]=ort></app-template-list-ort>
-  </li>
-</ul>
+<Button (click)="createOrt()"><mat-icon>add</mat-icon>Ort hinzufügen</Button>
+
+<div id="orte">
+  <app-template-list-ort *ngFor="let item of ortMitSpulen" [ort]="item.ort" [spulenList]="item.spulen" />
+</div>

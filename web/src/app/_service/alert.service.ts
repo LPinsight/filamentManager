@@ -37,7 +37,7 @@ constructor() { }
       inputPlaceholder: 'Herstellername',
       inputValue: name,
       confirmButtonText: 'Hersteller hinzufügen',
-      denyButtonText: 'Abbrechen'
+      denyButtonText: 'Abbruch'
     }
   }
 
@@ -52,7 +52,7 @@ constructor() { }
       inputPlaceholder: 'Herstellername',
       inputValue: name,
       confirmButtonText: 'Hersteller aktualisieren',
-      denyButtonText: 'Abbrechen'
+      denyButtonText: 'Abbruch'
     }
   }
 
@@ -160,7 +160,7 @@ constructor() { }
       showCloseButton: true,
       showDenyButton: true,
       confirmButtonText: title,
-      denyButtonText: 'Abbrechen'
+      denyButtonText: 'Abbruch'
     }
   }
 
@@ -172,7 +172,7 @@ constructor() { }
       showCloseButton: true,
       showDenyButton: true,
       confirmButtonText: 'Spule hinzufügen',
-      denyButtonText: 'Abbrechen'
+      denyButtonText: 'Abbruch'
     }
   }
 
@@ -185,7 +185,7 @@ constructor() { }
       showCloseButton: true,
       showDenyButton: true,
       confirmButtonText: `Spule ${titel}`,
-      denyButtonText: 'Abbrechen'
+      denyButtonText: 'Abbruch'
     }
   }
 
@@ -270,6 +270,21 @@ constructor() { }
       denyButtonColor: "#7066e0",
       cancelButtonText: 'Abbruch',
       cancelButtonColor: "#dc3741",
+    }
+  }
+
+  public createOrtConfig(name?: string): SweetAlertOptions {
+    return {
+      title: 'Ort hinzufügen',
+      text: 'Geben Sie den Namen des Ortes ein, den Sie hinzufügen möchten.',
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      input: 'text',
+      inputPlaceholder: 'Ort',
+      inputValue: name,
+      confirmButtonText: 'Ort hinzufügen',
+      denyButtonText: 'Abbruch'
     }
   }
 

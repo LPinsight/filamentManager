@@ -1,19 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Ort } from '../../_interface/ort';
 import { Spule } from '../../_interface/spule';
 import { AlertService } from '../../_service/alert.service';
 import { DataService } from '../../_service/data.service';
 import { ToastService } from '../../_service/toast.service';
 
 @Component({
-  selector: 'app-template-list-ort',
-  templateUrl: './template-list-ort.component.html',
-  styleUrls: ['./template-list-ort.component.scss'],
-  standalone: false
+  selector: 'app-template-list-ort-spule',
+  templateUrl: './template-list-ort-spule.component.html',
+  styleUrls: ['./template-list-ort-spule.component.scss']
 })
-export class TemplateListOrtComponent implements OnInit {
-  @Input() ort!: Ort
-  @Input() spulenList!: Spule[]
+export class TemplateListOrtSpuleComponent implements OnInit {
+  @Input() spule!: Spule
 
   constructor(
     // private dataService: DataService,
@@ -21,8 +18,6 @@ export class TemplateListOrtComponent implements OnInit {
     // private toastService: ToastService,
   ) {}
 
-  ngOnInit() {
-    
+  ngOnInit(){
   }
-
 }

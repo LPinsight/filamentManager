@@ -1,0 +1,12 @@
+@use './../../scss/var' as *;
+
+:host {
+
+  button {
+
+  }
+  
+  div#orte {
+    display: flex;
+  }
+}

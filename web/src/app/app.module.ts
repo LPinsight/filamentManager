@@ -30,6 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { FilamentFilterComponent } from './shared/filament-filter/filament-filter.component';
 import { LegendeComponent } from './shared/legende/legende.component';
 import { NoElementComponent } from './shared/no-element/no-element.component';
+import { TemplateListOrtSpuleComponent } from './_template/template-list-ort-spule/template-list-ort-spule.component';
 
 const navigationRoutes: Routes = [
   {path: 'spulen', component: PageSpuleComponent},
@@ -60,6 +61,7 @@ const navigationRoutes: Routes = [
     FilamentFilterComponent,
     LegendeComponent,
     NoElementComponent,
+    TemplateListOrtSpuleComponent,
    ],
   imports: [
     BrowserModule,
