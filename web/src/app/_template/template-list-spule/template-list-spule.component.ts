@@ -81,19 +81,16 @@ export class TemplateListSpuleComponent implements OnInit {
 
   public async chanceNFC(event: string) {
     switch(event){
-      case "update":
-        // const result1 = await Swal.fire(this.alertService.setSpulenOrtConfig(this.orteList, this.spule.ort.id))
+      case "update":        
+        const result1 = await Swal.fire(this.alertService.editSpulenNfcConfig())
 
-        // if (result1.isConfirmed) {
-        //   this.dataService.spule.updateOrt(this.spule.id, result1.value).subscribe({
-        //     next: (res) => {
-        //       this.toastService.success(`Der Ort "${this.dataService.ort.getNameById(result1.value)}" wurde erfolgreich ausgewählt.`, `Ort erfolgreich ausgewählt`)
-        //     },
-        //     error: (err) => {
-        //       this.toastService.error(err.error.message, `Ort-Auswählen fehlgeschlagen`);
-        //     }
-        //   })
-        // }
+        if (result1.isConfirmed) {
+          this.editNummer()
+          
+        } else if (result1.isDenied) {
+          Swal.fire("NFC-Tag an Box senden und zuweisen","", "success")
+          
+        }
         return
         
       case "remove":
@@ -113,6 +110,28 @@ export class TemplateListSpuleComponent implements OnInit {
       default:
         return
     }
+  }
+
+  private async editNummer() {
+    const newNummer = await Swal.fire(this.alertService.editSpulenNummerConfig(this.spule.nummer))
+    let nummer= null;
+
+    if (newNummer.isConfirmed) {
+      nummer = newNummer.value
+    } else if (newNummer.isDenied) {
+      nummer = null
+    } else {
+      return
+    }
+
+    this.dataService.spule.editNummer(this.spule.id, Number(nummer)).subscribe({
+        next: (res) => {
+          this.toastService.success(`Die Spulen Nummer wurde erfolgreich gespeichert.`, `Nummer erfolgreich gespeichert`)
+        },
+        error: (err) => {
+          this.toastService.error(err.error.message, `Nummer-Speichern fehlgeschlagen`);
+        }
+      })
   }
 
 }

@@ -27,7 +27,11 @@ type OrtRequest struct {
 	OrtID *string `json:"ort_id"`
 }
 
-type NfcRequest struct {
+type NfcRemoveRequest struct {
 	NFC    *string `json:"nfc"`
+	Nummer *int    `json:"nummer"`
+}
+
+type NummerRequest struct {
 	Nummer *int    `json:"nummer"`
 }

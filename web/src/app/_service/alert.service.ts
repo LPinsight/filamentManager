@@ -4,6 +4,7 @@ import { Material } from '../_interface/material';
 import { Filament } from '../_interface/filament';
 import { Hersteller } from '../_interface/hersteller';
 import { Ort } from '../_interface/ort';
+import { max } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -230,6 +231,45 @@ constructor() { }
       showDenyButton: true,
       confirmButtonText: 'NFC-Tag nicht entfernen',
       denyButtonText: 'NFC-Tag entfernen'
+    }
+  }
+
+  public editSpulenNfcConfig(): SweetAlertOptions {
+    return {
+      title: `Aktion auswählen`,
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Nummer bearbeiten',
+      denyButtonText: 'NFC-Tag zuweisen',
+      denyButtonColor: "#7066e0",
+      cancelButtonText: 'Abbruch',
+      cancelButtonColor: "#dc3741",
+    }
+  }
+
+  public editSpulenNummerConfig(nummer?: number): SweetAlertOptions { 
+    return {
+      title: 'Nummer speichern',
+      text: 'Geben Sie die Nummer der Spule ein.',
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      showCancelButton: true,
+      input: 'number',
+      inputPlaceholder: 'Spulen Nr.',
+      inputValue: nummer && nummer > 0 ? nummer : 1,
+      inputAttributes: {
+        step: '1',
+        min: '1',
+        max: '4'
+      },
+      confirmButtonText: 'Nummer speichern',
+      denyButtonText: 'Nummer löschen',
+      denyButtonColor: "#7066e0",
+      cancelButtonText: 'Abbruch',
+      cancelButtonColor: "#dc3741",
     }
   }
 

@@ -22,7 +22,7 @@
 
 <div class="buttons">
   <section *ngIf="!spule.archiviert">
-    <button><mat-icon svgIcon="nfc"></mat-icon>NFC bearbeiten</button>
+    <button (click)="chanceNFC('update')"><mat-icon svgIcon="nfc"></mat-icon>NFC bearbeiten</button>
     <button *ngIf="spule.nfc" (click)="chanceNFC('remove')" ><mat-icon svgIcon="nfc-off"></mat-icon>NFC entfernen</button>
   </section>
 

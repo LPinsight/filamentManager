@@ -6,7 +6,6 @@ import (
 	"api/models"
 	"api/utils"
 	"errors"
-	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -207,9 +206,8 @@ func (s *SpuleService) UpdateOrt(id string, data iface.OrtRequest) (*iface.Spule
 	return updated, nil
 }
 
-// NFC-Tag & Nummer aktualisieren
-func (s *SpuleService) UpdateNfc(id string, data iface.NfcRequest) (*iface.Spule, error) {
-	fmt.Println(data)
+// NFC-Tag & Nummer entfernen
+func (s *SpuleService) RemoveNfc(id string, data iface.NfcRemoveRequest) (*iface.Spule, error) {
 	updates := map[string]interface{}{}
 
 	if data.NFC == nil {
@@ -219,6 +217,37 @@ func (s *SpuleService) UpdateNfc(id string, data iface.NfcRequest) (*iface.Spule
 	if data.Nummer == nil {
 		updates["nummer"] = data.Nummer
 	}
+
+	if len(updates) == 0 {
+		return nil, errors.New("no Update")
+	}
+
+	// Spule aus DB abrufen
+	result := s.db.Model(&models.Spule{}).
+		Where("spule_id = ?", id).
+		Updates(updates)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return nil, errors.New("spule not found")
+	}
+
+	spule, err := s.SearchSpule(id)
+	if err != nil {
+		return nil, err
+	}
+	updated := db.ToIfaceSpule(spule)
+
+	return updated, nil
+}
+
+// Nummer aktualisieren
+func (s *SpuleService) UpdateNummer(id string, data iface.NummerRequest) (*iface.Spule, error) {
+	updates := map[string]interface{}{}
+	updates["nummer"] = data.Nummer
 
 	if len(updates) == 0 {
 		return nil, errors.New("no Update")

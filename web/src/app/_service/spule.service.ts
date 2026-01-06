@@ -68,7 +68,20 @@ export class SpuleService {
       "nfc": null
     }
     
-    return this.http.patch<Spule>(`${apiUrl}/spule/${spuleId}/nfc`, json, {
+    return this.http.patch<Spule>(`${apiUrl}/spule/${spuleId}/nfc/remove`, json, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      return res
+    }))
+  }
+
+  editNummer(spuleId: string, nummer: number) {
+    let json = {
+      "nummer": nummer
+    }
+    
+    return this.http.patch<Spule>(`${apiUrl}/spule/${spuleId}/nummer`, json, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(map((res) => {
       this.loadAll().subscribe()
