@@ -27,6 +27,7 @@ import { PageSpuleComponent } from './page-spule/page-spule.component';
 import { TemplateListSpuleComponent } from './_template/template-list-spule/template-list-spule.component';
 import { PageMaterialHerstellerComponent } from './page-materialHersteller/page-materialHersteller.component';
 import { ToastrModule } from 'ngx-toastr';
+import { FilamentFilterComponent } from './shared/filament-filter/filament-filter.component';
 
 const navigationRoutes: Routes = [
   {path: 'spulen', component: PageSpuleComponent},
@@ -54,6 +55,7 @@ const navigationRoutes: Routes = [
     TemplateListOrtComponent,
     TemplateListFilamentComponent,
     TemplateListSpuleComponent,
+    FilamentFilterComponent,
    ],
   imports: [
     BrowserModule,

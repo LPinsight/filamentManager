@@ -83,60 +83,15 @@
 </div>
 
 <div class="filter">
-  <form [formGroup]="filterForm" class="formFilter">
-    <mat-form-field appearance="outline">
-      <mat-label>Farbe</mat-label>
-      <input matInput type="text" formControlName="farbe">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Hersteller</mat-label>
-      <mat-select formControlName="hersteller_id">
-        <mat-option [value]="null">Alle</mat-option>
-        <mat-option *ngFor="let hersteller of herstellerList" [value]="hersteller.id">
-          {{hersteller.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Material</mat-label>
-      <mat-select formControlName="material_id">
-        <mat-option [value]="null">Alle</mat-option>
-        <mat-option *ngFor="let material of materialList" [value]="material.id">
-          {{material.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div class="range-filter">
-      <label>Preis (€)</label>
-      <mat-slider min="{{preisMin}}" max="{{preisMax}}" step="1" thumbLabel discrete>
-        <input matSliderStartThumb formControlName="preisMin">
-        <input matSliderEndThumb formControlName="preisMax">
-      </mat-slider>
-
-      <div class="range-values">
-        {{filterForm.value.preisMin }} € - {{ filterForm.value.preisMax}} €
-      </div>
-    </div>
-
-    <div class="range-filter">
-      <label>Gewicht (g)</label>
-      <mat-slider min="{{gewichtMin}}" max="{{gewichtMax}}" step="1" thumbLabel discrete>
-        <input matSliderStartThumb formControlName="gewichtMin">
-        <input matSliderEndThumb formControlName="gewichtMax">
-      </mat-slider>
-
-      <div class="range-values">
-        {{filterForm.value.gewichtMin | number }} g - {{ filterForm.value.gewichtMax | number}} g
-      </div>
-    </div>
-  </form>
-  <button mat-stroked-button (click)="resetFilter()">
-    <mat-icon>filter_alt_off</mat-icon>
-    Filter zurücksetzen
-  </button>
+  <app-filament-filter
+    [form]="filterForm"
+    [config]="FILAMENT_FILTER_CONFIG"
+    [preisMin]="preisMin"
+    [preisMax]="preisMax"
+    [gewichtMin]="gewichtMin"
+    [gewichtMax]="gewichtMax"
+    (reset)="resetFilter()"
+  ></app-filament-filter>
 </div>
 
 <div id="hersteller-legende" class="legende">

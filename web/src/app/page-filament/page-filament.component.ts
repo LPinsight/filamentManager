@@ -7,6 +7,7 @@ import { ToastService } from '../_service/toast.service';
 import { Hersteller } from '../_interface/hersteller';
 import { Material } from '../_interface/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FILAMENT_FILTER_CONFIG } from '../_config/filament.config';
 
 @Component({
   selector: 'app-page-filament',
@@ -28,6 +29,7 @@ export class PageFilamentComponent implements OnInit {
   editingFilament: Filament | null = null;
   filamentForm!: FormGroup
   filterForm!: FormGroup
+  FILAMENT_FILTER_CONFIG = FILAMENT_FILTER_CONFIG
 
   constructor(
     private dataService: DataService,
@@ -205,14 +207,14 @@ export class PageFilamentComponent implements OnInit {
   }
 
   public resetFilter() {
-  this.filterForm.patchValue({
-    farbe: '',
-    hersteller_id: null,
-    material_id: null,
-    preisMin: this.preisMin,
-    preisMax: this.preisMax,
-    gewichtMin: this.gewichtMin,
-    gewichtMax: this.gewichtMax,
-  });
-}
+    this.filterForm.patchValue({
+      farbe: '',
+      hersteller_id: null,
+      material_id: null,
+      preisMin: this.preisMin,
+      preisMax: this.preisMax,
+      gewichtMin: this.gewichtMin,
+      gewichtMax: this.gewichtMax,
+    });
+  }
 }

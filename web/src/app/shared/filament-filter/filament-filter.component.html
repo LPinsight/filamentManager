@@ -1,0 +1,74 @@
+<form [formGroup]="form" class="formFilter">
+    <mat-form-field appearance="outline">
+      <mat-label>Farbe</mat-label>
+      <input matInput type="text" formControlName="farbe">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Hersteller</mat-label>
+      <mat-select formControlName="hersteller_id">
+        <mat-option [value]="null">Alle</mat-option>
+        <mat-option *ngFor="let hersteller of herstellerList" [value]="hersteller.id">
+          {{hersteller.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Material</mat-label>
+      <mat-select formControlName="material_id">
+        <mat-option [value]="null">Alle</mat-option>
+        <mat-option *ngFor="let material of materialList" [value]="material.id">
+          {{material.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="config.showOrt">
+      <mat-label>Ort</mat-label>
+      <mat-select formControlName="ort_id">
+        <mat-option [value]="null">Alle</mat-option>
+        <mat-option [value]="'__kein_ort__'">Kein Ort</mat-option>
+        <mat-option *ngFor="let ort of ortList" [value]="ort.id">
+          {{ort.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="config.showArchiviert" appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="archiviert">
+        <mat-option [value]="null">Alle</mat-option>
+        <mat-option [value]="false">Aktiv</mat-option>
+        <mat-option [value]="true">Archiviert</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="range-filter" *ngIf="config.showPreis">
+      <label>Preis (€)</label>
+      <mat-slider min="{{preisMin}}" max="{{preisMax}}" step="1" thumbLabel discrete>
+        <input matSliderStartThumb formControlName="preisMin">
+        <input matSliderEndThumb formControlName="preisMax">
+      </mat-slider>
+
+      <div class="range-values">
+        {{form.value.preisMin }} € - {{ form.value.preisMax}} €
+      </div>
+    </div>
+
+    <div class="range-filter" *ngIf="config.showGewicht">
+      <label>{{config.gewichtLabel}}</label>
+      <mat-slider min="{{gewichtMin}}" max="{{gewichtMax}}" step="1" thumbLabel discrete>
+        <input matSliderStartThumb formControlName="gewichtMin">
+        <input matSliderEndThumb formControlName="gewichtMax">
+      </mat-slider>
+
+      <div class="range-values">
+        {{form.value.gewichtMin | number }} g - {{ form.value.gewichtMax | number}} g
+      </div>
+    </div>
+  </form>
+  <button mat-stroked-button (click)="reset.emit()">
+    <mat-icon>filter_alt_off</mat-icon>
+    Filter zurücksetzen
+  </button>
