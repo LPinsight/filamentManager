@@ -15,12 +15,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PageFilamentComponent implements OnInit {
   filamentList: Filament[] = []
+  gefilterteFilamentList: Filament[] = []
   herstellerList: Hersteller[] = []
   materialList: Material[] = []
+
+  preisMin = 0;
+  preisMax = 0;
+  gewichtMin = 0;
+  gewichtMax = 0;
 
   hiddeForm = true
   editingFilament: Filament | null = null;
   filamentForm!: FormGroup
+  filterForm!: FormGroup
 
   constructor(
     private dataService: DataService,
@@ -30,14 +37,32 @@ export class PageFilamentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.initForm()
+
     this.dataService.filament.filament$.subscribe(list => {
       this.filamentList = list
+      this.gefilterteFilamentList = list
+
+      if(list.length) {
+        this.preisMin = Math.floor(Math.min(...list.map(f => f.preis)))
+        this.preisMax = Math.ceil(Math.max(...list.map(f => f.preis)))
+
+        this.gewichtMin = Math.floor(Math.min(...list.map(f => f.gewicht_filament)))
+        this.gewichtMax = Math.ceil(Math.max(...list.map(f => f.gewicht_filament)))
+
+        this.filterForm.patchValue({
+          preisMin: this.preisMin,
+          preisMax: this.preisMax,
+          gewichtMin: this.gewichtMin,
+          gewichtMax: this.gewichtMax,
+        })
+      }
     })
     
     this.dataService.hersteller.hersteller$.subscribe(h => this.herstellerList = h)
     this.dataService.material.material$.subscribe(m => this.materialList = m)
 
-    this.initForm()
+    this.filterForm.valueChanges.subscribe(_ => this.applyFilter())
   }
 
   initForm() {
@@ -52,6 +77,19 @@ export class PageFilamentComponent implements OnInit {
       link: [''],
       temp_extruder: [200, [Validators.required, Validators.min(0)]],
       temp_bed: [60, [Validators.required, Validators.min(0)]],
+    })
+
+    this.filterForm = this.fb.group({
+      farbe: [''],
+
+      hersteller_id: [null],
+      material_id: [null],
+
+      preisMin : [0],
+      preisMax : [0],
+
+      gewichtMin : [0],
+      gewichtMax : [0],
     })
   }
 
@@ -137,4 +175,44 @@ export class PageFilamentComponent implements OnInit {
     this.editingFilament = null
     this.resetForm()
   }
+
+  private applyFilter() {
+    const filter = this.filterForm.value
+
+    this.gefilterteFilamentList = this.filamentList.filter(f => {
+      if(filter.farbe && !f.farbe.toLowerCase().includes(filter.farbe.toLowerCase())) {
+        return false
+      }
+
+      if(filter.hersteller_id && f.hersteller.id !== filter.hersteller_id) {
+        return false
+      }
+
+      if(filter.material_id && f.material.id !== filter.material_id) {
+        return false
+      }
+
+      if(f.preis < filter.preisMin || f.preis > filter.preisMax) {
+        return false
+      }
+
+      if(f.gewicht_filament < filter.gewichtMin || f.gewicht_filament > filter.gewichtMax) {
+        return false
+      }
+
+      return true
+    })
+  }
+
+  public resetFilter() {
+  this.filterForm.patchValue({
+    farbe: '',
+    hersteller_id: null,
+    material_id: null,
+    preisMin: this.preisMin,
+    preisMax: this.preisMax,
+    gewichtMin: this.gewichtMin,
+    gewichtMax: this.gewichtMax,
+  });
+}
 }

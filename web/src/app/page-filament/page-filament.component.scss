@@ -50,6 +50,26 @@
     }
   }
 
+  div.filter {
+    display: flex;
+    flex-direction: column;
+
+    form.formFilter {
+      padding-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      div.range-filter {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        color: $second-dark;
+        width: 25rem;
+      }
+    }
+  }
+
   div#hersteller-legende {
     align-items: end;
 
