@@ -4,7 +4,7 @@ import { Ort, OrtmitSpulen } from '../_interface/ort';
 import { AlertService } from '../_service/alert.service';
 import { ToastService } from '../_service/toast.service';
 import Swal from 'sweetalert2';
-import { Spule } from '../_interface/spule';
+import { Spule, spuleDrop } from '../_interface/spule';
 import { combineLatest } from 'rxjs';
 
 @Component({
@@ -62,6 +62,10 @@ export class PageOrtComponent implements OnInit {
     }
 
 
+  }
+
+  public onSpuleDropped(event: spuleDrop) {
+    this.dataService.spule.updateOrt(event.spule.id, event.ortId).subscribe()
   }
 
 }

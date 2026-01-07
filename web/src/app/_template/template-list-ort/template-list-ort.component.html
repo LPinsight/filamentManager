@@ -4,4 +4,9 @@
   <button *ngIf="ort.id != '__kein_ort__'" (click)="remove()" class="delete"><mat-icon>delete</mat-icon></button>
 </div>
 
-<app-template-list-ort-spule *ngFor="let spule of spulenList" [spule]="spule" />
+<div cdkDropList [cdkDropListData]="spulenList" (cdkDropListDropped)="drop($event)" class="drop-list">
+  <div *ngIf="spulenList.length === 0" class="drop-placeholder">
+    Spule hier ablegen
+  </div>
+  <app-template-list-ort-spule *ngFor="let spule of spulenList" cdkDrag [spule]="spule" />
+</div>

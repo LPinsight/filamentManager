@@ -1,5 +1,5 @@
 <Button (click)="createOrt()"><mat-icon>add</mat-icon>Ort hinzufügen</Button>
 
-<div id="orte">
-  <app-template-list-ort *ngFor="let item of ortMitSpulen" [ort]="item.ort" [spulenList]="item.spulen" />
+<div id="orte" cdkDropListGroup>
+  <app-template-list-ort *ngFor="let item of ortMitSpulen" [ort]="item.ort" [spulenList]="item.spulen" (spuleDropped)="onSpuleDropped($event)" />
 </div>

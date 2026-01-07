@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Ort } from '../../_interface/ort';
-import { Spule } from '../../_interface/spule';
+import { Spule, spuleDrop } from '../../_interface/spule';
 import { AlertService } from '../../_service/alert.service';
 import { DataService } from '../../_service/data.service';
 import { ToastService } from '../../_service/toast.service';
 import Swal from 'sweetalert2';
 import { forkJoin } from 'rxjs';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-template-list-ort',
@@ -16,6 +17,8 @@ import { forkJoin } from 'rxjs';
 export class TemplateListOrtComponent implements OnInit {
   @Input() ort!: Ort
   @Input() spulenList!: Spule[]
+
+  @Output() spuleDropped = new EventEmitter<spuleDrop>()
 
   constructor(
     private dataService: DataService,
@@ -79,4 +82,28 @@ export class TemplateListOrtComponent implements OnInit {
     })
   }
 
+  public drop(event: CdkDragDrop<Spule[]>) {
+    if(event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      )
+      return
+    }
+
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    )
+
+    const spule =  event.container.data[event.currentIndex]
+
+    this.spuleDropped.emit({
+      spule,
+      ortId: this.ort.id === '__kein_ort__' ? null : this.ort.id
+    })
+  }
 }

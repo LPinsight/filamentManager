@@ -11,3 +11,8 @@ export interface Spule {
   ort: Ort
   archiviert: boolean
 }
+
+export interface spuleDrop {
+  spule: Spule,
+  ortId: string | null
+}

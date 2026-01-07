@@ -10,6 +10,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -77,7 +78,8 @@ const navigationRoutes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatSliderModule
+    MatSliderModule,
+    DragDropModule
   ],
   providers: [
   ],
