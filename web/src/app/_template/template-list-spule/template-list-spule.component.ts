@@ -134,4 +134,24 @@ export class TemplateListSpuleComponent implements OnInit {
       })
   }
 
+  public async remove() {
+    const result = await Swal.fire(this.alertService.spule.removeConfig(
+      this.spule.filament.farbe,
+      this.spule.nummer,
+      this.dataService.hersteller.getNameById(this.spule.filament.hersteller.id),
+      this.dataService.material.getNameById(this.spule.filament.material.id)))
+
+    if (result.isDenied) {
+      this.dataService.spule.remove(this.spule.id).subscribe({
+        next: (res) => {
+          this.toastService.success(`Spule "${this.spule.nummer}-${this.spule.filament.farbe}" wurde erfolgreich entfernt.`, "Entfernen erfolgreich")
+        },
+        error: (err) => {
+          this.toastService.error(err.error.message, 'Spule-Entfernen fehlgeschlagen');
+        }
+      })
+    }
+
+  }
+
 }

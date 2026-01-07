@@ -27,6 +27,10 @@ export class DataService {
       this.loadFilamentSpule()
     })
 
+    ort.changed$.subscribe(_ => {
+      spule.loadAll().subscribe()
+    })
+
     filament.changed$.subscribe(_ => {
       spule.loadAll().subscribe()
     })

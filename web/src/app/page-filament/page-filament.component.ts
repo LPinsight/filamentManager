@@ -178,8 +178,17 @@ export class PageFilamentComponent implements OnInit {
     this.editingFilament = filament
     this.resetForm()
     this.hiddeForm = false
-    this.filamentForm.patchValue(filament)
     this.filamentForm.patchValue({
+      ...filament,
+      hersteller_id: filament.hersteller.id,
+      material_id: filament.material.id,
+    })
+  }
+
+  public openDuplicateForm(filament: Filament) {
+    this.openCreateForm() 
+    this.filamentForm.patchValue({
+      ...filament,
       hersteller_id: filament.hersteller.id,
       material_id: filament.material.id,
     })

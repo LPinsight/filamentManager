@@ -35,6 +35,15 @@ export class Spule_dataService {
     }))
   }
 
+  remove(id: string) {
+    return this.http.delete<Spule>(`${apiUrl}/spule/${id}`, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      return res
+    }))
+  }
+
   updateArchiv(spule: Spule) {
     let json = {
       "archiviert": !spule.archiviert

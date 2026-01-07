@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 export class TemplateListFilamentComponent implements OnInit {
   @Input() filament!: Filament
   @Output() edit = new EventEmitter<Filament>()
+  @Output() duplicate = new EventEmitter<Filament>()
 
   constructor(
     private dataService: DataService,
@@ -40,6 +41,10 @@ export class TemplateListFilamentComponent implements OnInit {
 
   public updateFilament() {
     this.edit.emit(this.filament)
+  }
+
+  public duplicateFilament() {
+    this.duplicate.emit(this.filament)
   }
 
   public async addSpool() {

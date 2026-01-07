@@ -93,5 +93,5 @@
   />
 
 <app-legende [items]="legende" />
-<app-template-list-filament *ngFor="let filament of gefilterteFilamentList" [filament]=filament (edit)="openEditForm($event)" />
+<app-template-list-filament *ngFor="let filament of gefilterteFilamentList" [filament]=filament (edit)="openEditForm($event)" (duplicate)="openDuplicateForm($event)" />
 <app-no-element *ngIf="gefilterteFilamentList.length == 0" title="Kein Filament gefunden" />

@@ -23,6 +23,7 @@
       span {
         text-align: left;
         width: 13rem;
+        font-size: 2rem;
       }
 
       div.farbcode {
@@ -36,5 +37,11 @@
         align-items: center;
       }
     }
+  }
+
+  div.buttons {
+    display: flex;
+    height: 100%;
+    align-items: center;
   }
 }

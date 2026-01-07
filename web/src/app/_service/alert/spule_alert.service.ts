@@ -35,6 +35,18 @@ export class Spule_alertService {
     }
   }
 
+  public removeConfig(name: string, nummer: number,  hersteller: string, material: string): SweetAlertOptions {
+    return {
+      title: `Spule [${nummer}] von "${name} ${hersteller}-${material}" entfernen`,
+      text: `Möchten Sie die Spule wirklich entfernen?`,
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Spule nicht entfernen',
+      denyButtonText: 'Spule entfernen'
+    }
+  }
+
   public changeArchivConfig(name: string, hersteller: string, material: string, archiv: boolean): SweetAlertOptions {
     const titel = archiv ? "aktivieren" : "archivieren"
     return {

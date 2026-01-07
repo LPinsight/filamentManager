@@ -1,7 +1,7 @@
 <h1>{{ort.name}}</h1>
 <div class="buttons">
-  <button><mat-icon>edit</mat-icon></button>
-  <button class="delete"><mat-icon>delete</mat-icon></button>
+  <button *ngIf="ort.id != '__kein_ort__'" (click)="update()"><mat-icon>edit</mat-icon></button>
+  <button *ngIf="ort.id != '__kein_ort__'" (click)="remove()" class="delete"><mat-icon>delete</mat-icon></button>
 </div>
 
 <app-template-list-ort-spule *ngFor="let spule of spulenList" [spule]="spule" />

@@ -22,6 +22,10 @@
 
 <div class="buttons">
   <section *ngIf="!spule.archiviert">
+    <button><mat-icon svgIcon="gewicht"></mat-icon>Gewicht anpassen</button>
+  </section>
+
+  <section *ngIf="!spule.archiviert">
     <button (click)="chanceNFC('update')"><mat-icon svgIcon="nfc"></mat-icon>NFC bearbeiten</button>
     <button *ngIf="spule.nfc" (click)="chanceNFC('remove')" ><mat-icon svgIcon="nfc-off"></mat-icon>NFC entfernen</button>
   </section>
@@ -31,14 +35,9 @@
     <button *ngIf="spule.ort.name" (click)="chanceOrt('remove')"><mat-icon>location_off</mat-icon>Ort entfernen</button>
   </section>
 
-  <section *ngIf="!spule.archiviert">
-    <button><mat-icon svgIcon="gewicht"></mat-icon>Gewicht anpassen</button>
-    <button (click)="chanceArchiv()"><mat-icon>archive</mat-icon>archivieren</button>
-  </section>
-
   <section>
-    <button *ngIf="!spule.archiviert"  class="save"><mat-icon>edit</mat-icon>bearbeiten</button>
+    <button *ngIf="!spule.archiviert" (click)="chanceArchiv()"><mat-icon>archive</mat-icon>archivieren</button>
     <button *ngIf="spule.archiviert" (click)="chanceArchiv()"><mat-icon>upgrade</mat-icon>wieder aktivieren</button>
-    <button class="delete"><mat-icon>delete</mat-icon>löschen</button>
+    <button (click)="remove()" class="delete"><mat-icon>delete</mat-icon>löschen</button>
   </section>
 </div>

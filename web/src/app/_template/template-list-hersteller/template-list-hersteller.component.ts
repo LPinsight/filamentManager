@@ -29,10 +29,10 @@ export class TemplateListHerstellerComponent implements OnInit {
     if (result.isConfirmed) {
       this.dataService.hersteller.update(result.value, this.hersteller.id).subscribe({
         next: (res) => {
-          this.toastService.success(`Hersteller "${this.hersteller.name}" wurde erfolgreich entfernt.`, "Entfernen erfolgreich")
+          this.toastService.success(`Hersteller "${this.hersteller.name}" wurde erfolgreich angepasst.`, "Anpassung erfolgreich")
         },
         error: (err) => {
-          this.toastService.error(err.error.message, 'Hersteller-Entfernen fehlgeschlagen');
+          this.toastService.error(err.error.message, 'Hersteller-Anpassung fehlgeschlagen');
         }
       })
     }

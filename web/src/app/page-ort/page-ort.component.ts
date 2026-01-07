@@ -31,11 +31,14 @@ export class PageOrtComponent implements OnInit {
       this.dataService.ort.ort$,
       this.dataService.spule.spule$
     ]).subscribe(([orte, spulen]) => {
+      const spulenOhneOrt = spulen.filter(s => !s.ort.id)
+      const keinOrtBlock = spulenOhneOrt.length > 0 ? [{
+        ort: {id: "__kein_ort__", name: "kein Ort"},
+        spulen: spulenOhneOrt
+      }] : []
+
       this.ortMitSpulen = [
-        {
-          ort: {id: "__kein_ort__", name: "kein Ort"},
-          spulen: spulen.filter(s => !s.ort.id)
-        },
+        ...keinOrtBlock,
         ...orte.map(ort => ({
         ort,
         spulen: spulen.filter(s => s.ort?.id === ort.id)

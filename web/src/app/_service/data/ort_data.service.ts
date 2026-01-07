@@ -11,6 +11,13 @@ export class Ort_dataService {
   private subject = new BehaviorSubject<Ort[]>([])
   ort$ = this.subject.asObservable()
 
+  private changedSubject = new BehaviorSubject<void>(undefined)
+  changed$ = this.changedSubject.asObservable()
+
+  private notifyChanged() {
+    this.changedSubject.next()
+  }
+
   constructor(private http: HttpClient) { }
 
   loadAll() {
@@ -32,6 +39,29 @@ export class Ort_dataService {
     }
     
     return this.http.post<Ort>(`${apiUrl}/ort`, json, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      return res
+    }))
+  }
+
+  update(name: string, id: string) {
+    let json = {
+    "name": name
+    }
+    
+    return this.http.put<Ort>(`${apiUrl}/ort/${id}`, json, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      this.notifyChanged()
+      return res
+    }))
+  }
+
+  remove(id: string) {
+    return this.http.delete<Ort>(`${apiUrl}/ort/${id}`, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(map((res) => {
       this.loadAll().subscribe()
