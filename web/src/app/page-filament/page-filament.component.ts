@@ -35,12 +35,12 @@ export class PageFilamentComponent implements OnInit {
   legende: Legende[] = [
     {label: 'Farbe', class: 'farbe'},
     {label: 'Hersteller', class: 'hersteller'},
+    {label: 'Material'},
     {label: 'Preis'},
     {label: [
       {label: 'Gewicht Filament'},
       {label: 'Gewicht Spule'},
     ], class: 'gewicht'},
-    {label: 'NFC-Tag'},
     {label: 'Aktionen', class: 'aktionen'},
   ]
 
