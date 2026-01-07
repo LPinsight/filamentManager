@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, tap } from 'rxjs';
-import { Material } from '../_interface/material';
+import { Material } from '../../_interface/material';
 import { HttpClient } from '@angular/common/http';
-import { apiUrl } from '../_config/api.config';
+import { apiUrl } from '../../_config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MaterialService {
+export class Material_dataService {
   private subject = new BehaviorSubject<Material[]>([])
   material$ = this.subject.asObservable()
 

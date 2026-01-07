@@ -1,8 +1,14 @@
-<div class="farbe">
-  <div class="farbcode" [ngStyle]="{'background-color': spule.filament.farbcode}">{{spule.nummer}}</div>
-  <span>{{spule.filament.farbe}}</span>
+<div class="data">
+  <div class="farbe">
+    <div class="farbcode" [ngStyle]="{'background-color': spule.filament.farbcode}">{{spule.nummer || ""}}</div>
+    <span>{{spule.filament.farbe}}</span>
+  </div>
+
+  <span>{{spule.filament.hersteller.name}} - {{spule.filament.material.name}}</span>
+
+  <span>{{spule.verbleibendes_Gewicht | number}}g / {{spule.filament.gewicht_filament | number}}g</span>
 </div>
 
-<span>{{spule.filament.hersteller.name}} - {{spule.filament.material.name}}</span>
-
-<span>{{spule.verbleibendes_Gewicht | number}}g / {{spule.filament.gewicht_filament | number}}g</span>
+<div class="button">
+  <button (click)="showSpule()"><mat-icon>visibility</mat-icon></button>
+</div>

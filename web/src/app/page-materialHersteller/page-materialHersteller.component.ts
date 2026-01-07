@@ -53,7 +53,7 @@ export class PageMaterialHerstellerComponent implements OnInit {
   }
 
   public async addHersteller(name?: string) {
-    const result = await Swal.fire(this.alertService.createHerstellerConfig(name))
+    const result = await Swal.fire(this.alertService.hersteller.createConfig(name))
 
     if (result.isConfirmed) {
       this.dataService.hersteller.create(result.value).subscribe({
@@ -81,7 +81,7 @@ export class PageMaterialHerstellerComponent implements OnInit {
     let currentStep
 
     for (currentStep = 0; currentStep<steps.length;) {
-      const result = await swalQueue.fire(this.alertService.createMaterialConfig(currentStep, values, true))
+      const result = await swalQueue.fire(this.alertService.material.createUpdateConfig(currentStep, values, true))
 
       if (result.value) {
         values[currentStep] = result.value

@@ -30,7 +30,7 @@ export class TemplateListMaterialComponent implements OnInit {
     let currentStep
 
     for (currentStep = 0; currentStep<steps.length;) {
-      const result = await swalQueue.fire(this.alertService.createMaterialConfig(currentStep, values, false))
+      const result = await swalQueue.fire(this.alertService.material.createUpdateConfig(currentStep, values, false))
 
       if (result.value) {
         values[currentStep] = result.value
@@ -55,7 +55,7 @@ export class TemplateListMaterialComponent implements OnInit {
   }
 
   public async removeMaterial() {
-    const result = await Swal.fire(this.alertService.removeMaterialConfig(this.material.name))
+    const result = await Swal.fire(this.alertService.material.removeConfig(this.material.name))
     
     if (result.isDenied) {
       this.dataService.material.remove(this.material.id).subscribe({

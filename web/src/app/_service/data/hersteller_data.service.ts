@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Hersteller } from '../_interface/hersteller';
+import { Hersteller } from '../../_interface/hersteller';
 import { BehaviorSubject, map, tap } from 'rxjs';
-import { apiUrl } from '../_config/api.config';
+import { apiUrl } from '../../_config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HerstellerService {
+export class Hersteller_dataService {
   private subject = new BehaviorSubject<Hersteller[]>([])
   hersteller$ = this.subject.asObservable()
 

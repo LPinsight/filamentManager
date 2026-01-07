@@ -5,30 +5,36 @@
   margin: 0.7rem;
   border: 1px solid $prime-dark;
   border-radius: 1rem;
-  
+
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  
+  
 
-
-  div.farbe {
+  div.data {
     display: flex;
-    align-items: center;
+    flex-direction: column;
 
-    span {
-      text-align: left;
-      width: 13rem;
-    }
-
-    div.farbcode {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 1.5rem;
-      margin-right: 1rem;
-
+    div.farbe {
       display: flex;
-      justify-content: center;
       align-items: center;
+
+      span {
+        text-align: left;
+        width: 13rem;
+      }
+
+      div.farbcode {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 1.5rem;
+        margin-right: 1rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
-  
 }

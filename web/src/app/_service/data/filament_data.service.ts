@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Filament } from '../_interface/filament';
+import { Filament } from '../../_interface/filament';
 import { BehaviorSubject, map, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { apiUrl } from '../_config/api.config';
-import { Material } from '../_interface/material';
+import { apiUrl } from '../../_config/api.config';
+import { Material } from '../../_interface/material';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FilamentService {
+export class Filament_dataService {
   private subject = new BehaviorSubject<Filament[]>([])
   filament$ = this.subject.asObservable()
 

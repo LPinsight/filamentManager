@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Material } from '../_interface/material';
-import { Hersteller } from '../_interface/hersteller';
-import { Ort } from '../_interface/ort';
-import { Filament } from '../_interface/filament';
-import { Spule } from '../_interface/spule';
-import { BehaviorSubject, tap } from 'rxjs';
-import { MaterialService } from './material.service';
-import { HerstellerService } from './hersteller.service';
-import { OrtService } from './ort.service';
-import { FilamentService } from './filament.service';
-import { SpuleService } from './spule.service';
+import { Material_dataService } from './data/material_data.service';
+import { Hersteller_dataService } from './data/hersteller_data.service';
+import { Ort_dataService } from './data/ort_data.service';
+import { Filament_dataService } from './data/filament_data.service';
+import { Spule_dataService } from './data/spule_data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +11,11 @@ import { SpuleService } from './spule.service';
 export class DataService {
 
   constructor(
-    public material: MaterialService,
-    public hersteller: HerstellerService,
-    public ort: OrtService,
-    public filament: FilamentService,
-    public spule: SpuleService
+    public material: Material_dataService,
+    public hersteller: Hersteller_dataService,
+    public ort: Ort_dataService,
+    public filament: Filament_dataService,
+    public spule: Spule_dataService
   ) {
     this.loadAll()
     

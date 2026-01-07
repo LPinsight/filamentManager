@@ -24,7 +24,7 @@ export class TemplateListFilamentComponent implements OnInit {
   }
 
   public async removeFilament() {
-    const result = await Swal.fire(this.alertService.removeFilamentConfig(this.filament.farbe, this.filament.hersteller.name, this.filament.material.name))
+    const result = await Swal.fire(this.alertService.filament.removeConfig(this.filament.farbe, this.filament.hersteller.name, this.filament.material.name))
 
     if (result.isDenied) {
       this.dataService.filament.remove(this.filament.id).subscribe({
@@ -43,7 +43,7 @@ export class TemplateListFilamentComponent implements OnInit {
   }
 
   public async addSpool() {
-    const result = await Swal.fire(this.alertService.addSpulenConfig(this.filament.farbe, this.filament.hersteller.name, this.filament.material.name))
+    const result = await Swal.fire(this.alertService.spule.createConfig(this.filament.farbe, this.filament.hersteller.name, this.filament.material.name))
 
     if (result.isConfirmed) {
       this.dataService.spule.create(this.filament).subscribe({

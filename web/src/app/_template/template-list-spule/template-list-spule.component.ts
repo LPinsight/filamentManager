@@ -27,7 +27,7 @@ export class TemplateListSpuleComponent implements OnInit {
   }
 
   public async chanceArchiv() {
-    const result = await Swal.fire(this.alertService.changeArchivConfig(this.spule.filament.farbe, this.spule.filament.hersteller.name, this.spule.filament.material.name, this.spule.archiviert))
+    const result = await Swal.fire(this.alertService.spule.changeArchivConfig(this.spule.filament.farbe, this.spule.filament.hersteller.name, this.spule.filament.material.name, this.spule.archiviert))
 
     if (result.isConfirmed) {
       const wordding = this.spule.archiviert ? "aktiviert" : "archiviert"
@@ -46,7 +46,7 @@ export class TemplateListSpuleComponent implements OnInit {
   public async chanceOrt(event: string) {
     switch(event){
       case "update":
-        const result1 = await Swal.fire(this.alertService.setSpulenOrtConfig(this.orteList, this.spule.ort.id))
+        const result1 = await Swal.fire(this.alertService.spule.setOrtConfig(this.orteList, this.spule.ort.id))
 
         if (result1.isConfirmed) {
           this.dataService.spule.updateOrt(this.spule.id, result1.value).subscribe({
@@ -61,7 +61,7 @@ export class TemplateListSpuleComponent implements OnInit {
         return
         
       case "remove":
-        const result2 = await Swal.fire(this.alertService.removeSpulenOrtConfig())
+        const result2 = await Swal.fire(this.alertService.spule.removeOrtConfig())
         
         if (result2.isDenied) {
           this.dataService.spule.updateOrt(this.spule.id, null).subscribe({
@@ -82,7 +82,7 @@ export class TemplateListSpuleComponent implements OnInit {
   public async chanceNFC(event: string) {
     switch(event){
       case "update":        
-        const result1 = await Swal.fire(this.alertService.editSpulenNfcConfig())
+        const result1 = await Swal.fire(this.alertService.spule.editNfcConfig())
 
         if (result1.isConfirmed) {
           this.editNummer()
@@ -94,7 +94,7 @@ export class TemplateListSpuleComponent implements OnInit {
         return
         
       case "remove":
-        const result2 = await Swal.fire(this.alertService.removeSpulenNfcConfig())
+        const result2 = await Swal.fire(this.alertService.spule.removeNfcConfig())
         
         if (result2.isDenied) {
           this.dataService.spule.removeNfc(this.spule.id).subscribe({
@@ -113,7 +113,7 @@ export class TemplateListSpuleComponent implements OnInit {
   }
 
   private async editNummer() {
-    const newNummer = await Swal.fire(this.alertService.editSpulenNummerConfig(this.spule.nummer))
+    const newNummer = await Swal.fire(this.alertService.spule.editNummerConfig(this.spule.nummer))
     let nummer= null;
 
     if (newNummer.isConfirmed) {

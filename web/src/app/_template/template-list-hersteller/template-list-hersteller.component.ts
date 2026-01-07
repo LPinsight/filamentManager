@@ -24,7 +24,7 @@ export class TemplateListHerstellerComponent implements OnInit {
   }
 
   public async updateHersteller() {
-    const result = await Swal.fire(this.alertService.updateHerstellerConfig(this.hersteller.name))
+    const result = await Swal.fire(this.alertService.hersteller.updateConfig(this.hersteller.name))
 
     if (result.isConfirmed) {
       this.dataService.hersteller.update(result.value, this.hersteller.id).subscribe({
@@ -39,7 +39,7 @@ export class TemplateListHerstellerComponent implements OnInit {
   }
 
   public async removeHersteller() {
-    const result = await Swal.fire(this.alertService.removeHerstellerConfig(this.hersteller.name))
+    const result = await Swal.fire(this.alertService.hersteller.removeConfig(this.hersteller.name))
 
     if (result.isDenied) {
       this.dataService.hersteller.remove(this.hersteller.id).subscribe({

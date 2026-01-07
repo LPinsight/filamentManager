@@ -118,7 +118,7 @@ export class PageFilamentComponent implements OnInit {
     const material = this.dataService.material.getNameById(filament.material_id)
     const hersteller = this.dataService.hersteller.getNameById(filament.hersteller_id)
     
-    const result = await Swal.fire(this.alertService.createFilamentConfig(filament, material, hersteller, !this.editingFilament))
+    const result = await Swal.fire(this.alertService.filament.createUpdateConfig(filament, material, hersteller, !this.editingFilament))
 
     if(result.isConfirmed) {
       if(this.editingFilament) {

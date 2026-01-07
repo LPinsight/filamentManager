@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, tap } from 'rxjs';
-import { Spule } from '../_interface/spule';
+import { Spule } from '../../_interface/spule';
 import { HttpClient } from '@angular/common/http';
-import { apiUrl } from '../_config/api.config';
-import { Filament } from '../_interface/filament';
-import { Ort } from '../_interface/ort';
+import { apiUrl } from '../../_config/api.config';
+import { Filament } from '../../_interface/filament';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SpuleService {
+export class Spule_dataService {
   private spuleSubject = new BehaviorSubject<Spule[]>([])
   spule$ = this.spuleSubject.asObservable()
 

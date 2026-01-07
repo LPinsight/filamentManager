@@ -31,15 +31,21 @@ export class PageOrtComponent implements OnInit {
       this.dataService.ort.ort$,
       this.dataService.spule.spule$
     ]).subscribe(([orte, spulen]) => {
-      this.ortMitSpulen = orte.map(ort => ({
+      this.ortMitSpulen = [
+        {
+          ort: {id: "__kein_ort__", name: "kein Ort"},
+          spulen: spulen.filter(s => !s.ort.id)
+        },
+        ...orte.map(ort => ({
         ort,
         spulen: spulen.filter(s => s.ort?.id === ort.id)
       }))
+      ]
     })
   }
 
   public async createOrt() {
-    const result = await Swal.fire(this.alertService.createOrtConfig())
+    const result = await Swal.fire(this.alertService.ort.createConfig())
 
     if (result.isConfirmed) {
       this.dataService.ort.create(result.value).subscribe({
