@@ -14,3 +14,9 @@ export interface Filament {
   temp_extruder: number
   temp_bed: number
 }
+
+export type FilamentSortMode = 
+| 'farbe'
+| 'material'
+| 'hersteller'
+| 'gewicht'

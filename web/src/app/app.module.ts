@@ -32,6 +32,7 @@ import { FilamentFilterComponent } from './shared/filament-filter/filament-filte
 import { LegendeComponent } from './shared/legende/legende.component';
 import { NoElementComponent } from './shared/no-element/no-element.component';
 import { TemplateListOrtSpuleComponent } from './_template/template-list-ort-spule/template-list-ort-spule.component';
+import { SortButtonComponent } from './shared/sort-button/sort-button.component';
 
 const navigationRoutes: Routes = [
   {path: 'spulen', component: PageSpuleComponent},
@@ -63,6 +64,7 @@ const navigationRoutes: Routes = [
     LegendeComponent,
     NoElementComponent,
     TemplateListOrtSpuleComponent,
+    SortButtonComponent,
    ],
   imports: [
     BrowserModule,

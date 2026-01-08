@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Filament } from '../_interface/filament';
+import { Filament, FilamentSortMode } from '../_interface/filament';
 import { DataService } from '../_service/data.service';
 import Swal from 'sweetalert2';
 import { AlertService } from '../_service/alert.service';
@@ -9,6 +9,8 @@ import { Material } from '../_interface/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FILAMENT_FILTER_CONFIG } from '../_config/filament.config';
 import { Legende } from '../_interface/legende';
+import { SpulenSortMode, Spule } from '../_interface/spule';
+import { sortDirection } from '../_interface/main';
 
 @Component({
   selector: 'app-page-filament',
@@ -31,6 +33,9 @@ export class PageFilamentComponent implements OnInit {
   filamentForm!: FormGroup
   filterForm!: FormGroup
   FILAMENT_FILTER_CONFIG = FILAMENT_FILTER_CONFIG
+
+  sortMode: FilamentSortMode = 'farbe'
+  sortDirection: sortDirection = 'asc'
 
   legende: Legende[] = [
     {label: 'Farbe', class: 'farbe'},
@@ -78,6 +83,7 @@ export class PageFilamentComponent implements OnInit {
     this.dataService.material.material$.subscribe(m => this.materialList = m)
 
     this.filterForm.valueChanges.subscribe(_ => this.applyFilter())
+    this.applyFilter()
   }
 
   initForm() {
@@ -203,7 +209,7 @@ export class PageFilamentComponent implements OnInit {
   private applyFilter() {
     const filter = this.filterForm.value
 
-    this.gefilterteFilamentList = this.filamentList.filter(f => {
+    const gefiltert = this.filamentList.filter(f => {
       if(filter.farbe && !f.farbe.toLowerCase().includes(filter.farbe.toLowerCase())) {
         return false
       }
@@ -226,6 +232,8 @@ export class PageFilamentComponent implements OnInit {
 
       return true
     })
+
+    this.gefilterteFilamentList = this.sortFilament(gefiltert)
   }
 
   public resetFilter() {
@@ -239,4 +247,33 @@ export class PageFilamentComponent implements OnInit {
       gewichtMax: this.gewichtMax,
     });
   }
+
+  public setSortMode(mode: FilamentSortMode) {
+    if(this.sortMode === mode) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
+    } else {
+      this.sortMode = mode
+      this.sortDirection = 'asc'
+    }
+
+    this.applyFilter()
+  }
+
+  private sortFilament(list: Filament[]): Filament[] {
+    const factor = this.sortDirection === 'asc'? 1 : -1
+    const sorted = [...list]
+
+    switch(this.sortMode) {
+      case 'farbe':
+        return sorted.sort((a, b) =>  factor * (a.farbe.localeCompare(b.farbe)))
+      case 'material':
+        return sorted.sort((a, b) => factor * (a.material.name.localeCompare(b.material.name)))
+      case 'hersteller':
+        return sorted.sort((a, b) => factor * (a.hersteller.name.localeCompare(b.hersteller.name)))
+      case 'gewicht':
+        return sorted.sort((a, b) => factor * (a.gewicht_filament - b.gewicht_filament))
+      default:
+        return sorted
+    }
+  } 
 }

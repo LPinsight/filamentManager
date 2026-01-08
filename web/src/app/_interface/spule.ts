@@ -23,3 +23,11 @@ export interface spuleDropRequest {
   ort_id: string | null,
   sortIndex: number,
 }
+
+export type SpulenSortMode = 
+| 'ort'
+| 'farbe'
+| 'material'
+| 'hersteller'
+| 'nummer'
+| 'gewicht'

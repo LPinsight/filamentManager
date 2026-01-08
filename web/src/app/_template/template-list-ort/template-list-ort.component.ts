@@ -99,12 +99,6 @@ export class TemplateListOrtComponent implements OnInit {
     }
 
     this.updateSortOrder()
-    // const spule =  event.container.data[event.currentIndex]
-
-    // this.spuleDropped.emit({
-    //   spule,
-    //   ortId: this.ort.id === '__kein_ort__' ? null : this.ort.id
-    // })
   }
 
   private updateSortOrder() {

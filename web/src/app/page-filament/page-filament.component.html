@@ -82,15 +82,23 @@
   </form>
 </div>
 
-  <app-filament-filter
-    [form]="filterForm"
-    [config]="FILAMENT_FILTER_CONFIG"
-    [preisMin]="preisMin"
-    [preisMax]="preisMax"
-    [gewichtMin]="gewichtMin"
-    [gewichtMax]="gewichtMax"
-    (reset)="resetFilter()"
-  />
+<app-filament-filter
+  [form]="filterForm"
+  [config]="FILAMENT_FILTER_CONFIG"
+  [preisMin]="preisMin"
+  [preisMax]="preisMax"
+  [gewichtMin]="gewichtMin"
+  [gewichtMax]="gewichtMax"
+  (reset)="resetFilter()"
+/>
+
+<div class="sort">
+  <h3>Filter:</h3>
+  <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" icon="palette" sortModeSelf="farbe" titel="Farbe" />
+  <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" svg="manufacturer" sortModeSelf="hersteller" titel="Hersteller" />
+  <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" svg="material" sortModeSelf="material" titel="Material" />
+  <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" svg="gewicht" sortModeSelf="gewicht" titel="Gewicht" />
+</div>
 
 <app-legende [items]="legende" />
 <app-template-list-filament *ngFor="let filament of gefilterteFilamentList" [filament]=filament (edit)="openEditForm($event)" (duplicate)="openDuplicateForm($event)" />

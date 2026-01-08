@@ -1,0 +1,7 @@
+<button [class.save]="sortModeActiv==sortModeSelf" (click)="clickSort.emit(sortModeSelf)">
+    <mat-icon svgIcon="{{svg}}">{{icon}}</mat-icon>{{titel}}
+    <div *ngIf="sortModeActiv==sortModeSelf" class="richtung">
+      <mat-icon *ngIf="sortDirection=='asc'">arrow_upward</mat-icon>
+      <mat-icon *ngIf="sortDirection=='desc'">arrow_downward</mat-icon>
+    </div>
+  </button>

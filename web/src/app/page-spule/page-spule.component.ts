@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Spule } from '../_interface/spule';
+import { Spule, SpulenSortMode } from '../_interface/spule';
 import { DataService } from '../_service/data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SPULE_FILTER_CONFIG } from '../_config/filament.config';
 import { Legende } from '../_interface/legende';
+import { sortDirection } from '../_interface/main';
 
 @Component({
   selector: 'app-page-spule',
@@ -24,6 +25,9 @@ export class PageSpuleComponent implements OnInit {
 
   filterForm!: FormGroup
   SPULE_FILTER_CONFIG = SPULE_FILTER_CONFIG
+  
+  sortMode: SpulenSortMode = 'farbe'
+  sortDirection: sortDirection = 'asc'
 
   legende: Legende[] = [
     {label: 'Farbe', class: 'farbe'},
@@ -67,6 +71,7 @@ export class PageSpuleComponent implements OnInit {
     })
 
     this.filterForm.valueChanges.subscribe(_ => this.applyFilter())
+    this.applyFilter()
   }
 
   initForm() {
@@ -89,7 +94,7 @@ export class PageSpuleComponent implements OnInit {
   private applyFilter() {
     const filter = this.filterForm.value
 
-    this.gefilterteSpuleList = this.spuleList.filter(s => {
+    const gefiltert = this.spuleList.filter(s => {
       if(filter.farbe && !s.filament.farbe.toLowerCase().includes(filter.farbe.toLowerCase())) {
         return false
       }
@@ -126,6 +131,8 @@ export class PageSpuleComponent implements OnInit {
 
       return true
     })
+
+    this.gefilterteSpuleList = this.sortSpulen(gefiltert)
   }
 
   public resetFilter() {
@@ -141,5 +148,38 @@ export class PageSpuleComponent implements OnInit {
       gewichtMax: this.gewichtMax,
     });
   }
+
+  public setSortMode(mode: SpulenSortMode) {
+    if(this.sortMode === mode) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
+    } else {
+      this.sortMode = mode
+      this.sortDirection = 'asc'
+    }
+
+    this.applyFilter()
+  }
+
+  private sortSpulen(list: Spule[]): Spule[] {
+    const factor = this.sortDirection === 'asc'? 1 : -1
+    const sorted = [...list]
+
+    switch(this.sortMode) {
+      case 'farbe':
+        return sorted.sort((a, b) =>  factor * (a.filament.farbe.localeCompare(b.filament.farbe)))
+      case 'material':
+        return sorted.sort((a, b) => factor * (a.filament.material.name.localeCompare(b.filament.material.name)))
+      case 'hersteller':
+        return sorted.sort((a, b) => factor * (a.filament.hersteller.name.localeCompare(b.filament.hersteller.name)))
+      case 'ort':
+        return sorted.sort((a, b) => factor * (a.ort.name.localeCompare(b.ort.name)))
+      case 'nummer':
+        return sorted.sort((a, b) => factor * ((a.nummer ?? Number.MAX_SAFE_INTEGER) - (b.nummer ?? Number.MAX_SAFE_INTEGER)))
+      case 'gewicht':
+        return sorted.sort((a, b) => factor * (a.verbleibendes_Gewicht - b.verbleibendes_Gewicht))
+      default:
+        return sorted
+    }
+  } 
 
 }
