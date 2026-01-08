@@ -67,6 +67,7 @@ func NewRouter() http.Handler {
 	spuleRouter := api.PathPrefix("/spule").Subrouter()
 	spuleRouter.HandleFunc("", handler.GetSpuleHandler).Methods("GET", "OPTIONS")
 	spuleRouter.HandleFunc("", handler.CreateSpuleHandler).Methods("POST", "OPTIONS")
+	spuleRouter.HandleFunc("/ort", handler.UpdateSpulenSortOrtHandler).Methods("PATCH", "OPTIONS")
 
 	// /spule/nfc
 	spuleByNfc := spuleRouter.PathPrefix("/nfc").Subrouter()

@@ -25,7 +25,7 @@ func NewHerstellerService(db *gorm.DB) *HerstellerService {
 func (s *HerstellerService) GetAll() ([]*iface.Hersteller, error) {
 	var herstellerModels []models.Hersteller
 
-	if err := s.db.Find(&herstellerModels).Error; err != nil {
+	if err := s.db.Order("name asc").Find(&herstellerModels).Error; err != nil {
 		return nil, err
 	}
 

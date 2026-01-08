@@ -4,7 +4,7 @@ import { Ort, OrtmitSpulen } from '../_interface/ort';
 import { AlertService } from '../_service/alert.service';
 import { ToastService } from '../_service/toast.service';
 import Swal from 'sweetalert2';
-import { Spule, spuleDrop } from '../_interface/spule';
+import { Spule, spuleDrop, spuleDropRequest } from '../_interface/spule';
 import { combineLatest } from 'rxjs';
 
 @Component({
@@ -64,8 +64,14 @@ export class PageOrtComponent implements OnInit {
 
   }
 
-  public onSpuleDropped(event: spuleDrop) {
-    this.dataService.spule.updateOrt(event.spule.id, event.ortId).subscribe()
+  public onSpuleDropped(event: spuleDropRequest[]) {
+    // this.dataService.spule.updateOrt(event.spule.id, event.ortId).subscribe()
+    this.dataService.spule.updateSortOrt(event).subscribe({
+      error: err => {
+        this.toastService.error(err.error, "Sortierung fehlgeschlagen")
+        this.dataService.spule.loadAll().subscribe()
+      }
+    })
   }
 
 }

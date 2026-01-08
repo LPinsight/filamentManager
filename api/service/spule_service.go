@@ -25,7 +25,7 @@ func NewSpuleService(db *gorm.DB) *SpuleService {
 func (s *SpuleService) GetAll() ([]*iface.Spule, error) {
 	var spulenModels []models.Spule
 
-	if err := s.db.Preload("Filament").Preload("Filament.Hersteller").Preload("Filament.Material").Preload("Ort").Find(&spulenModels).Error; err != nil {
+	if err := s.db.Order("sort_index ASC").Preload("Filament").Preload("Filament.Hersteller").Preload("Filament.Material").Preload("Ort").Find(&spulenModels).Error; err != nil {
 		return nil, err
 	}
 
@@ -204,6 +204,32 @@ func (s *SpuleService) UpdateOrt(id string, data iface.OrtRequest) (*iface.Spule
 	updated := db.ToIfaceSpule(spule)
 
 	return updated, nil
+}
+
+// Ort aktualisieren
+func (s *SpuleService) UpdateSort(data []iface.SpulenSortRequest) error {
+	return s.db.Transaction(func(tx *gorm.DB) error {
+		for _, item := range data {
+			if item.OrtID != nil {
+				if err := tx.First(&models.Ort{}, "ort_id = ?", *item.OrtID).Error; err != nil {
+					return errors.New("ort not found")
+				}
+			}
+
+			// Spule aus DB abrufen
+			result := tx.Model(&models.Spule{}).
+				Where("spule_id = ?", item.ID).
+				Updates(map[string]interface{}{
+					"ort_id":     item.OrtID,
+					"sort_index": item.SortIndex,
+				})
+
+			if result.Error != nil {
+				return result.Error
+			}
+		}
+		return nil
+	})
 }
 
 // NFC-Tag & Nummer entfernen

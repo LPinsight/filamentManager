@@ -27,11 +27,17 @@ type OrtRequest struct {
 	OrtID *string `json:"ort_id"`
 }
 
+type SpulenSortRequest struct {
+	ID        string  `json:"id"`
+	OrtID     *string `json:"ort_id"`
+	SortIndex int     `json:"sortIndex"`
+}
+
 type NfcRemoveRequest struct {
 	NFC    *string `json:"nfc"`
 	Nummer *int    `json:"nummer"`
 }
 
 type NummerRequest struct {
-	Nummer *int    `json:"nummer"`
+	Nummer *int `json:"nummer"`
 }

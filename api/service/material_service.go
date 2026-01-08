@@ -25,7 +25,7 @@ func NewMaterialService(db *gorm.DB) *MaterialService {
 func (s *MaterialService) GetAll() ([]*iface.Material, error) {
 	var materialModels []models.Material
 
-	if err := s.db.Find(&materialModels).Error; err != nil {
+	if err := s.db.Order("name asc").Find(&materialModels).Error; err != nil {
 		return nil, err
 	}
 

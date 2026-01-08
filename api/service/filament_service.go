@@ -25,7 +25,7 @@ func NewFilamentService(db *gorm.DB) *FilamentService {
 func (s *FilamentService) GetAll() ([]*iface.Filament, error) {
 	var filamentModels []models.Filament
 
-	if err := s.db.Preload("Hersteller").Preload("Material").Find(&filamentModels).Error; err != nil {
+	if err := s.db.Order("farbe ASC").Preload("Hersteller").Preload("Material").Find(&filamentModels).Error; err != nil {
 		return nil, err
 	}
 

@@ -14,5 +14,12 @@ export interface Spule {
 
 export interface spuleDrop {
   spule: Spule,
-  ortId: string | null
+  ort_id: string | null,
+  sortIndex: number,
+}
+
+export interface spuleDropRequest {
+  id: string,
+  ort_id: string | null,
+  sortIndex: number,
 }

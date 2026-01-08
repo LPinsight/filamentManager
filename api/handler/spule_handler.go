@@ -121,6 +121,26 @@ func UpdateSpulenOrtHandler(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, spule, http.StatusOK)
 }
 
+func UpdateSpulenSortOrtHandler(w http.ResponseWriter, r *http.Request) {
+	var data []iface.SpulenSortRequest
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if len(data) == 0 {
+		writeJSON(w, "empty payload", http.StatusBadRequest)
+	}
+
+	err := spuleService.UpdateSort(data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	writeJSON(w, "", http.StatusOK)
+}
+
 func RemoveSpulenNfcHandler(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 

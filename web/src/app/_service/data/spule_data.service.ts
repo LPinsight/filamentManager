@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, tap } from 'rxjs';
-import { Spule } from '../../_interface/spule';
+import { Spule, spuleDropRequest } from '../../_interface/spule';
 import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '../../_config/api.config';
 import { Filament } from '../../_interface/filament';
@@ -42,6 +42,13 @@ export class Spule_dataService {
       this.loadAll().subscribe()
       return res
     }))
+  }
+
+  getFarbeById(id: string) {
+    if (!id) return '—';
+
+    const list = this.spuleSubject.value;
+    return list.find(s => s.id === id)?.filament.farbe ?? `Unbekannt (#${id})`;
   }
 
   updateArchiv(spule: Spule) {
@@ -95,6 +102,20 @@ export class Spule_dataService {
       this.loadAll().subscribe()
       return res
     }))
+  }
+
+  updateSortOrt(updates: spuleDropRequest[]) {    
+    updates.forEach(item => {
+      console.log(this.getFarbeById(item.id),item.sortIndex, item.id , item.ort_id);
+    })
+    
+    return this.http.patch<void>(`${apiUrl}/spule/ort`, updates, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(
+      tap(() => {        
+        this.loadAll().subscribe()
+      })
+    )
   }
 
 }

@@ -9,5 +9,6 @@ type Spule struct {
 	Nummer               int      `json:"nummer"`
 	OrtID                *string  `gorm:"size:191;index"`
 	Ort                  *Ort     `gorm:"constraint:OnUpdate:CASCADE,OnDelete:RESTRICT"`
+	SortIndex            int      `gorm:"index" json:"sortIndex"`
 	Archiviert           bool     `json:"archiviert"`
 }

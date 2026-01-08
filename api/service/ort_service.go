@@ -25,7 +25,7 @@ func NewOrtService(db *gorm.DB) *OrtService {
 func (s *OrtService) GetAll() ([]*iface.Ort, error) {
 	var ortModels []models.Ort
 
-	if err := s.db.Find(&ortModels).Error; err != nil {
+	if err := s.db.Order("name asc").Find(&ortModels).Error; err != nil {
 		return nil, err
 	}
 

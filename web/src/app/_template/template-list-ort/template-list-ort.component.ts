@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Ort } from '../../_interface/ort';
-import { Spule, spuleDrop } from '../../_interface/spule';
+import { Spule, spuleDrop, spuleDropRequest } from '../../_interface/spule';
 import { AlertService } from '../../_service/alert.service';
 import { DataService } from '../../_service/data.service';
 import { ToastService } from '../../_service/toast.service';
@@ -18,7 +18,7 @@ export class TemplateListOrtComponent implements OnInit {
   @Input() ort!: Ort
   @Input() spulenList!: Spule[]
 
-  @Output() spuleDropped = new EventEmitter<spuleDrop>()
+  @Output() spuleDropped = new EventEmitter<spuleDropRequest[]>()
 
   constructor(
     private dataService: DataService,
@@ -89,21 +89,31 @@ export class TemplateListOrtComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       )
-      return
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      )
     }
 
-    transferArrayItem(
-      event.previousContainer.data,
-      event.container.data,
-      event.previousIndex,
-      event.currentIndex
-    )
+    this.updateSortOrder()
+    // const spule =  event.container.data[event.currentIndex]
 
-    const spule =  event.container.data[event.currentIndex]
+    // this.spuleDropped.emit({
+    //   spule,
+    //   ortId: this.ort.id === '__kein_ort__' ? null : this.ort.id
+    // })
+  }
 
-    this.spuleDropped.emit({
-      spule,
-      ortId: this.ort.id === '__kein_ort__' ? null : this.ort.id
-    })
+  private updateSortOrder() {
+    const updates: spuleDropRequest[] = this.spulenList.map((spule, index) => ({
+      id: spule.id,
+      ort_id: this.ort.id === '__kein_ort__' ? null : this.ort.id,
+      sortIndex: index
+    }))
+    
+    this.spuleDropped.emit(updates)
   }
 }
