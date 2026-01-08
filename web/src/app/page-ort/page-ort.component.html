@@ -1,4 +1,5 @@
 <Button (click)="createOrt()"><mat-icon>add</mat-icon>Ort hinzufügen</Button>
+<Button (click)="sortOrte()"><mat-icon>format_line_spacing</mat-icon>Orte Sortieren</Button>
 
 <div id="orte" cdkDropListGroup>
   <app-template-list-ort *ngFor="let item of ortMitSpulen" [ort]="item.ort" [spulenList]="item.spulen" (spuleDropped)="onSpuleDropped($event)" />

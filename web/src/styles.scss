@@ -123,3 +123,39 @@ h1, h3{
 .cdk-drag-placeholder {
   opacity: 0;
 }
+
+div.ort-sort-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ort-sort-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  cursor: grab;
+
+  &.disabled {
+    background: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+  }
+}
+
+.drag-handle {
+  cursor: grab;
+  font-size: 18px;
+
+  &.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+.dragging {
+  opacity: 0.5;
+}

@@ -50,4 +50,15 @@ export class Ort_alertService {
     }
   }
 
+  public sortConfig():SweetAlertOptions {
+    return {
+      title: 'Orte sortieren',
+      html: `<div id="ort-sort-container"></div>`,
+      showDenyButton: true,
+      showCloseButton: true,
+      confirmButtonText: 'Speichern',
+      denyButtonText: 'Abbruch'
+    }
+  }
+
 }

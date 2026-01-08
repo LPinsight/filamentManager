@@ -64,8 +64,6 @@ export class TemplateListOrtComponent implements OnInit {
     forkJoin(update$).subscribe({
       next: () => this.removeFunc(),
       error: err => {
-        console.log(err);
-        
         this.toastService.error(err.error?.message, 'Fehler beim Aktualisieren der Spulen');
       }
     })
