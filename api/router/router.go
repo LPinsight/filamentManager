@@ -45,6 +45,7 @@ func NewRouter() http.Handler {
 	ortRouter := api.PathPrefix("/ort").Subrouter()
 	ortRouter.HandleFunc("", handler.GetOrtHandler).Methods("GET", "OPTIONS")
 	ortRouter.HandleFunc("", handler.CreateOrtHandler).Methods("POST", "OPTIONS")
+	ortRouter.HandleFunc("/sort", handler.UpdateOrtSortHandler).Methods("PATCH", "OPTIONS")
 
 	// /ort/<id>
 	ortById := ortRouter.PathPrefix("/{id:O-[0-9a-fA-F-]+}").Subrouter()

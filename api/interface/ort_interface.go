@@ -8,3 +8,8 @@ type Ort struct {
 type OrtData struct {
 	Name string `json:"name"`
 }
+
+type SortRequest struct {
+	ID        string `json:"id"`
+	SortIndex int    `json:"sortIndex"`
+}

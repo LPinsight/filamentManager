@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Ort } from '../../_interface/ort';
+import { Ort, ortDrop } from '../../_interface/ort';
 import { BehaviorSubject, map, tap } from 'rxjs';
 import { apiUrl } from '../../_config/api.config';
 
@@ -67,6 +67,16 @@ export class Ort_dataService {
       this.loadAll().subscribe()
       return res
     }))
+  }
+
+  updateSort(updates: ortDrop[]) {    
+    return this.http.patch<void>(`${apiUrl}/ort/sort`, updates, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(
+      tap(() => {        
+        this.loadAll().subscribe()
+      })
+    )
   }
 
 }

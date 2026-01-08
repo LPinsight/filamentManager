@@ -25,7 +25,7 @@ func NewOrtService(db *gorm.DB) *OrtService {
 func (s *OrtService) GetAll() ([]*iface.Ort, error) {
 	var ortModels []models.Ort
 
-	if err := s.db.Order("name asc").Find(&ortModels).Error; err != nil {
+	if err := s.db.Order("sort_index asc").Find(&ortModels).Error; err != nil {
 		return nil, err
 	}
 
@@ -98,6 +98,25 @@ func (s *OrtService) Delete(id string) error {
 	}
 
 	return nil
+}
+
+// Reihenfolge aktualisieren
+func (s *OrtService) UpdateSort(data []iface.SortRequest) error {
+	return s.db.Transaction(func(tx *gorm.DB) error {
+		for _, item := range data {
+			// Spule aus DB abrufen
+			result := tx.Model(&models.Ort{}).
+				Where("ort_id = ?", item.ID).
+				Updates(map[string]interface{}{
+					"sort_index": item.SortIndex,
+				})
+
+			if result.Error != nil {
+				return result.Error
+			}
+		}
+		return nil
+	})
 }
 
 // ####################################################

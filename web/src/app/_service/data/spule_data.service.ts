@@ -105,10 +105,6 @@ export class Spule_dataService {
   }
 
   updateSortOrt(updates: spuleDropRequest[]) {    
-    updates.forEach(item => {
-      console.log(this.getFarbeById(item.id),item.sortIndex, item.id , item.ort_id);
-    })
-    
     return this.http.patch<void>(`${apiUrl}/spule/ort`, updates, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(

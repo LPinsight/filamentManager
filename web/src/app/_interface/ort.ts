@@ -9,3 +9,8 @@ export interface OrtmitSpulen {
   ort: Ort
   spulen: Spule[]
 }
+
+export interface ortDrop {
+  id: string
+  sortIndex: number,
+}

@@ -72,3 +72,24 @@ func UpdateOrtHandler(w http.ResponseWriter, r *http.Request) {
 
 	writeJSON(w, ort, http.StatusOK)
 }
+
+func UpdateOrtSortHandler(w http.ResponseWriter, r *http.Request) {
+	var data []iface.SortRequest
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if len(data) == 0 {
+		writeJSON(w, "empty payload", http.StatusBadRequest)
+		return
+	}
+
+	err := ortService.UpdateSort(data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	writeJSON(w, "", http.StatusOK)
+}

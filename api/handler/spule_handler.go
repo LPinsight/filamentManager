@@ -130,6 +130,7 @@ func UpdateSpulenSortOrtHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(data) == 0 {
 		writeJSON(w, "empty payload", http.StatusBadRequest)
+		return
 	}
 
 	err := spuleService.UpdateSort(data)

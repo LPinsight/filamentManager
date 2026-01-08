@@ -206,7 +206,7 @@ func (s *SpuleService) UpdateOrt(id string, data iface.OrtRequest) (*iface.Spule
 	return updated, nil
 }
 
-// Ort aktualisieren
+// Reihenfolge aktualisieren
 func (s *SpuleService) UpdateSort(data []iface.SpulenSortRequest) error {
 	return s.db.Transaction(func(tx *gorm.DB) error {
 		for _, item := range data {
