@@ -114,4 +114,17 @@ export class Spule_dataService {
     )
   }
 
+  updateGewicht(spuleId: string, verbrauchtesGewicht: number) {
+    let json = {
+      "verbrauchtes_Gewicht": verbrauchtesGewicht
+    }
+    
+    return this.http.patch<Spule>(`${apiUrl}/spule/${spuleId}/gewicht`, json, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(map((res) => {
+      this.loadAll().subscribe()
+      return res
+    }))
+  }
+
 }

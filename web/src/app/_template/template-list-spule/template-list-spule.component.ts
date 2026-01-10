@@ -112,6 +112,25 @@ export class TemplateListSpuleComponent implements OnInit {
     }
   }
 
+  public async chanceGewicht () {
+    const result = await Swal.fire(this.alertService.spule.chanceGewichtConfig(this.spule))
+
+    if(result.isConfirmed) {
+      const {gewicht} = result.value
+      
+      this.dataService.spule.updateGewicht(this.spule.id, gewicht).subscribe({
+        next: (res) => {
+          this.toastService.success(`Gewicht wurde erfolgreich angepasst.`, `Anpassung erfolgreich`)
+        },
+        error: (err) => {
+          this.toastService.error(err.error.message, `Gewicht-Anpassung fehlgeschlagen`);
+        }
+      })
+      
+    }
+    
+  }
+
   private async editNummer() {
     const newNummer = await Swal.fire(this.alertService.spule.editNummerConfig(this.spule.nummer))
     let nummer= null;

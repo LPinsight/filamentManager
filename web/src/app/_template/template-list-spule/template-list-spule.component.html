@@ -22,7 +22,7 @@
 
 <div class="buttons">
   <section *ngIf="!spule.archiviert">
-    <button><mat-icon svgIcon="gewicht"></mat-icon>Gewicht anpassen</button>
+    <button (click)="chanceGewicht()"><mat-icon svgIcon="gewicht"></mat-icon>Gewicht anpassen</button>
   </section>
 
   <section *ngIf="!spule.archiviert">

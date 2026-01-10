@@ -87,6 +87,7 @@ func NewRouter() http.Handler {
 	spuleById.HandleFunc("/ort", handler.UpdateSpulenOrtHandler).Methods("PATCH", "OPTIONS")
 	spuleById.HandleFunc("/nfc/remove", handler.RemoveSpulenNfcHandler).Methods("PATCH", "OPTIONS")
 	spuleById.HandleFunc("/nummer", handler.UpdateSpulenNummerHandler).Methods("PATCH", "OPTIONS")
+	spuleById.HandleFunc("/gewicht", handler.UpdateGewichtHandler).Methods("PATCH", "OPTIONS")
 
 	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 

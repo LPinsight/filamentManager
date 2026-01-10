@@ -27,6 +27,10 @@ type OrtRequest struct {
 	OrtID *string `json:"ort_id"`
 }
 
+type GewichtRequest struct {
+	Verbrauchtes_Gewicht float32 `json:"verbrauchtes_Gewicht"`
+}
+
 type SpulenSortRequest struct {
 	ID        string  `json:"id"`
 	OrtID     *string `json:"ort_id"`

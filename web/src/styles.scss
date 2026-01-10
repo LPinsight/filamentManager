@@ -159,3 +159,78 @@ div.ort-sort-list {
 .dragging {
   opacity: 0.5;
 }
+
+.input-Gewicht {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  div.bestand {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      input {
+        width: 8rem;
+      }
+    }
+  }
+
+  label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+
+    span {
+      font-size: 1.4rem;
+      width: 12rem;
+      margin-bottom: 0.5rem;
+
+      b {
+        font: 1.7rem;
+        text-decoration: underline;
+      }
+    }
+
+    input {
+
+      &[type="number"] {
+        margin: 0.7rem 1rem;
+        width: 20rem;
+        text-align: center;
+
+        &.disabled {
+        color:  $second;
+        margin: 0.2rem 1rem;
+      }
+      }
+    }
+  }
+
+  .radio-buttons {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    label {
+      // margin: 0.25rem;
+
+      input {
+        margin-right: 1rem;
+      }
+
+      span {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+      }
+    }
+  }
+}

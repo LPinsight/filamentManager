@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SweetAlertOptions } from 'sweetalert2';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { Spule } from '../../_interface/spule';
 import { Base_alertService } from './base_alert.service';
 import { Ort } from '../../_interface/ort';
@@ -141,6 +141,156 @@ export class Spule_alertService {
       denyButtonColor: "#7066e0",
       cancelButtonText: 'Abbruch',
       cancelButtonColor: "#dc3741",
+    }
+  }
+
+  public chanceGewichtConfig(spule: Spule): SweetAlertOptions {
+    return {
+      title: `Gewicht anpassen`,
+      icon: 'question',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'gewicht anpassen',
+      denyButtonText: 'Abbruch',
+      html: `
+        <div class="input-Gewicht">
+          <div class="bestand">
+            <label> <span><b>Grundgewicht</b><br>Filament<br>Leerspule </span>
+              <input type="number" class="swal2-input disabled" value="${spule.filament.gewicht_filament}" disabled>
+              <input type="number" class="swal2-input disabled" value="${spule.filament.gewicht_spule}" disabled>
+            </label>
+            <label> <span><b>verbleibend</b><br>aktuell<br>Neu</span>
+              <input id="bestandVerbleibend" type="number" class="swal2-input disabled" value="${spule.verbleibendes_Gewicht}" disabled>
+              <input id="bestandVerbleibendNeu" type="number" class="swal2-input disabled" value="${spule.verbleibendes_Gewicht}" disabled>
+            </label>
+            <label> <span><b>verbraucht</b><br>aktuell<br>Neu</span>
+              <input id="bestandVerbraucht" type="number" class="swal2-input disabled" value="${spule.verbrauchtes_Gewicht}" disabled>
+              <input id="bestandVerbrauchtNeu" type="number" class="swal2-input disabled" value="${spule.verbrauchtes_Gewicht}" disabled>
+            </label>
+          </div>
+
+          <label> <span>Gewicht (g):</span>
+            <input id="gewicht" type="number" class="swal2-input" min="0" placeholder="Gewicht eingeben">
+          </label>
+
+          <div class="radio-buttons">
+            <label>
+              <input type="radio" name="mode" value="used" checked>
+              <span>Verbrauchtes Gewicht</span>
+            </label>
+
+            <label>
+              <input type="radio" name="mode" value="rest_mitSpule">
+              <span>Restgewicht inkl. Spule</span>
+            </label>
+
+            <label>
+              <input type="radio" name="mode" value="rest_ohneSpule">
+              <span>Restgewicht ohne Spule</span>
+            </label>
+          </div>
+        </div>
+      `,
+      didOpen: () => {
+        const gewichtInput = document.getElementById('gewicht') as HTMLInputElement
+        const radioButtons = document.querySelectorAll('input[name="mode"]')
+
+        updateFields('switchMode')
+
+        gewichtInput.addEventListener('input', () => {
+          updateFields()
+        })
+
+        radioButtons.forEach((radio) => {
+          radio.addEventListener('change', () => {
+            updateFields('switchMode')
+          })
+        })
+
+        function setGewichtData(value: number, min: number, max: number) {
+          let gewichtHTML = document.getElementById('gewicht') as HTMLInputElement
+
+          gewichtHTML.value = String(value)
+          gewichtHTML.min = String(min)
+          gewichtHTML.max = String(max)
+        }
+
+        function setShowValues(verbleibend: number, verbraucht: number) {
+          let verbleibendHTML = document.getElementById('bestandVerbleibendNeu') as HTMLInputElement
+          let verbrauchtHTML = document.getElementById('bestandVerbrauchtNeu') as HTMLInputElement
+
+          verbleibendHTML.value = String(verbleibend)
+          verbrauchtHTML.value = String(verbraucht)
+
+        }
+
+        function updateFields(change?: string) {
+          const gewicht = Number((document.getElementById('gewicht') as HTMLInputElement).value)
+          const mode = (document.querySelector('input[name="mode"]:checked') as HTMLInputElement)?.value
+          
+          let neuesVerbrauchtesGewicht = spule.verbrauchtes_Gewicht
+          let neuesRestGewicht = spule.verbleibendes_Gewicht
+
+          if(change === 'switchMode'){
+            setShowValues(neuesRestGewicht, neuesVerbrauchtesGewicht)
+
+            switch(mode){
+              case 'used':
+                setGewichtData(0, 1, spule.filament.gewicht_filament)
+                return
+              case 'rest_mitSpule':
+                setGewichtData(
+                  neuesRestGewicht+spule.filament.gewicht_spule,
+                  spule.filament.gewicht_spule,
+                  spule.filament.gewicht_filament + spule.filament.gewicht_spule)
+                return
+              case 'rest_ohneSpule':
+                setGewichtData(neuesRestGewicht, 0, spule.filament.gewicht_filament)
+                return
+            }
+          }
+
+          switch(mode) {
+            case 'used':
+              if (!gewicht || gewicht <0 || gewicht > spule.verbleibendes_Gewicht) {
+                Swal.showValidationMessage('Bitte ein gültiges Gewicht eingeben')
+                return
+              }
+              Swal.resetValidationMessage()
+              neuesRestGewicht -= gewicht
+              neuesVerbrauchtesGewicht += gewicht
+              break
+    
+            case 'rest_mitSpule':
+              if(!gewicht || gewicht < spule.filament.gewicht_spule || gewicht > (spule.filament.gewicht_filament + spule.filament.gewicht_spule)) {
+                Swal.showValidationMessage('Bitte ein gültiges Gewicht eingeben')
+                return
+              }
+              Swal.resetValidationMessage()
+              const spulenGewicht = spule.filament.gewicht_spule
+              neuesRestGewicht = gewicht - spulenGewicht
+              neuesVerbrauchtesGewicht = spule.filament.gewicht_filament - neuesRestGewicht
+              break
+    
+            case 'rest_ohneSpule':
+              if(gewicht < 0 || gewicht > spule.filament.gewicht_filament) {
+                Swal.showValidationMessage('Bitte ein gültiges Gewicht eingeben')
+                return
+              }
+              Swal.resetValidationMessage()
+              neuesRestGewicht = gewicht
+              neuesVerbrauchtesGewicht = spule.filament.gewicht_filament - gewicht
+              break
+          }
+
+          setShowValues(neuesRestGewicht, neuesVerbrauchtesGewicht)
+        }
+      },
+      preConfirm: () => {
+        const gewicht = Number((document.getElementById('bestandVerbrauchtNeu') as HTMLInputElement).value) 
+
+        return { gewicht }
+      }
     }
   }
 

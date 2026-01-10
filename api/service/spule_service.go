@@ -301,6 +301,35 @@ func (s *SpuleService) UpdateNummer(id string, data iface.NummerRequest) (*iface
 	return updated, nil
 }
 
+// Verbrauchtes Gewicht aktualisieren
+func (s *SpuleService) UpdatGewicht(id string, data iface.GewichtRequest) (*iface.Spule, error) {
+
+	updates := map[string]interface{}{
+		"verbrauchtes_Gewicht": data.Verbrauchtes_Gewicht,
+	}
+
+	// Spule aus DB abrufen
+	result := s.db.Model(&models.Spule{}).
+		Where("spule_id = ?", id).
+		Updates(updates)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return nil, errors.New("spule not found")
+	}
+
+	spule, err := s.SearchSpule(id)
+	if err != nil {
+		return nil, err
+	}
+	updated := db.ToIfaceSpule(spule)
+
+	return updated, nil
+}
+
 // ####################################################
 // #                                                  #
 // #                      assets                      #
