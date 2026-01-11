@@ -1,8 +1,9 @@
 package iface
 
 type Ort struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	SortIndex int    `json:"sortIndex"`
 }
 
 type OrtData struct {

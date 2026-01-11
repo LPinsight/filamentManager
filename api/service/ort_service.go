@@ -49,11 +49,29 @@ func (s *OrtService) GetByID(id string) (*iface.Ort, error) {
 	return ort, nil
 }
 
+func (s *OrtService) getLastSortIndex() (int, error) {
+	var ort models.Ort
+
+	if err := s.db.Order("sort_index desc").First(&ort).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return 0, nil
+		}
+		return 0, err
+	}
+	return ort.SortIndex, nil
+}
+
 // Neuen Ort erstellen
 func (s *OrtService) Create(data iface.OrtData) (*iface.Ort, error) {
+	lastIndex, err := s.getLastSortIndex()
+	if err != nil {
+		return nil, err
+	}
+
 	ortModel := &models.Ort{
-		OrtID: utils.NewOrtID(),
-		Name:  data.Name,
+		OrtID:     utils.NewOrtID(),
+		Name:      data.Name,
+		SortIndex: lastIndex + 1,
 	}
 
 	if err := s.db.Create(ortModel).Error; err != nil {

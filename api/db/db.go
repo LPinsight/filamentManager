@@ -114,8 +114,9 @@ func ToIfaceOrt(m *models.Ort) *iface.Ort {
 	}
 
 	ort := &iface.Ort{
-		ID:   m.OrtID,
-		Name: m.Name,
+		ID:        m.OrtID,
+		Name:      m.Name,
+		SortIndex: m.SortIndex,
 	}
 
 	return ort
