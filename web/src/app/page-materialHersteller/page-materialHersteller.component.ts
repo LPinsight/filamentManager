@@ -42,13 +42,12 @@ export class PageMaterialHerstellerComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.dataService.material.material$.subscribe(liste => {
-      this.materialList = liste
-      this.gefilterteMaterialList = liste 
-    })
-    this.dataService.hersteller.hersteller$.subscribe(liste => {
-      this.herstellerListe = liste   
-      this.gefilterteHerstellerListe = liste   
+    this.dataService.dataState$.subscribe(state => {
+      this.materialList = state.material
+      this.gefilterteMaterialList = state.material 
+
+      this.herstellerListe = state.hersteller   
+      this.gefilterteHerstellerListe = state.hersteller   
     })
   }
 

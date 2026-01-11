@@ -4,11 +4,21 @@ import { Hersteller_dataService } from './data/hersteller_data.service';
 import { Ort_dataService } from './data/ort_data.service';
 import { Filament_dataService } from './data/filament_data.service';
 import { Spule_dataService } from './data/spule_data.service';
+import { DataState } from '../_interface/main';
+import { combineLatest, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+
+  dataState$: Observable<DataState> = combineLatest({
+    spule: this.spule.spule$,
+    filament: this.filament.filament$,
+    material: this.material.material$,
+    hersteller: this.hersteller.hersteller$,
+    ort: this.ort.ort$
+  })
 
   constructor(
     public material: Material_dataService,
@@ -19,21 +29,10 @@ export class DataService {
   ) {
     this.loadAll()
     
-    hersteller.changed$.subscribe(_ => {
-      this.loadFilamentSpule()
-    })
-
-    material.changed$.subscribe(_ => {
-      this.loadFilamentSpule()
-    })
-
-    ort.changed$.subscribe(_ => {
-      spule.loadAll().subscribe()
-    })
-
-    filament.changed$.subscribe(_ => {
-      spule.loadAll().subscribe()
-    })
+    hersteller.changed$.subscribe(_ => this.loadFilamentSpule())
+    material.changed$.subscribe(_ => this.loadFilamentSpule())
+    ort.changed$.subscribe(_ => spule.loadAll().subscribe())
+    filament.changed$.subscribe(_ => spule.loadAll().subscribe())
   }
 
   private loadAll () {

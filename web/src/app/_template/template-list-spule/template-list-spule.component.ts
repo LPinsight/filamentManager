@@ -20,7 +20,7 @@ export class TemplateListSpuleComponent implements OnInit {
     private alertService: AlertService,
     private toastService: ToastService,
   ) {
-    this.dataService.ort.ort$.subscribe(o => this.orteList = o)
+    dataService.dataState$.subscribe(state => this.orteList = state.ort)
   }
 
   ngOnInit() {    

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Hersteller } from '../../_interface/hersteller';
 import { Material } from '../../_interface/material';
@@ -11,7 +11,7 @@ import { Ort } from '../../_interface/ort';
   templateUrl: './filament-filter.component.html',
   styleUrls: ['./filament-filter.component.scss']
 })
-export class FilamentFilterComponent {
+export class FilamentFilterComponent implements OnInit {
   @Input() form!: FormGroup
   @Input() config!: FilamentFilterConfig
 
@@ -30,9 +30,13 @@ export class FilamentFilterComponent {
 
   constructor(
     private dataService: DataService
-  ) {
-    this.dataService.hersteller.hersteller$.subscribe(h => this.herstellerList = h)
-    this.dataService.material.material$.subscribe(m => this.materialList = m)
-    this.dataService.ort.ort$.subscribe(m => this.ortList = m)
+  ) {}
+
+  ngOnInit() {
+    this.dataService.dataState$.subscribe(state => {
+      this.herstellerList = state.hersteller
+      this.materialList = state.material
+      this.ortList = state.ort
+    })
   }
 }

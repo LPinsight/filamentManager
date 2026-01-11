@@ -47,19 +47,19 @@ export class PageSpuleComponent implements OnInit {
   ngOnInit() {
     this.initForm()
 
-    this.dataService.spule.spule$.subscribe(list => {
-      this.spuleList = list
-      this.gefilterteSpuleList = list
+    this.dataService.dataState$.subscribe(state => {
+      this.spuleList = state.spule
+      this.gefilterteSpuleList = state.spule
 
-      this.aktiveSpulen = list.filter(spule => !spule.archiviert)
-      this.archvierteSpulen = list.filter(spule => spule.archiviert)
+      this.aktiveSpulen = state.spule.filter(spule => !spule.archiviert)
+      this.archvierteSpulen = state.spule.filter(spule => spule.archiviert)
 
-      if(list.length) {
-        this.preisMin = Math.floor(Math.min(...list.map(s => s.filament.preis)))
-        this.preisMax = Math.ceil(Math.max(...list.map(s => s.filament.preis)))
+      if(state.spule.length) {
+        this.preisMin = Math.floor(Math.min(...state.spule.map(s => s.filament.preis)))
+        this.preisMax = Math.ceil(Math.max(...state.spule.map(s => s.filament.preis)))
 
-        this.gewichtMin = Math.floor(Math.min(...list.map(s => s.verbleibendes_Gewicht)))
-        this.gewichtMax = Math.ceil(Math.max(...list.map(s => s.verbleibendes_Gewicht)))
+        this.gewichtMin = Math.floor(Math.min(...state.spule.map(s => s.verbleibendes_Gewicht)))
+        this.gewichtMax = Math.ceil(Math.max(...state.spule.map(s => s.verbleibendes_Gewicht)))
 
         this.filterForm.patchValue({
           preisMin: this.preisMin,

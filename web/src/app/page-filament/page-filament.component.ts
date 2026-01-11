@@ -59,16 +59,17 @@ export class PageFilamentComponent implements OnInit {
   ngOnInit() {
     this.initForm()
 
-    this.dataService.filament.filament$.subscribe(list => {
-      this.filamentList = list
-      this.gefilterteFilamentList = list
+    this.dataService.dataState$.subscribe(state => {
+      // FILAMENT
+      this.filamentList = state.filament
+      this.gefilterteFilamentList = state.filament
 
-      if(list.length) {
-        this.preisMin = Math.floor(Math.min(...list.map(f => f.preis)))
-        this.preisMax = Math.ceil(Math.max(...list.map(f => f.preis)))
+      if(state.filament.length) {
+        this.preisMin = Math.floor(Math.min(...state.filament.map(f => f.preis)))
+        this.preisMax = Math.ceil(Math.max(...state.filament.map(f => f.preis)))
 
-        this.gewichtMin = Math.floor(Math.min(...list.map(f => f.gewicht_filament)))
-        this.gewichtMax = Math.ceil(Math.max(...list.map(f => f.gewicht_filament)))
+        this.gewichtMin = Math.floor(Math.min(...state.filament.map(f => f.gewicht_filament)))
+        this.gewichtMax = Math.ceil(Math.max(...state.filament.map(f => f.gewicht_filament)))
 
         this.filterForm.patchValue({
           preisMin: this.preisMin,
@@ -77,10 +78,12 @@ export class PageFilamentComponent implements OnInit {
           gewichtMax: this.gewichtMax,
         })
       }
+
+      // HERSTELLER
+      this.herstellerList = state.hersteller
+      // MATERIAL
+      this.materialList = state.material
     })
-    
-    this.dataService.hersteller.hersteller$.subscribe(h => this.herstellerList = h)
-    this.dataService.material.material$.subscribe(m => this.materialList = m)
 
     this.filterForm.valueChanges.subscribe(_ => this.applyFilter())
     this.applyFilter()

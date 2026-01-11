@@ -23,15 +23,10 @@ export class PageOrtComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataService.ort.ort$.subscribe(liste => {
-      this.orteListe = liste
-    })
+    this.dataService.dataState$.subscribe(state => {
+      this.orteListe = state.ort
 
-    combineLatest([
-      this.dataService.ort.ort$,
-      this.dataService.spule.spule$
-    ]).subscribe(([orte, spulen]) => {
-      const spulenOhneOrt = spulen.filter(s => !s.ort.id)
+      const spulenOhneOrt = state.spule.filter(s => !s.ort.id)
       const keinOrtBlock = spulenOhneOrt.length > 0 ? [{
         ort: {id: "__kein_ort__", name: "kein Ort"},
         spulen: spulenOhneOrt
@@ -39,9 +34,9 @@ export class PageOrtComponent implements OnInit {
 
       this.ortMitSpulen = [
         ...keinOrtBlock,
-        ...orte.map(ort => ({
+        ...state.ort.map(ort => ({
         ort,
-        spulen: spulen.filter(s => s.ort?.id === ort.id)
+        spulen: state.spule.filter(s => s.ort?.id === ort.id)
       }))
       ]
     })

@@ -1,4 +1,4 @@
-<h1>{{ort.name}}</h1>
+<h1>{{ort.name}} [{{spulenList.length}}]</h1>
 <div class="buttons">
   <button *ngIf="ort.id != '__kein_ort__'" (click)="update()"><mat-icon>edit</mat-icon></button>
   <button *ngIf="ort.id != '__kein_ort__'" (click)="remove()" class="delete"><mat-icon>delete</mat-icon></button>
