@@ -1,2 +1,17 @@
 {{listen.spule.length}}x Spulen<br>
 {{listen.filament.length}}x Filament<br>
+
+<div >
+  <h1>Farbe</h1>
+  <span>Anzahl Spulen</span>
+  <span>Gesamt Gewicht</span>
+  <span>Gesamt Verbleibend</span>
+  <span>Gesamt Verbrauch</span>
+</div>
+<div *ngFor="let filament of spulenNachFilament">
+  <h1>{{filament.filament.farbe}}</h1>
+  <span>{{filament.spulen.length}}</span>
+  <span>{{filament.gesamtGewicht | number}}</span>
+  <span>{{filament.gesamtVerbleibend | number}}</span>
+  <span>{{filament.gesamtVerbrauch | number}}</span>
+</div>

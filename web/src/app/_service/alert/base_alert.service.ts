@@ -29,6 +29,15 @@ export class Base_alertService {
     }).format(value)
   }
 
+  private formatProzent(value: number): string {
+    return new Intl.NumberFormat('de-DE', {
+      style: 'unit',
+      unit: 'percent',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(value)
+  }
+
   private formatEuro(value: number): string {
     return new Intl.NumberFormat('de-DE', {
       minimumFractionDigits: 2,
@@ -82,7 +91,7 @@ export class Base_alertService {
         </p>
         <p><b>Hersteller:</b> ${hersteller}</p>
         <p><b>Material:</b> ${material}</p>
-        <p><b>Verbeibendes Gewicht:</b> ${this.formatGramm(spule.verbleibendes_Gewicht)}</p>
+        <p><b>Verbleibendes Gewicht:</b> ${this.formatGramm(spule.verbleibendes_Gewicht)} [${this.formatProzent(spule.verbrauch_prozent)}]</p>
         <p><b>Verbrauchtes Gewicht:</b> ${this.formatGramm(spule.verbrauchtes_Gewicht)}</p>
         <p><b>NFC-Tag:</b> ${spule.nfc ? "NFC-Tag zugeordnet": "kein NFC-Tag zugeordnet"}</p>
         <p><b>Spulen Nr.:</b> ${spule.nummer || "keine Nummer zugeordnet"}</p>

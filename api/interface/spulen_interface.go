@@ -4,6 +4,7 @@ type Spule struct {
 	ID                    string   `json:"id"`
 	Filament              Filament `json:"filament"`
 	Verbrauchtes_Gewicht  float32  `json:"verbrauchtes_Gewicht"`
+	Verbrauch_Prozent     float32  `json:"verbrauch_prozent"`
 	Verbleibendes_Gewicht float32  `json:"verbleibendes_Gewicht"`
 	NFC                   string   `json:"nfc"`
 	Nummer                int      `json:"nummer"`

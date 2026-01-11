@@ -1,0 +1,19 @@
+@use './../../scss/var' as *;
+
+div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80rem;
+  border-bottom: 1px solid #fff;
+
+
+  h1 {
+    width: 20rem;
+    text-align: center;
+  }
+  span {
+    width: 10rem;
+    text-align: center;
+  }
+}

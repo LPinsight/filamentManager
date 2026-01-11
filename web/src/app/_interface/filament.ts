@@ -1,5 +1,6 @@
 import { Hersteller } from "./hersteller"
 import { Material } from "./material"
+import { Spule } from "./spule"
 
 export interface Filament {
   id: string
@@ -20,3 +21,11 @@ export type FilamentSortMode =
 | 'material'
 | 'hersteller'
 | 'gewicht'
+
+export interface FilamentmitSpulen {
+  filament: Filament,
+  spulen: Spule[]
+  gesamtGewicht: number,
+  gesamtVerbrauch: number,
+  gesamtVerbleibend: number
+}

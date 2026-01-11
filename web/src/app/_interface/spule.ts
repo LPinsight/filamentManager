@@ -6,6 +6,7 @@ export interface Spule {
   filament: Filament
   verbrauchtes_Gewicht: number
   verbleibendes_Gewicht: number
+  verbrauch_prozent: number
   nfc: string
   nummer: number
   ort: Ort
