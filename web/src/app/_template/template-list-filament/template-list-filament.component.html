@@ -1,8 +1,4 @@
-<div class="farbe">
-  <div class="farbcode" [ngStyle]="{'background-color': filament.farbcode}"></div>
-  <span *ngIf="filament.link"><a href="{{filament.link}}" target="_blank">{{filament.farbe}}</a></span>
-  <span *ngIf="!filament.link">{{filament.farbe}}</span>
-</div>
+<app-filament-farbe [farbcode]="filament.farbcode" [farbe]="filament.farbe" [link]="filament.link"/>
 
 <span class="hersteller">{{filament.hersteller.name}}</span>
 

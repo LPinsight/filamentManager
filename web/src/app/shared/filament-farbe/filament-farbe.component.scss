@@ -1,0 +1,29 @@
+@use './../../../scss/var' as *;
+
+:host {
+  display: flex;
+  align-items: center;
+  width: 20rem;
+
+  span {
+    text-align: left;
+    width: 13rem;
+    font-size: 2rem;
+
+    a {
+      color: $white;
+    }
+  }
+
+  div.farbcode {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    margin-right: 1rem;
+    border: 1px solid $prime-dark;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

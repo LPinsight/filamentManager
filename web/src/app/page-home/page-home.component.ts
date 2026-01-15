@@ -3,7 +3,7 @@ import { DataService } from '../_service/data.service';
 import { Spule } from '../_interface/spule';
 import { Filament, FilamentmitSpulen } from '../_interface/filament';
 import { Material } from '../_interface/material';
-import { Hersteller } from '../_interface/hersteller';
+import { Hersteller, HerstellerMitFilament } from '../_interface/hersteller';
 import { DataState } from '../_interface/main';
 
 @Component({
@@ -15,6 +15,7 @@ import { DataState } from '../_interface/main';
 export class PageHomeComponent implements OnInit {
     listen!: DataState
     spulenNachFilament: FilamentmitSpulen[] = []
+    filamentNachHersteller: HerstellerMitFilament[] = []
 
   constructor(
     private dataService: DataService
@@ -25,7 +26,29 @@ export class PageHomeComponent implements OnInit {
       this.listen = state
 
       this.groupSpulenByFilament(state.spule)
+      this.groupFilamentByHersteller(this.spulenNachFilament)
     })
+  }
+
+  private groupFilamentByHersteller(filamentmitSpulen: FilamentmitSpulen[]) {
+    const grouped = filamentmitSpulen.reduce((acc, filament) => {
+      const herstellerId = filament.filament.hersteller.id
+
+      if(!acc[herstellerId]) {
+        acc[herstellerId] = {
+          hersteller: filament.filament.hersteller,
+          filament: [],
+        }
+      }
+
+      acc[herstellerId].filament.push(filament)
+      return acc
+    }, {} as Record<string, HerstellerMitFilament>)
+
+    this.filamentNachHersteller = Object.values(grouped)
+    console.log(grouped);
+    
+    
   }
 
   private groupSpulenByFilament(spulen: Spule[]) {
@@ -53,8 +76,6 @@ export class PageHomeComponent implements OnInit {
     }, {} as Record<string, FilamentmitSpulen>)
 
     this.spulenNachFilament = Object.values(grouped)
-    console.log(this.spulenNachFilament);
-    
   }
 
 }

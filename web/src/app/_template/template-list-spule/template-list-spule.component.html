@@ -1,7 +1,4 @@
-<div class="farbe">
-  <div class="farbcode" [ngStyle]="{'background-color': spule.filament.farbcode}"></div>
-  <span>{{spule.filament.farbe}}</span>
-</div>
+<app-filament-farbe [farbcode]="spule.filament.farbcode" [farbe]="spule.filament.farbe" />
 
 <span class="hersteller">{{spule.filament.hersteller.name}} - {{spule.filament.material.name}}</span>
 

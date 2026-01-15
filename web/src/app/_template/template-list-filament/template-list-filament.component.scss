@@ -18,28 +18,6 @@
     &.hersteller {
       width: 16rem;
     }
-
-    a {
-      color: $white;
-    }
-  }
-
-  div.farbe {
-    display: flex;
-    align-items: center;
-
-    span {
-      text-align: left;
-      width: 13rem;
-    }
-
-    div.farbcode {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 1.5rem;
-      margin-right: 1rem;
-      border: 1px solid $prime-dark;
-    }
   }
 
   div.gewicht {

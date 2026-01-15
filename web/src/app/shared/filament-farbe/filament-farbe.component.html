@@ -1,0 +1,4 @@
+<div class="farbcode" [ngStyle]="{'background-color': farbcode}">{{nummer || ""}}</div>
+
+<span *ngIf="link"><a href="{{link}}" target="_blank">{{farbe}}</a></span>
+<span *ngIf="!link">{{farbe}}</span>
