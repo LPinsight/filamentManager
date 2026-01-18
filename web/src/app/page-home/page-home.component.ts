@@ -16,6 +16,9 @@ export class PageHomeComponent implements OnInit {
     listen!: DataState
     spulenNachFilament: FilamentmitSpulen[] = []
     filamentNachHersteller: HerstellerMitFilament[] = []
+    gefiltertFilamentNachHersteller: HerstellerMitFilament[] = []
+
+    farbenSearch = ''
 
   constructor(
     private dataService: DataService
@@ -38,6 +41,7 @@ export class PageHomeComponent implements OnInit {
         acc[herstellerId] = {
           hersteller: filament.filament.hersteller,
           filament: [],
+          offen: false
         }
       }
 
@@ -45,10 +49,8 @@ export class PageHomeComponent implements OnInit {
       return acc
     }, {} as Record<string, HerstellerMitFilament>)
 
-    this.filamentNachHersteller = Object.values(grouped)
-    console.log(grouped);
-    
-    
+    this.filamentNachHersteller = Object.values(grouped)    
+    this.gefiltertFilamentNachHersteller = Object.values(grouped)    
   }
 
   private groupSpulenByFilament(spulen: Spule[]) {
@@ -76,6 +78,31 @@ export class PageHomeComponent implements OnInit {
     }, {} as Record<string, FilamentmitSpulen>)
 
     this.spulenNachFilament = Object.values(grouped)
+  }
+
+  public toggleHersteller (hersteller: HerstellerMitFilament) {
+    hersteller.offen = !hersteller.offen
+  }
+
+  public filterFilament () {
+    const search = this.farbenSearch.toLowerCase().trim()
+
+    if(!search) {
+      this.gefiltertFilamentNachHersteller = this.filamentNachHersteller
+      return
+    }
+
+    this.gefiltertFilamentNachHersteller = this.filamentNachHersteller.map(hersteller => {
+      const gefilterteFilamente = hersteller.filament.filter(f => f.filament.farbe.toLowerCase().includes(search))
+
+      return {
+        ...hersteller,
+        filament: gefilterteFilamente,
+        offen: hersteller.offen
+      }
+    })
+    .filter(h => h.filament.length > 0)
+    
   }
 
 }

@@ -1,20 +1,28 @@
-{{listen.spule.length}}x Spulen<br>
-{{listen.filament.length}}x Filament<br>
+<mat-form-field appearance="outline">
+    <mat-label>Farbe</mat-label>
+  <input matInput type="text" [(ngModel)]="farbenSearch" (input)="filterFilament()">
+</mat-form-field>
 
-<div class="hersteller" *ngFor="let hersteller of filamentNachHersteller">
-  <h1>{{hersteller.hersteller.name}}</h1>
-  <div class="filament legende">
-    <span class="farbe">Farbe</span>
-    <span>Anzahl Spulen</span>
-    <span>Gesamt Gewicht</span>
-    <span>Gesamt Verbleibend</span>
-    <span>Gesamt Verbrauch</span>
-  </div>
-  <div class="filament" *ngFor="let filament of hersteller.filament">
-    <app-filament-farbe [farbcode]="filament.filament.farbcode" [farbe]="filament.filament.farbe" />
-    <span>{{filament.spulen.length}}</span>
-    <span>{{filament.gesamtGewicht | number}}g</span>
-    <span>{{filament.gesamtVerbleibend | number}}g</span>
-    <span>{{filament.gesamtVerbrauch | number}}g</span>
+<div class="hersteller" *ngFor="let hersteller of gefiltertFilamentNachHersteller">
+  <h1 class="accordion-header" (click)="toggleHersteller(hersteller)">
+    {{hersteller.hersteller.name}}
+    ({{hersteller.filament.length}}{{hersteller.filament.length == 1 ? "x Filament": "x Filamente"}})
+    <span class="icon">{{hersteller.offen ? '-' : '+'}}</span>
+  </h1>
+  <div class="accordion-body" *ngIf="hersteller.offen">
+    <div class="filament legende">
+      <span class="farbe">Farbe</span>
+      <span>Anzahl Spulen</span>
+      <span>Gesamt Gewicht</span>
+      <span>Gesamt Verbleibend</span>
+      <span>Gesamt Verbrauch</span>
+    </div>
+    <div class="filament" *ngFor="let filament of hersteller.filament">
+      <app-filament-farbe [farbcode]="filament.filament.farbcode" [farbe]="filament.filament.farbe" />
+      <span>{{filament.spulen.length}}</span>
+      <span>{{filament.gesamtGewicht | number}}g</span>
+      <span>{{filament.gesamtVerbleibend | number}}g</span>
+      <span>{{filament.gesamtVerbrauch | number}}g</span>
+    </div>
   </div>
 </div>

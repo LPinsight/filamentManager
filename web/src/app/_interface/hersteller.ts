@@ -8,4 +8,5 @@ export interface Hersteller {
 export interface HerstellerMitFilament{
   hersteller: Hersteller
   filament: FilamentmitSpulen[]
+  offen?: boolean
 }
