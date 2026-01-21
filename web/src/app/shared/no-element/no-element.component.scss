@@ -14,3 +14,12 @@ p {
     width: 44rem;
   }
 }
+
+@media (max-width: $bp-mobile) {
+  p {
+    &.material,
+    &.herteller {
+      width: 100%;
+    }
+  }
+}

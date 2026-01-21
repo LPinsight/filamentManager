@@ -2,6 +2,7 @@
 
 :host {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
 
   div#material,
@@ -11,6 +12,22 @@
 
     button {
       margin-bottom: 2rem;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  :host {
+    flex-direction: column;
+    gap: 2rem;
+
+    div#material,
+    div#hersteller {
+      width: 100%;
+
+      app-legende {
+        display: none;
+      }
     }
   }
 }

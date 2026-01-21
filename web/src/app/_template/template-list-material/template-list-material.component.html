@@ -1,6 +1,14 @@
-<span>{{material.name}}</span>
-<span>{{material.durchmesser| number:'1.2-2'}}mm</span>
-<span>{{material.dichte| number:'1.2-2'}}g/cm³</span>
+<span class="name">{{material.name}}</span>
+
+<span class="value">
+    <span class="label">Durchmesser:</span>
+    {{material.durchmesser| number:'1.2-2'}}mm
+</span>
+
+<span class="value">
+    <span class="label">Dichte:</span>
+    {{material.dichte| number:'1.2-2'}}g/cm³
+</span>
 
 <div class="buttons">
     <button (click)="updateMaterial()" class="save"><mat-icon>edit</mat-icon>bearbeiten</button>
