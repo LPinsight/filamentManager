@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-template-header-nav',
@@ -7,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   standalone: false
 })
 export class TemplateHeaderNavComponent implements OnInit {
+  @Output() linkClicked = new EventEmitter<void>()
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public closeNav() {
+    this.linkClicked.emit()
   }
 
 }

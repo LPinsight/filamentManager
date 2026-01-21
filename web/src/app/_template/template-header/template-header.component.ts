@@ -7,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   standalone: false
 })
 export class TemplateHeaderComponent implements OnInit {
+  public navOpen = false
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public toggleNav() {
+    this.navOpen = !this.navOpen
   }
 
 }

@@ -3,7 +3,11 @@
   <h1>Filament<br><span>Management</span></h1>
 </div>
 
-<div id="nav">
-  <app-template-header-nav></app-template-header-nav>
+<button class="nav" (click)="toggleNav()" aria-label="Navigation öffnen">
+  <mat-icon>menu</mat-icon>
+</button>
+
+<div id="nav" [class.open]="navOpen">
+  <app-template-header-nav (linkClicked)="navOpen = false"></app-template-header-nav>
 </div>
 </header>

@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { LayoutModule } from '@angular/cdk/layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -83,7 +84,8 @@ const navigationRoutes: Routes = [
     MatSelectModule,
     MatFormFieldModule,
     MatSliderModule,
-    DragDropModule
+    DragDropModule,
+    LayoutModule
   ],
   providers: [
   ],

@@ -7,6 +7,12 @@ header {
   border-bottom: solid 5px $second-dark;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  button.nav {
+    display: none;
+  }
 
   div#left {
     h1 {
@@ -31,5 +37,42 @@ header {
 
   div#nav {
     height: 100%;
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  header {
+    z-index: 99;
+    height: auto;
+
+    button.nav {
+      display: flex;
+      background: none;
+      color: $white;
+      cursor: pointer;
+
+      mat-icon {
+        font-size: 2.5rem;
+        height: auto;
+        width: auto;
+      }
+    }
+
+    div#nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: $prime;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 300ms ease;
+      height: auto;
+
+      &.open {
+        max-height: 100vh;
+        border-bottom: solid 5px $second-dark;
+      }
+    }
   }
 }
