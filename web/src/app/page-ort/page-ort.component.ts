@@ -26,7 +26,7 @@ export class PageOrtComponent implements OnInit {
     this.dataService.dataState$.subscribe(state => {
       this.orteListe = state.ort
 
-      const spulenOhneOrt = state.spule.filter(s => !s.ort.id)
+      const spulenOhneOrt = state.spule.filter(s => !s.ort.id && !s.archiviert)
       const keinOrtBlock = spulenOhneOrt.length > 0 ? [{
         ort: {id: "__kein_ort__", name: "kein Ort"},
         spulen: spulenOhneOrt
@@ -36,7 +36,7 @@ export class PageOrtComponent implements OnInit {
         ...keinOrtBlock,
         ...state.ort.map(ort => ({
         ort,
-        spulen: state.spule.filter(s => s.ort?.id === ort.id)
+        spulen: state.spule.filter(s => s.ort?.id === ort.id && !s.archiviert)
       }))
       ]
     })

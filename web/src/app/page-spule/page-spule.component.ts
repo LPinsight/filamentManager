@@ -62,6 +62,7 @@ export class PageSpuleComponent implements OnInit {
         this.gewichtMax = Math.ceil(Math.max(...state.spule.map(s => s.verbleibendes_Gewicht)))
 
         this.filterForm.patchValue({
+          archiviert: false,
           preisMin: this.preisMin,
           preisMax: this.preisMax,
           gewichtMin: this.gewichtMin,
