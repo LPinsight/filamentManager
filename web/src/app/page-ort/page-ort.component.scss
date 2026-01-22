@@ -2,8 +2,12 @@
 
 :host {
 
-  button {
-
+  div.buttons {
+    display: flex;
+    justify-content: space-around;
+    button {
+      width: 100%;
+    }
   }
   
   div#orte {
@@ -12,3 +16,11 @@
   }
 }
 
+@media (max-width: $bp-mobile) {
+  :host {
+    div.buttons {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+}

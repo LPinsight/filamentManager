@@ -20,6 +20,8 @@ export class TemplateListOrtComponent implements OnInit {
 
   @Output() spuleDropped = new EventEmitter<spuleDropRequest[]>()
 
+  dragDelay = 0
+
   constructor(
     private dataService: DataService,
     private alertService: AlertService,
@@ -27,7 +29,9 @@ export class TemplateListOrtComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    
+    if (window.matchMedia('(pointer: coarse').matches) {
+      this.dragDelay = 300
+    }
   }
 
   public async update() {

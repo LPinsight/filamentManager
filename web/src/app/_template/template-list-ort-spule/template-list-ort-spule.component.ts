@@ -12,11 +12,10 @@ import Swal from 'sweetalert2';
 })
 export class TemplateListOrtSpuleComponent implements OnInit {
   @Input() spule!: Spule
-
+  
   constructor(
     private dataService: DataService,
     private alertService: AlertService,
-    private toastService: ToastService,
   ) {}
 
   ngOnInit(){
@@ -26,6 +25,6 @@ export class TemplateListOrtSpuleComponent implements OnInit {
     const material: string = this.dataService.material.getNameById(this.spule.filament.material.id)
     const hersteller: string = this.dataService.hersteller.getNameById(this.spule.filament.hersteller.id)
 
-    const result = Swal.fire(this.alertService.spule.showConfig(this.spule,material, hersteller))
+    const _ = Swal.fire(this.alertService.spule.showConfig(this.spule,material, hersteller))
   }
 }

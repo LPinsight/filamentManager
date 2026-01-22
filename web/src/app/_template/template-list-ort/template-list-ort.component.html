@@ -8,5 +8,5 @@
   <div *ngIf="spulenList.length === 0" class="drop-placeholder">
     Spule hier ablegen
   </div>
-  <app-template-list-ort-spule *ngFor="let spule of spulenList" cdkDrag [spule]="spule" />
+  <app-template-list-ort-spule *ngFor="let spule of spulenList" cdkDrag [spule]="spule" [cdkDragStartDelay]="dragDelay" />
 </div>
