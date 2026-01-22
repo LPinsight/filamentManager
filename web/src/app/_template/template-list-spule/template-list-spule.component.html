@@ -2,8 +2,14 @@
 
 <span class="hersteller">{{spule.filament.hersteller.name}} - {{spule.filament.material.name}}</span>
 
-<span>{{spule.verbrauchtes_Gewicht | number}}g</span>
-<span>{{spule.verbleibendes_Gewicht | number}}g [{{spule.verbrauch_prozent| number:'1.0-0'}}%]</span>
+<span>
+  <span class="label">Verbraucht:</span>
+  {{spule.verbrauchtes_Gewicht | number}}g
+</span>
+<span>
+  <span class="label">Verbleibend:</span>
+  {{spule.verbleibendes_Gewicht | number}}g [{{spule.verbrauch_prozent| number:'1.0-0'}}%]
+</span>
 
 <span *ngIf="!spule.nfc && !spule.nummer" class="empty">
   kein Tag zugeordnet<br>

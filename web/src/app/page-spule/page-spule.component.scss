@@ -2,7 +2,24 @@
 
 div.sort {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
+
+  section.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  div.sort {
+    margin-bottom: 1rem;
+  }
+
+  app-legende {
+    display: none;
+  }
 }

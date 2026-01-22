@@ -139,7 +139,7 @@ export class PageSpuleComponent implements OnInit {
   public resetFilter() {
     this.filterForm.patchValue({
       farbe: '',
-      archiviert: null,
+      archiviert: false,
       hersteller_id: null,
       material_id: null,
       ort_id: null,

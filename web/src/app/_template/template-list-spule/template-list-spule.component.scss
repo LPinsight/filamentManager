@@ -34,24 +34,6 @@
     }
   }
 
-  div.farbe {
-    display: flex;
-    align-items: center;
-
-    span {
-      text-align: left;
-      width: 13rem;
-    }
-
-    div.farbcode {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 1.5rem;
-      margin-right: 1rem;
-      border: 1px solid $prime-dark;
-    }
-  }
-
   div.buttons {
     display: flex;
     flex-direction: row;
@@ -61,6 +43,43 @@
     section {
       display: flex;
       flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  :host {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+
+    span {
+      width: auto;
+      text-align: center;
+      font-size: 1.5rem;
+
+      &.label {
+        font-weight: 600;
+      }
+
+      &.hersteller {
+        width: auto;
+      }
+    }
+
+    div.buttons {
+      width: 100%;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      section {
+        flex-direction: row;
+        align-items: center;
+
+        button {
+          width: 100%;
+        }
+      }
     }
   }
 }
