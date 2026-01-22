@@ -1,2 +1,6 @@
 <app-template-header></app-template-header>
 <div id="content"><router-outlet></router-outlet></div>
+
+<span id="up" (click)="scrollUp()" [class.show]="showScrollUp">
+  <mat-icon >swipe_up</mat-icon>
+</span>

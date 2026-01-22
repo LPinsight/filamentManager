@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Filament, FilamentSortMode } from '../_interface/filament';
 import { DataService } from '../_service/data.service';
 import Swal from 'sweetalert2';
@@ -201,6 +201,13 @@ export class PageFilamentComponent implements OnInit {
       hersteller_id: filament.hersteller.id,
       material_id: filament.material.id,
     })
+
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    }, 0)
   }
 
   public closeForm() {

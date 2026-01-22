@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { DataService } from './_service/data.service';
-import { Hersteller } from './_interface/hersteller';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +6,21 @@ import { Hersteller } from './_interface/hersteller';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  showScrollUp = false
 
   constructor (
-    private dataService: DataService
   ) {}
+
+  @HostListener('window:scroll')
+  onWindowScroll(){
+    this.showScrollUp = window.scrollY > 200
+  }
+
+  scrollUp() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
   
 }
