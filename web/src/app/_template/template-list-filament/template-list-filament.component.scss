@@ -20,6 +20,11 @@
     }
   }
 
+  span.label {
+    display: none;
+    font-weight: 600;
+  }
+
   div.gewicht {
     display: flex;
     flex-direction: column;
@@ -34,6 +39,46 @@
     section {
       display: flex;
       flex-direction: row;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  :host {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+
+    span {
+      width: auto;
+      text-align: center;
+      font-size: 1.4rem;
+
+      &.hersteller {
+        width: auto;
+      }
+    }
+
+    span.label {
+      display: inline;
+    }
+
+    div.gewicht {
+      flex-direction: row;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    div.buttons {
+      width: 100%;
+      gap: 0.5rem;
+
+      section {
+
+        button {
+          width: 100%;
+        }
+      }
     }
   }
 }

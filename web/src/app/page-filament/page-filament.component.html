@@ -94,10 +94,12 @@
 
 <div class="sort">
   <h3>Sortieren:</h3>
-  <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" icon="palette" sortModeSelf="farbe" titel="Farbe" />
-  <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" svg="manufacturer" sortModeSelf="hersteller" titel="Hersteller" />
-  <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" svg="material" sortModeSelf="material" titel="Material" />
-  <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" svg="gewicht" sortModeSelf="gewicht" titel="Gewicht" />
+  <section class="buttons">
+    <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" icon="palette" sortModeSelf="farbe" titel="Farbe" />
+    <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" svg="manufacturer" sortModeSelf="hersteller" titel="Hersteller" />
+    <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" svg="material" sortModeSelf="material" titel="Material" />
+    <app-sort-button (clickSort)="setSortMode($event)" [sortModeActiv]="sortMode" [sortDirection]="sortDirection" svg="gewicht" sortModeSelf="gewicht" titel="Gewicht" />
+  </section>
 </div>
 
 <app-legende [items]="legende" />

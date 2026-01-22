@@ -51,9 +51,55 @@
   }
 
   div.sort {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+
+    section.buttons {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+    }
+  }
 }
+
+@media (max-width: $bp-mobile) {
+  :host {
+    div#formFilament {
+      form {
+        div#inputs {
+          flex-direction: column;
+          align-items: stretch;
+
+          section {
+            margin: 0 0.75rem;
+          }
+        }
+
+        div#actions {
+          flex-direction: column;
+
+          button {
+            margin: 0 1rem 1rem;
+            width: auto;
+          }
+        }
+      }
+    }
+
+    div.sort {
+      flex-direction: column;
+      margin-bottom: 1rem;
+
+      section.buttons {
+        justify-content: center;
+      }
+    }
+
+    app-legende {
+      display: none;
+    }
+  }
 }

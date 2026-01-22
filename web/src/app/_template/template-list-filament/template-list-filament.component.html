@@ -1,13 +1,23 @@
 <app-filament-farbe [farbcode]="filament.farbcode" [farbe]="filament.farbe" [link]="filament.link"/>
 
-<span class="hersteller">{{filament.hersteller.name}}</span>
+<span class="value hersteller">
+  <span class="label">Hersteller:</span>
+  {{filament.hersteller.name}}
+</span>
 
-<span>{{filament.material.name}}</span>
+<span class="value">
+  <span class="label">Material:</span>
+  {{filament.material.name}}
+</span>
 
-<span>{{filament.preis| number:'1.2-2'}}€</span>
+<span class="value">
+  <span class="label">Preis:</span>
+  {{filament.preis| number:'1.2-2'}}€
+</span>
 
-<div class="gewicht">
-  <span>{{filament.gewicht_filament | number}}g</span>
+<div class="value gewicht">
+  <span class="label">Gewicht Filament & Spule:</span>
+  <span>{{filament.gewicht_filament | number}}g</span> &
   <span>{{filament.gewicht_spule | number}}g</span>
 </div>
 
@@ -16,6 +26,7 @@
     <button (click)="updateFilament()" class="save"><mat-icon>edit</mat-icon>bearbeiten</button>
     <button (click)="removeFilament()" class="delete"><mat-icon>delete</mat-icon>löschen</button>
   </section>
-    <button (click)="duplicateFilament()"><mat-icon>content_copy</mat-icon>Duplizieren</button>
+
+  <button (click)="duplicateFilament()"><mat-icon>content_copy</mat-icon>Duplizieren</button>
   <button (click)="addSpool()" ><mat-icon svgIcon="spool"></mat-icon>Spule hinzufügen</button>
 </div>

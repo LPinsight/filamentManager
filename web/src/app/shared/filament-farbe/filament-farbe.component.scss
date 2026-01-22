@@ -27,3 +27,14 @@
     align-items: center;
   }
 }
+
+@media (max-width: $bp-mobile) {
+  :host {
+    width: 100%;
+    justify-content: center;
+
+    span {
+      width: auto;
+    }
+  }
+}

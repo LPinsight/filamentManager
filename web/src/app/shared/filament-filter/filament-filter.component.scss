@@ -1,25 +1,50 @@
 @use './../../../scss/var' as *;
 
 :host {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  form.formFilter {
+    padding-bottom: 1rem;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
 
-    form.formFilter {
-      padding-bottom: 1rem;
+    h2.label {
+      margin-bottom: 0;
+      display: none;
+    }
+
+    div.range-filter {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-wrap: wrap;
+      flex-direction: column;
+      text-align: center;
+      color: $second-dark;
+      width: 25rem;
 
-      div.range-filter {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        color: $second-dark;
-        width: 25rem;
-
-        mat-slider {
-          margin: 0 1.8rem;
-        }
+      mat-slider {
+        margin: 0 1.8rem;
       }
     }
   }
+}
+
+@media (max-width: $bp-mobile) {
+  :host {
+    form.formFilter {
+      justify-content: center;
+
+      h2.label {
+        display: block;
+      }
+
+      mat-form-field,
+      div.range-filter {
+        width: 100%;
+      }
+    }
+  }
+}
