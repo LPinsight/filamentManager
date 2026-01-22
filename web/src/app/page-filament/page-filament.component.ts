@@ -192,6 +192,8 @@ export class PageFilamentComponent implements OnInit {
       hersteller_id: filament.hersteller.id,
       material_id: filament.material.id,
     })
+
+    this.scroll()
   }
 
   public openDuplicateForm(filament: Filament) {
@@ -202,18 +204,14 @@ export class PageFilamentComponent implements OnInit {
       material_id: filament.material.id,
     })
 
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-    }, 0)
+    this.scroll()
   }
 
   public closeForm() {
     this.hiddeForm = true
     this.editingFilament = null
     this.resetForm()
+    this.scroll()
   }
 
   private applyFilter() {
@@ -286,4 +284,13 @@ export class PageFilamentComponent implements OnInit {
         return sorted
     }
   } 
+
+  private scroll() {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    }, 0)
+  }
 }

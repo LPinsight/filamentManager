@@ -1,8 +1,7 @@
-<button *ngIf="hiddeForm" (click)="openCreateForm()"><mat-icon>add</mat-icon>Filament hinzufügen</button>
-
-<div [hidden]="hiddeForm" id="formFilament">
-  <h2>{{ editingFilament ? 'Filament bearbeiten' : 'Filament hinzufügen' }}</h2>
-  <form [formGroup]="filamentForm" (ngSubmit)="submit()">
+<div id="formFilament">
+  <h2 *ngIf="editingFilament"><mat-icon>edit</mat-icon>Filament bearbeiten</h2>
+  <h2 *ngIf="!editingFilament" (click)="openCreateForm()" [class.active]="!hiddeForm"><mat-icon>add</mat-icon>Filament hinzufügen</h2>
+  <form [formGroup]="filamentForm" [class.open]="!hiddeForm" (ngSubmit)="submit()">
 
     <div id="inputs">
       <section>
