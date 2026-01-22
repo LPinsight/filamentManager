@@ -1,5 +1,9 @@
-<form [formGroup]="form" class="formFilter">
-  <h2 class="label">Filter</h2>
+<h2 class="label" (click)="toggleFilter()">
+  Filter
+  <mat-icon>{{filterOpen? 'arrow_drop_up' : 'arrow_drop_down' }} </mat-icon>
+</h2>
+
+<form [formGroup]="form" class="formFilter" [class.open]="filterOpen">
   <mat-form-field appearance="outline">
       <mat-label>Farbe</mat-label>
       <input matInput type="text" formControlName="farbe">
@@ -69,7 +73,7 @@
       </div>
     </div>
   </form>
-  <button mat-stroked-button (click)="reset.emit()">
+  <button mat-stroked-button (click)="resetForm()">
     <mat-icon>filter_alt_off</mat-icon>
     Filter zurücksetzen
   </button>

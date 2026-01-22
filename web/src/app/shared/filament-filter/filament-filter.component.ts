@@ -23,6 +23,7 @@ export class FilamentFilterComponent implements OnInit {
 
   @Output() reset = new EventEmitter<void>()
 
+  filterOpen = false
 
   herstellerList: Hersteller[] = []
   materialList: Material[] = []
@@ -38,5 +39,14 @@ export class FilamentFilterComponent implements OnInit {
       this.materialList = state.material
       this.ortList = state.ort
     })
+  }
+
+  resetForm () {
+    this.filterOpen = false
+    this.reset.emit()
+  }
+
+  toggleFilter() {
+    this.filterOpen = !this.filterOpen
   }
 }
