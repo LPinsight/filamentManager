@@ -5,6 +5,7 @@ import (
 	"api/handler"
 	"api/router"
 	"api/service"
+	"api/websocket"
 	"fmt"
 	"log"
 
@@ -27,7 +28,10 @@ func main() {
 
 	handler.Init(materialService, herstellerService, ortService, filamentService, spuleService)
 
-	router := router.NewRouter()
+	wsService := websocket.NewWebSocketService()
+	wsService.Run()
+
+	router := router.NewRouter(wsService)
 
 	fmt.Println("Server started at http://0.0.0.0:8080")
 	log.Fatal(endless.ListenAndServe("0.0.0.0:8080", router))

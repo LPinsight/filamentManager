@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../_service/data.service';
 import { Spule } from '../_interface/spule';
-import { Filament, FilamentmitSpulen } from '../_interface/filament';
-import { Material } from '../_interface/material';
-import { Hersteller, HerstellerMitFilament } from '../_interface/hersteller';
+import { FilamentmitSpulen } from '../_interface/filament';
+import { HerstellerMitFilament } from '../_interface/hersteller';
 import { DataState } from '../_interface/main';
+import { WebsocketService } from '../_service/websocket.service';
 
 @Component({
   selector: 'app-page-home',
@@ -21,7 +21,8 @@ export class PageHomeComponent implements OnInit {
     farbenSearch = ''
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private webSocket: WebsocketService
   ) { }
 
   ngOnInit() {
@@ -31,6 +32,11 @@ export class PageHomeComponent implements OnInit {
       this.groupSpulenByFilament(state.spule)
       this.groupFilamentByHersteller(this.spulenNachFilament)
     })
+  }
+
+  public test() {
+    this.webSocket.sendMessage("test")
+
   }
 
   private groupFilamentByHersteller(filamentmitSpulen: FilamentmitSpulen[]) {

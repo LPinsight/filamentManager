@@ -8,11 +8,15 @@ import (
 
 	_ "api/docs" // 👈 wichtig!
 	"api/handler"
+	"api/websocket"
 )
 
-func NewRouter() http.Handler {
+func NewRouter(wsService *websocket.WebSocketService) http.Handler {
 	router := mux.NewRouter()
 	router.Use(enableCORS)
+
+	// WebSocket
+	router.HandleFunc("/ws", wsService.Handler)
 
 	// Main API routes
 	api := router.PathPrefix("/api").Subrouter()
