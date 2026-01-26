@@ -34,11 +34,6 @@ export class PageHomeComponent implements OnInit {
     })
   }
 
-  public test() {
-    this.webSocket.sendMessage("test")
-
-  }
-
   private groupFilamentByHersteller(filamentmitSpulen: FilamentmitSpulen[]) {
     const grouped = filamentmitSpulen.reduce((acc, filament) => {
       const herstellerId = filament.filament.hersteller.id

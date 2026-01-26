@@ -9,10 +9,11 @@ import { ButtonPressPayload, RfidScanPayload, WebSocketMessage } from '../_inter
 export class WebsocketService {
   private URL: string = `ws://192.168.178.193:8080/ws`
   private socket!: WebSocket
-  private messageSubject = new Subject<string>();
 
   private buttonPress$ = new Subject<ButtonPressPayload>()
   private rfidScan$ = new Subject<RfidScanPayload>()
+  private assignStarted$ = new Subject<number>()
+  private assignResult$ = new Subject<{success: boolean; message?: string}>()
 
   constructor(
     private toastService: ToastService
@@ -23,11 +24,27 @@ export class WebsocketService {
     
     this.socket = new WebSocket(this.URL);
 
+    this.socket.onopen = () => {
+      this.sendMessage({
+        type: 'register',
+        source: 'web',
+      })
+    }
+
     this.socket.onmessage = (event) => {
       try {
         const msg = JSON.parse(event.data) as WebSocketMessage
 
         switch(msg.type) {
+          case 'assign_started':
+            this.assignStarted$.next(msg.payload.spoolId)
+            break
+          case 'assign_success':
+            this.assignResult$.next({success: true})
+            break
+          case 'assign_error':
+            this.assignResult$.next({success: false, message: msg.payload.message})
+            break
           case 'button_press':
             this.buttonPress$.next(msg.payload as ButtonPressPayload)
             break
@@ -52,14 +69,10 @@ export class WebsocketService {
     }
   }
 
-  private reconnect(delay = 5000) {
-      setTimeout(() => this.connect(), delay); // Reconnect after 5 seconds
-  }
-
-  sendMessage(msg: string) {
+  sendMessage<T>(msg: WebSocketMessage<T>) {
     if (this.socket && this.socket.readyState == WebSocket.OPEN) {
-      this.socket.send(msg);
-    } else {      
+      this.socket.send(JSON.stringify(msg));
+    } else {
       this.toastService.warning('WebSocket ist nicht verbunden.', 'WebSocket-Fehler');
     }
   }
@@ -68,6 +81,18 @@ export class WebsocketService {
     if (this.socket) {
       this.socket.close();
     }
+  }
+
+  private reconnect(delay = 5000) {
+      setTimeout(() => this.connect(), delay); // Reconnect after 5 seconds
+  }
+
+  onAssignStarted() {
+    return this.assignStarted$.asObservable()
+  }
+
+  onAssignResult() {
+    return this.assignResult$.asObservable()
   }
 
   onButtonPress(): Observable<ButtonPressPayload> {

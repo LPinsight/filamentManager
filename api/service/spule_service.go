@@ -339,7 +339,7 @@ func (s *SpuleService) UpdatGewicht(id string, data iface.GewichtRequest) (*ifac
 func (s *SpuleService) SearchSpule(id string) (*models.Spule, error) {
 	var spule models.Spule
 
-	if err := s.db.Preload("Filament").Preload("Ort").First(&spule, "spule_id = ?", id).Error; err != nil {
+	if err := s.db.Preload("Filament").Preload("Filament.Hersteller").Preload("Ort").First(&spule, "spule_id = ?", id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("spule not found")
 		}

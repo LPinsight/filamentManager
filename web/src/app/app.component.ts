@@ -18,16 +18,15 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.websocket.connect()
 
-    this.websocket.onButtonPress().subscribe(res => {
-      this.toastService.info(res.button)
+    this.websocket.onAssignResult().subscribe(res => {
       console.log(res);
+      
+      if(res.success) {
+        this.toastService.success('NFC-Tag wurde erfolgreich zugewiesen', 'NFC-Zuordnung Erfolgreich')
+      } else {
+        this.toastService.error(res.message || 'NFC-Zuordnung fehlgeschlagen', 'NFC-Zuordnung Fehlgeschlagen')
+      }
     })
-
-    this.websocket.onRfidScan().subscribe(res => {
-      this.toastService.info(res.uid)
-      console.log(res);
-    })
-    
   }
 
   @HostListener('window:scroll')

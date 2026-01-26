@@ -1,6 +1,9 @@
 package websocket
 
 import (
+	iface "api/interface"
+	"api/service"
+	"encoding/json"
 	"net/http"
 	"sync"
 
@@ -8,43 +11,23 @@ import (
 )
 
 type WebSocketService struct {
-	clients   map[*websocket.Conn]bool
-	broadcast chan string
-	upgrader  websocket.Upgrader
-	mutex     sync.RWMutex
+	clients  map[*iface.Client]bool
+	upgrader websocket.Upgrader
+	mutex    sync.RWMutex
+
+	rfidState    *iface.RfidAssignmentState
+	spuleService *service.SpuleService
 }
 
-func NewWebSocketService() *WebSocketService {
+func NewWebSocketService(spuleService *service.SpuleService) *WebSocketService {
 	return &WebSocketService{
-		clients:   make(map[*websocket.Conn]bool),
-		broadcast: make(chan string),
+		clients: make(map[*iface.Client]bool),
 		upgrader: websocket.Upgrader{
 			CheckOrigin: func(r *http.Request) bool { return true },
 		},
+		rfidState:    &iface.RfidAssignmentState{Active: false},
+		spuleService: spuleService,
 	}
-}
-
-func (ws *WebSocketService) Run() {
-	go func() {
-		for {
-			msg := <-ws.broadcast
-
-			ws.mutex.RLock()
-			for client := range ws.clients {
-				err := client.WriteMessage(websocket.TextMessage, []byte(msg))
-				if err != nil {
-					client.Close()
-
-					ws.mutex.RUnlock()
-					ws.mutex.Lock()
-					delete(ws.clients, client)
-					ws.mutex.Unlock()
-					ws.mutex.RLock()
-				}
-			}
-			ws.mutex.RUnlock()
-		}
-	}()
 }
 
 func (ws *WebSocketService) Handler(w http.ResponseWriter, r *http.Request) {
@@ -55,23 +38,205 @@ func (ws *WebSocketService) Handler(w http.ResponseWriter, r *http.Request) {
 
 	defer conn.Close()
 
+	client := &iface.Client{
+		Conn:   conn,
+		Source: "",
+	}
+
 	ws.mutex.Lock()
-	ws.clients[conn] = true
+	ws.clients[client] = true
 	ws.mutex.Unlock()
 
 	for {
 		_, msg, err := conn.ReadMessage()
 		if err != nil {
 			ws.mutex.Lock()
-			delete(ws.clients, conn)
+			delete(ws.clients, client)
 			ws.mutex.Unlock()
 			break
 		}
 
-		ws.broadcast <- string(msg)
+		ws.handleMessage(client, msg)
 	}
 }
 
-func (ws *WebSocketService) BroadcastMessage(msg string) {
-	ws.broadcast <- msg
+func (ws *WebSocketService) handleMessage(client *iface.Client, raw []byte) {
+	var msg iface.Msg
+
+	if err := json.Unmarshal(raw, &msg); err != nil {
+		return
+	}
+
+	if msg.Type == "register" {
+		client.Source = msg.Source
+		return
+	}
+
+	if client.Source == "" {
+		return
+	}
+
+	switch msg.Type {
+	case "rfid_scan":
+		ws.handleRfidScan(msg)
+	case "assign_spool":
+		ws.handleAssignSpool(msg)
+	default:
+	}
+}
+
+func (ws *WebSocketService) sendTo(target string, msg []byte) {
+	ws.mutex.RLock()
+	defer ws.mutex.RUnlock()
+
+	for client := range ws.clients {
+		if client.Source == target {
+			client.Conn.WriteMessage(websocket.TextMessage, msg)
+		}
+	}
+}
+
+func (ws *WebSocketService) handleAssignSpool(msg iface.Msg) {
+	var spoolId string
+	var farbe string
+	var nummer int
+	var hersteller string
+
+	ws.mutex.Lock()
+
+	if ws.rfidState.Active {
+		ws.mutex.Unlock()
+		ws.sendAssignError("Bereits eine NFC-Zuordnung aktiv")
+		return
+	}
+
+	rawSpoolId, ok := msg.Payload["spoolId"].(string)
+	if !ok || rawSpoolId == "" {
+		ws.mutex.Unlock()
+		ws.sendAssignError("Ungültige Spulen-ID")
+		return
+	}
+
+	ws.rfidState.Active = true
+	ws.rfidState.SpoolID = rawSpoolId
+	spoolId = rawSpoolId
+
+	ws.mutex.Unlock()
+
+	spule, err := ws.spuleService.GetByID(spoolId)
+	if err != nil {
+		ws.resetRfidState()
+		ws.sendAssignError("Spule nicht gefunden")
+		return
+	}
+
+	farbe = spule.Filament.Farbe
+	nummer = spule.Nummer
+	hersteller = spule.Filament.Hersteller.Name
+
+	ws.sendStartRfidScan(spoolId, farbe, nummer, hersteller)
+	ws.sendAssignStarted(spoolId)
+}
+
+func (ws *WebSocketService) handleRfidScan(msg iface.Msg) {
+	var spoolId string
+
+	ws.mutex.Lock()
+
+	if !ws.rfidState.Active {
+		ws.mutex.Unlock()
+		return
+	}
+
+	uid, ok := msg.Payload["uid"].(string)
+	if !ok {
+		ws.mutex.Unlock()
+		ws.sendAssignError("Ungültige NFC-ID")
+		return
+	}
+
+	spoolId = ws.rfidState.SpoolID
+
+	ws.rfidState.Active = false
+	ws.rfidState.SpoolID = ""
+
+	ws.mutex.Unlock()
+
+	// TODO: DB-Speichern
+
+	ws.sendAssignSuccess()
+	ws.sendRfidSuccess()
+
+	_ = uid
+	_ = spoolId
+}
+
+func (ws *WebSocketService) resetRfidState() {
+	ws.mutex.Lock()
+	defer ws.mutex.Unlock()
+
+	ws.rfidState.Active = false
+	ws.rfidState.SpoolID = ""
+}
+
+func (ws *WebSocketService) sendStartRfidScan(spoolId string, farbe string, nummer int, hersteller string) {
+	msg, _ := json.Marshal(map[string]interface{}{
+		"type":   "start_rfid_scan",
+		"source": "api",
+		"target": "nodemcu",
+		"payload": map[string]interface{}{
+			"spoolId":    spoolId,
+			"farbe":      farbe,
+			"nummer":     nummer,
+			"hersteller": hersteller,
+		},
+	})
+
+	ws.sendTo("nodemcu", msg)
+}
+
+func (ws *WebSocketService) sendAssignStarted(spoolId string) {
+	msg, _ := json.Marshal(map[string]interface{}{
+		"type":   "assign_started",
+		"source": "api",
+		"target": "web",
+		"payload": map[string]interface{}{
+			"spoolId": spoolId,
+		},
+	})
+
+	ws.sendTo("web", msg)
+}
+
+func (ws *WebSocketService) sendAssignSuccess() {
+	msg, _ := json.Marshal(map[string]interface{}{
+		"type":   "assign_success",
+		"source": "api",
+		"target": "web",
+	})
+
+	ws.sendTo("web", msg)
+}
+
+func (ws *WebSocketService) sendAssignError(message string) {
+	msg, _ := json.Marshal(map[string]interface{}{
+		"type":   "assign_error",
+		"source": "api",
+		"target": "web",
+		"payload": map[string]interface{}{
+			"message": message,
+		},
+	})
+
+	ws.sendTo("web", msg)
+}
+
+func (ws *WebSocketService) sendRfidSuccess() {
+	msg, _ := json.Marshal(map[string]interface{}{
+		"type":   "rfid_success",
+		"source": "api",
+		"target": "nodemcu",
+	})
+
+	ws.sendTo("nodemcu", msg)
 }

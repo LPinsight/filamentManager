@@ -5,6 +5,7 @@ import { AlertService } from '../../_service/alert.service';
 import { DataService } from '../../_service/data.service';
 import Swal from 'sweetalert2';
 import { Ort } from '../../_interface/ort';
+import { WebsocketService } from '../../_service/websocket.service';
 
 @Component({
   selector: 'app-template-list-spule',
@@ -19,6 +20,7 @@ export class TemplateListSpuleComponent implements OnInit {
     private dataService: DataService,
     private alertService: AlertService,
     private toastService: ToastService,
+    private websocket: WebsocketService
   ) {
     dataService.dataState$.subscribe(state => this.orteList = state.ort)
   }
@@ -88,8 +90,15 @@ export class TemplateListSpuleComponent implements OnInit {
           this.editNummer()
           
         } else if (result1.isDenied) {
-          Swal.fire("NFC-Tag an Box senden und zuweisen","", "success")
-          
+          this.websocket.sendMessage({
+            type: 'assign_spool',
+            source: 'web',
+            payload: {
+              spoolId: this.spule.id
+            }
+          })
+
+          this.toastService.info("Bitte NFC-Tag an die Box halten", "NFC-Zuordnung gestartet")
         }
         return
         

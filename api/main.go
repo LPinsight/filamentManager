@@ -28,8 +28,7 @@ func main() {
 
 	handler.Init(materialService, herstellerService, ortService, filamentService, spuleService)
 
-	wsService := websocket.NewWebSocketService()
-	wsService.Run()
+	wsService := websocket.NewWebSocketService(spuleService)
 
 	router := router.NewRouter(wsService)
 
