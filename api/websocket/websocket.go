@@ -81,6 +81,8 @@ func (ws *WebSocketService) handleMessage(client *iface.Client, raw []byte) {
 		ws.handleRfidScan(msg)
 	case "assign_spool":
 		ws.handleAssignSpool(msg)
+	case "cancel_rfid_assign":
+		ws.handleCancelAssign()
 	default:
 	}
 }
@@ -248,4 +250,20 @@ func (ws *WebSocketService) sendRfidSuccess() {
 	})
 
 	ws.sendTo("nodemcu", msg)
+}
+
+func (ws *WebSocketService) handleCancelAssign() {
+	shouldNotify := false
+
+	ws.mutex.Lock()
+	if ws.rfidState.Active {
+		ws.rfidState.Active = false
+		ws.rfidState.SpoolID = ""
+		shouldNotify = true
+	}
+	ws.mutex.Unlock()
+
+	if shouldNotify {
+		ws.sendAssignError("NFC-Zuordnung abgebrochen")
+	}
 }
