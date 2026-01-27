@@ -51,6 +51,13 @@ export class Spule_dataService {
     return list.find(s => s.id === id)?.filament.farbe ?? `Unbekannt (#${id})`;
   }
 
+  getSpuleById(id: string): Spule | undefined {
+    if (!id) return undefined;
+
+    const list = this.spuleSubject.value;
+    return list.find(s => s.id === id);
+  }
+
   updateArchiv(spule: Spule) {
     let json = {
       "archiviert": !spule.archiviert

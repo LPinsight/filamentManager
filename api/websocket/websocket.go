@@ -83,6 +83,8 @@ func (ws *WebSocketService) handleMessage(client *iface.Client, raw []byte) {
 		ws.handleAssignSpool(msg)
 	case "cancel_rfid_assign":
 		ws.handleCancelAssign()
+	case "rfid_weight_scan":
+		ws.handleWeightScan(msg)
 	default:
 	}
 }
@@ -266,4 +268,31 @@ func (ws *WebSocketService) handleCancelAssign() {
 	if shouldNotify {
 		ws.sendAssignError("NFC-Zuordnung abgebrochen")
 	}
+}
+
+func (ws *WebSocketService) handleWeightScan(msg iface.Msg) {
+	rawUid, ok := msg.Payload["uid"].(string)
+	if !ok || rawUid == "" {
+		return
+	}
+
+	spule, err := ws.spuleService.GetByNfcTag(rawUid)
+	if err != nil {
+		return
+	}
+
+	ws.sendOpenWeightDialog(spule)
+}
+
+func (ws *WebSocketService) sendOpenWeightDialog(spule *iface.Spule) {
+	msg, _ := json.Marshal(map[string]interface{}{
+		"type":   "open_weight_dialog",
+		"source": "api",
+		"target": "web",
+		"payload": map[string]interface{}{
+			"spoolId": spule.ID,
+		},
+	})
+
+	ws.sendTo("web", msg)
 }

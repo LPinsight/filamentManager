@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ToastService } from './toast.service';
-import { ButtonPressPayload, RfidScanPayload, WebSocketMessage } from '../_interface/webSocket';
+import { ButtonPressPayload, RfidScanPayload, WebSocketMessage, WeightScanPayload } from '../_interface/webSocket';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class WebsocketService {
   private buttonPress$ = new Subject<ButtonPressPayload>()
   private rfidScan$ = new Subject<RfidScanPayload>()
   private assignStarted$ = new Subject<number>()
+  private assignWeight$ = new Subject<WeightScanPayload>()
   private assignResult$ = new Subject<{success: boolean; message?: string}>()
 
   constructor(
@@ -51,6 +52,9 @@ export class WebsocketService {
           case 'rfid_scan':
             this.rfidScan$.next(msg.payload as RfidScanPayload)
             break
+          case 'open_weight_dialog':
+            this.assignWeight$.next(msg.payload as WeightScanPayload)
+            break;
 
           default:
             this.toastService.warning(msg.payload, "Unbekannter WS-Typ:")
@@ -61,11 +65,11 @@ export class WebsocketService {
     };
 
     this.socket.onclose = (event) => {
-      this.reconnect()
+      // this.reconnect()
     };
 
     this.socket.onerror = (event) => {
-      this.reconnect()
+      // this.reconnect()
     }
   }
 
@@ -93,6 +97,10 @@ export class WebsocketService {
 
   onAssignResult() {
     return this.assignResult$.asObservable()
+  }
+
+  onAssignWeight(): Observable<WeightScanPayload>  {
+    return this.assignWeight$.asObservable()
   }
 
   onButtonPress(): Observable<ButtonPressPayload> {

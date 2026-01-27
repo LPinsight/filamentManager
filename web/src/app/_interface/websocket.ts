@@ -23,3 +23,7 @@ export interface ButtonPressPayload {
 export interface RfidScanPayload {
   uid: string
 }
+
+export interface WeightScanPayload {
+  spoolId: string
+}
