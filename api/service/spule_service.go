@@ -232,6 +232,31 @@ func (s *SpuleService) UpdateSort(data []iface.SpulenSortRequest) error {
 	})
 }
 
+// NFC-Tag setzen
+func (s *SpuleService) SetNfc(id string, uid string) (*iface.Spule, error) {
+
+	// Spule aus DB abrufen
+	result := s.db.Model(&models.Spule{}).
+		Where("spule_id = ?", id).
+		Update("nfc", uid)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return nil, errors.New("spule not found")
+	}
+
+	spule, err := s.SearchSpule(id)
+	if err != nil {
+		return nil, err
+	}
+	updated := db.ToIfaceSpule(spule)
+
+	return updated, nil
+}
+
 // NFC-Tag & Nummer entfernen
 func (s *SpuleService) RemoveNfc(id string, data iface.NfcRemoveRequest) (*iface.Spule, error) {
 	updates := map[string]interface{}{}
@@ -240,9 +265,9 @@ func (s *SpuleService) RemoveNfc(id string, data iface.NfcRemoveRequest) (*iface
 		updates["nfc"] = data.NFC
 	}
 
-	if data.Nummer == nil {
-		updates["nummer"] = data.Nummer
-	}
+	// if data.Nummer == nil {
+	// 	updates["nummer"] = data.Nummer
+	// }
 
 	if len(updates) == 0 {
 		return nil, errors.New("no Update")

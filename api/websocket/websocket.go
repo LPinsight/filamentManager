@@ -140,6 +140,7 @@ func (ws *WebSocketService) handleAssignSpool(msg iface.Msg) {
 
 func (ws *WebSocketService) handleRfidScan(msg iface.Msg) {
 	var spoolId string
+	var uid string
 
 	ws.mutex.Lock()
 
@@ -148,7 +149,7 @@ func (ws *WebSocketService) handleRfidScan(msg iface.Msg) {
 		return
 	}
 
-	uid, ok := msg.Payload["uid"].(string)
+	rawUid, ok := msg.Payload["uid"].(string)
 	if !ok {
 		ws.mutex.Unlock()
 		ws.sendAssignError("Ungültige NFC-ID")
@@ -156,19 +157,27 @@ func (ws *WebSocketService) handleRfidScan(msg iface.Msg) {
 	}
 
 	spoolId = ws.rfidState.SpoolID
+	uid = rawUid
 
 	ws.rfidState.Active = false
 	ws.rfidState.SpoolID = ""
 
 	ws.mutex.Unlock()
 
-	// TODO: DB-Speichern
+	existing, err := ws.spuleService.GetByNfcTag(uid)
+	if err == nil && existing != nil {
+		ws.sendAssignError("NFC-Tag ist bereits vergeben")
+		return
+	}
+
+	_, err = ws.spuleService.SetNfc(spoolId, uid)
+	if err != nil {
+		ws.sendAssignError("NFC konnte nicht gespeichert werden")
+		return
+	}
 
 	ws.sendAssignSuccess()
 	ws.sendRfidSuccess()
-
-	_ = uid
-	_ = spoolId
 }
 
 func (ws *WebSocketService) resetRfidState() {

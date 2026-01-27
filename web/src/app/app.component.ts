@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { WebsocketService } from './_service/websocket.service';
 import { ToastService } from './_service/toast.service';
+import { DataService } from './_service/data.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit {
   constructor (
     private websocket: WebsocketService,
     private toastService: ToastService,
+    private dataService: DataService
   ) {}
 
   ngOnInit() {
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit {
       console.log(res);
       
       if(res.success) {
+        this.dataService.spule.loadAll().subscribe()
         this.toastService.success('NFC-Tag wurde erfolgreich zugewiesen', 'NFC-Zuordnung Erfolgreich')
       } else {
         this.toastService.error(res.message || 'NFC-Zuordnung fehlgeschlagen', 'NFC-Zuordnung Fehlgeschlagen')

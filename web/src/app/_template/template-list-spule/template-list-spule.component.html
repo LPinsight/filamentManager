@@ -19,6 +19,10 @@
   kein Tag zugeordnet<br>
   <span class="nummer">Nummer: {{spule.nummer}}</span>
 </span>
+<span *ngIf="spule.nfc && !spule.nummer" class="empty">
+  <span class="nummer">Tag zugeordnet</span><br>
+  keine Nr. zugeordnet
+</span>
 <span *ngIf="spule.nfc && spule.nummer">Nummer: {{spule.nummer}}</span>
 
 <span [class.empty]="!spule.ort.name">{{spule.ort.name || "kein Ort"}}</span>
